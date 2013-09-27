@@ -1,0 +1,7 @@
+<h1>Editing theme</h1>
+
+<%= render 'form' %>
+
+<%= link_to 'Show', @theme %> |
+<%= link_to 'Back', themes_path %> |
+<%= link_to "Delete", @theme, method: :delete, data: { confirm: "Are you sure you want to delete this theme?" } %>

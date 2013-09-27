@@ -1,0 +1,7 @@
+<%= content_tag "ol", class: "nav", data: { page_id: @page.id } do %>
+	<% if @page.siblings.visible.any? && !@page.root? %>
+		<%= render @page.siblings.visible %>
+	<% else %>
+		<%= render @page.children.visible %>
+	<% end %>
+<% end %>

@@ -1,0 +1,23 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @website.title %>
+</p>
+
+<p>
+  <strong>Permalink:</strong>
+  <%= @website.permalink %>
+</p>
+
+<p>
+  <strong>Theme:</strong>
+  <%= link_to @website.theme.try(:name), @website.theme %>
+</p>
+
+<%= link_to 'Edit', edit_website_path(@website) %> |
+<% if @website.theme_locked? %>
+	<%= link_to "Unlock Theme", website_path(@website, "website[duplicate_theme]" => true), method: :patch %>
+<% else %>
+	<%= link_to "Theme", edit_theme_path(@website.theme) %>
+<% end %>

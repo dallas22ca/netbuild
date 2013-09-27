@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Blocks</title>
+  <%= stylesheet_link_tag    "public", media: "all", "data-turbolinks-track" => true %>
+  <%= javascript_include_tag "public", "data-turbolinks-track" => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>		
+				
+<%=
+
+	case @page.permalink
+	when "signin"
+		@yield = render("sessions")
+	when "sitemap"
+		@yield = render("sitemap")
+	else
+		@yield = ""
+	end
+	
+	blocks_1 = '<div class="widget drop_item">
+			<p>
+				Revive Halifax in <strong>3</strong> days, <strong>12</strong> hours, <strong>17</strong> minutes.
+			</p>
+		</div>'
+
+	Liquid::Template.parse(@page.layout.body).render({
+		"primary" => "rgb(184, 48, 48)",
+		"secondary" => "rgb(58, 122, 125)",
+		"logo" => "/themes/shared/logo.png",
+		"cta" => "/themes/shared/miniban.png",
+		"nav" => render("nav"),
+		"subnav" => render("subnav"),
+		"title" => @page.title,
+		"sign_inout" => user_signed_in? ? destroy_user_session_path : new_user_session_path,
+		"sign_inout_icon" => user_signed_in? ? "unlock" : "lock",
+		"blocks_1" => blocks_1
+		# "yield" => @yield
+		}, :filters => [LiquidFilters]).html_safe
+
+%>
+
+</body>
+</html>

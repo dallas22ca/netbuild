@@ -1,0 +1,31 @@
+<h1>Listing documents</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Theme</th>
+      <th>Name</th>
+      <th>Extension</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @documents.each do |document| %>
+      <tr>
+        <td><%= document.theme %></td>
+        <td><%= document.name %></td>
+        <td><%= document.extension %></td>
+        <td><%= link_to 'Show', theme_document_path(@theme, document) %></td>
+        <td><%= link_to 'Edit', edit_theme_document_path(@theme, document) %></td>
+        <td><%= link_to 'Destroy', theme_document_path(@theme, document), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Document', new_theme_document_path(@theme) %>

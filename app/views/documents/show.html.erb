@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Theme:</strong>
+  <%= @document.theme %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @document.name %>
+</p>
+
+<p>
+  <strong>Extension:</strong>
+  <%= @document.extension %>
+</p>
+
+<p>
+  <strong>Body:</strong>
+  <%= @document.body %>
+</p>
+
+<%= link_to 'Edit', edit_theme_document_path(@theme, @document) %> |
+<%= link_to 'Back', theme_documents_path(@theme, @document) %>
