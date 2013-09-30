@@ -1,5 +1,7 @@
 Blocks::Application.routes.draw do
   
+  resources :wrappers
+
   resources :blocks
 
   devise_scope :user do

@@ -93,6 +93,11 @@ $(document).on "click", ".publish", ->
 
 unload = ->
   $("#loading").show()
+  
+$(document).on "click", ".nav a", ->
+  if !timeTravel.active && window.midedit
+    if !confirm "You have unsaved changes. Are you sure you want to continue?"
+      false
 
 load = ->
   $("#loading").fadeOut()
