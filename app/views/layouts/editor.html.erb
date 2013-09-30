@@ -2,12 +2,15 @@
 <html>
 <head>
   <title>Blocks</title>
-  <%= stylesheet_link_tag    "public", media: "all", "data-turbolinks-track" => true %>
-  <%= javascript_include_tag "public", "data-turbolinks-track" => true %>
+  <%= stylesheet_link_tag    "editor", media: "all", "data-turbolinks-track" => true %>
+  <%= javascript_include_tag "editor", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
 </head>
-<body>
+<body data-page_id="<%= @page.id if @page %>">
+	
+<%= render "pages/includes/editor" %>
 
+<div id="timetravel">
 <%=
 
 	case @page.permalink
@@ -31,13 +34,10 @@
 		"sign_inout_icon" => user_signed_in? ? "unlock" : "lock",
 		"adminable?" => adminable?
 		# "yield" => @yield
-	}.merge(
-		@page.layout.body.scan(/blocks_(\d*)/).map { |b| {
-			"blocks_#{b.first}" => render("block_wrapper", parent: b, blocks: @website.blocks.where(parent: b))
-		}}.first
-	), :filters => [LiquidFilters]).html_safe
+	}.merge(@blocks), :filters => [LiquidFilters]).html_safe
 
 %>
+</div>
 
 </body>
 </html>

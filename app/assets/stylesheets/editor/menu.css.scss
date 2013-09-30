@@ -1,0 +1,79 @@
+@media screen and (max-width: 860px) {
+  #blocks_menu {
+    display: none;
+  }
+  
+  .drop_handle, .drop_delete {
+    display: none;
+  }
+}
+
+#blocks_menu {
+  z-index: 999;
+  background: rgba(0, 0, 0, 0.9);
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  padding-top: 10px;
+
+  ul {
+    li {
+      position: relative;
+      
+      &.separator {
+        margin: 10px 0;
+        height: 1px;
+        background: rgba(255, 255, 255, 0.15);
+      }
+      
+      ol, ul, p, blockquote, .widget {
+        position: absolute;
+      }
+      
+      &:hover > .hint {
+        display: block;
+      }
+      
+      &.disabled {
+        &:hover > .hint {
+          display: none;
+        }
+        
+        a {
+          color: #333 !important;
+        }
+      }
+      
+      &:hover > a, &:hover > .draggable {
+        color: #fff;
+      }
+
+      a, .draggable {
+        display: block;
+        color: #888;
+        font-size: 19px;
+        transition: none;
+        padding: 7px 14px;
+        
+        &.draggable {
+          cursor: move;
+        }
+      }
+      
+      .hint {
+        width: 17em;
+        display: none;
+        position: absolute;
+        background: rgba(0, 0, 0, 0.7);
+        margin: -33px 0 0 45px;
+        color: #fff;
+        font-size: 12px;
+        font-weight: bold;
+        padding: 10px 20px;
+        text-align: left;
+        border-radius: 0 40px 40px 0;
+      }
+    }
+  }
+}

@@ -1,5 +1,7 @@
 Blocks::Application.routes.draw do
   
+  resources :blocks
+
   devise_scope :user do
   
     constraints subdomain: /^((?!www).)*$/ do
@@ -17,6 +19,7 @@ Blocks::Application.routes.draw do
         end
       end
       
+      post "/save" => "websites#save", as: :save
       get "/:permalink" => "pages#show", as: :public_page
       get "/" => "pages#show"
     end

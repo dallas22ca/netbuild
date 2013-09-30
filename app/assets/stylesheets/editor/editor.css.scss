@@ -1,0 +1,92 @@
+@media screen and (min-width: 860px) {
+  body {
+    padding-left: 48px;
+  }
+}
+
+@media screen and (max-width: 860px) {
+  #widget_home {
+    display: none;
+  }
+  
+  .handle, .delete {
+    display: none;
+  }
+}
+
+#snapshots {
+  display: none;
+}
+
+.publish {
+  position: fixed;
+  bottom: 5px;
+  right: 5px;
+}
+
+.handle {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+  color: rgba(0, 0, 0, 0.5);
+  margin-top: -21px;
+  margin-left: -4px;
+  padding: 4px;
+  font-size: 13px;
+  cursor: move;
+  z-index: 900;
+  text-align: left;
+}
+
+.delete {
+  position: absolute;
+  color: rgba(0, 0, 0, 0.5);
+  margin-top: -21px;
+  margin-left: 36px;
+  padding: 4px;
+  font-size: 15px;
+  z-index: 901;
+  cursor: pointer;
+  text-align: left;
+}
+
+.edit {
+  position: absolute;
+  color: rgba(0, 0, 0, 0.5);
+  margin-top: -21px;
+  margin-left: 16px;
+  padding: 4px;
+  font-size: 15px;
+  z-index: 901;
+  cursor: pointer;
+  text-align: left;
+}
+
+.placeholder {
+  opacity: 0.4;
+  
+  .handle, .delete, .edit {
+    display: none;
+  }
+}
+
+.drop_helper {
+  opacity: 0.7;
+  
+  .handle, .delete, .edit {
+    display: none;
+  }
+}
+
+.droppable {
+  min-height: 1em;
+  width: 100%;
+}
+
+.pending_delete {
+  display: none !important;
+}
+
+#templates {
+  display: none;
+}

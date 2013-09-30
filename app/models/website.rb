@@ -4,6 +4,7 @@ class Website < ActiveRecord::Base
   belongs_to :theme
   belongs_to :home, class_name: "Page", foreign_key: "home_id"
   
+  has_many :blocks
   has_many :pages
   has_many :themes
   has_many :memberships

@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Website:</strong>
+  <%= @block.website %>
+</p>
+
+<p>
+  <strong>Parent:</strong>
+  <%= @block.parent %>
+</p>
+
+<p>
+  <strong>Genre:</strong>
+  <%= @block.genre %>
+</p>
+
+<p>
+  <strong>Details:</strong>
+  <%= @block.details %>
+</p>
+
+<%= link_to 'Edit', edit_block_path(@block) %> |
+<%= link_to 'Back', blocks_path %>

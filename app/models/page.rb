@@ -5,6 +5,8 @@ class Page < ActiveRecord::Base
   belongs_to :parent, class_name: "Page", primary_key: "parent_id"
   has_many :children, class_name: "Page", foreign_key: "parent_id"
   
+  default_scope -> { order(:ordinal) }
+  
   scope :roots, -> { where parent_id: nil }
   scope :visible, -> { where visible: true }
   

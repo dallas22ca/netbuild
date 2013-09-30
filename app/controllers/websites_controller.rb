@@ -50,6 +50,44 @@ class WebsitesController < ApplicationController
       end
     end
   end
+  
+  def save
+    @deleted = []
+    @new = []
+    
+    params[:blocks].each do |key, block|
+      b = @website.blocks.where(id: block[:id]).first
+      
+      if b
+        if block[:delete] == "true"
+          @deleted.push b.id
+          b.destroy
+        else
+          b.update_attributes(
+            parent: block[:parent],
+            genre: block[:genre],
+            ordinal: block[:ordinal],
+            details: block[:details]
+          )
+        end
+      elsif block[:delete] != "true"
+        b = @website.blocks.create(
+          parent: block[:parent],
+          genre: block[:genre],
+          ordinal: block[:ordinal],
+          details: block[:details],
+          initial_id: block[:id]
+        )
+        @new.push b
+      end
+    end
+    
+    params[:pages].each_with_index do |id, index|
+      id = id.gsub("page_", "")
+      p = @website.pages.where(id: id).first
+      p.update_attributes ordinal: index if p
+    end  
+  end
 
   # DELETE /websites/1
   # DELETE /websites/1.json

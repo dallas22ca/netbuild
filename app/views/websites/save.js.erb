@@ -1,0 +1,7 @@
+<% @deleted.each do |block_id| %>
+  $("#block_<%= block_id %>").remove()
+<% end %>
+
+<% @new.each do |block| %>
+  $("#timetravel #block_<%= block.initial_id %>").replaceWith("<%= j render(block) %>")
+<% end %>

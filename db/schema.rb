@@ -11,11 +11,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130927114729) do
+ActiveRecord::Schema.define(version: 20130930121735) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "hstore"
+
+  create_table "blocks", force: true do |t|
+    t.integer  "website_id"
+    t.integer  "parent"
+    t.string   "genre"
+    t.hstore   "details"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "ordinal",    default: 1000
+  end
+
+  add_index "blocks", ["details"], name: "index_blocks_on_details", using: :gist
+  add_index "blocks", ["parent"], name: "index_blocks_on_parent", using: :btree
+  add_index "blocks", ["website_id"], name: "index_blocks_on_website_id", using: :btree
 
   create_table "documents", force: true do |t|
     t.integer  "theme_id"
@@ -97,5 +111,17 @@ ActiveRecord::Schema.define(version: 20130927114729) do
 
   add_index "websites", ["home_id"], name: "index_websites_on_home_id", using: :btree
   add_index "websites", ["theme_id"], name: "index_websites_on_theme_id", using: :btree
+
+  create_table "widgets", force: true do |t|
+    t.integer  "website_id"
+    t.integer  "parent"
+    t.string   "genre"
+    t.text     "details"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "widgets", ["parent"], name: "index_widgets_on_parent", using: :btree
+  add_index "widgets", ["website_id"], name: "index_widgets_on_website_id", using: :btree
 
 end

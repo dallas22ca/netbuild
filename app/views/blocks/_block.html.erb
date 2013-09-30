@@ -1,0 +1,85 @@
+<% cache do %>
+	<%= content_tag_for :div, block, data: { genre: block.genre, id: block.id } do %>
+		<% if block.genre == "p" %>
+			<p class="contenteditable"><%= block.data["content"].to_s.html_safe %></p>
+		<% elsif block.genre == "h3" %>
+			<h3 class="contenteditable"><%= block.data["content"].to_s.html_safe %></h3>
+		<% elsif block.genre == "h4" %>
+			<h4 class="contenteditable"><%= block.data["content"].to_s.html_safe %></h4>
+		<% elsif block.genre == "events" %>
+			<ol>
+				<li>
+					<h5>Mon, Sept 18</h5>
+					<ol>
+						<li>7:00 AM - AWANA - Children</li>
+						<li>7:00 AM - Wednesday Equipping Classes</li>
+					</ol>
+				</li>
+				<li>
+					<h5>Wed, Sept 22</h5>
+					<ol>
+						<li>7:00 AM - Online Worship</li>
+						<li>7:00 AM - Adult Connect Groups</li>
+						<li>7:00 AM - Children Connect Groups</li>
+					</ol>
+				</li>
+			</ol>
+		<% elsif block.genre == "img" %>
+			<div class="img_wrapper">
+				<img src="/themes/shared/map.png">
+			</div>
+		<% elsif block.genre == "social" %>
+		<div class="img_wrapper">
+			<img src="/themes/shared/social.png">
+		</div>
+		<% elsif block.genre == "media" %>
+			<div class="media_wrapper">
+				<div class="block_header">
+					<h2>Media Gallery</h2>
+				</div>
+				<div class="block_content">
+					<div class="video"></div>
+					<ul class="playlist">
+						<li>
+							<a href="#">
+								<span class="title">Exceeding God</span>
+								<span class="date">Wed, Sept 5, 2013</span>
+							</a>
+	          </li>
+						<li>
+							<a href="#" class="playing">
+								<span class="title">Back to School</span>
+								<span class="date">Wed, Sept 5, 2013</span>
+							</a>
+	          </li>
+						<li>
+							<a href="#">
+								<span class="title">Decisions, Decisions, Decisions.</span>
+								<span class="date">Wed, Sept 5, 2013</span>
+							</a>
+	          </li>
+						<li>
+							<a href="#">
+								<span class="title">Heaven</span>
+								<span class="date">Wed, Sept 5, 2013</span>
+							</a>
+	          </li>
+						<li>
+							<a href="#">
+								<span class="title">The Field</span>
+								<span class="date">Wed, Sept 5, 2013</span>
+							</a>
+	          </li>
+						<li>
+							<a href="#">
+								<span class="title">Eternity 101</span>
+								<span class="date">Wed, Sept 5, 2013</span>
+							</a>
+	          </li>
+					</ul>
+					<div class="clear"></div>
+				</div>
+			</div>
+		<% end %>
+	<% end %>
+<% end %>

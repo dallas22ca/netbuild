@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  website_id: 
+  parent: 1
+  genre: MyString
+  details: 
+
+two:
+  website_id: 
+  parent: 1
+  genre: MyString
+  details: 

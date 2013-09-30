@@ -19,9 +19,16 @@ class PagesController < ApplicationController
       @page = @website.home
     end
     
+    if @page
+      @blocks = {}
+      @page.layout.body.scan(/blocks_(\d*)/).each do |b|
+			  @blocks["blocks_#{b.first}"] = render_to_string("pages/block_wrapper", layout: false, locals: { parent: b, blocks: @website.blocks.where(parent: b) })
+      end
+    end
+    
     if @path != root_path && @page == @website.home
       redirect_to root_path
-    elsif !@page
+    elsif !@website
       render text: "This account has been suspended."
     end
   end
@@ -88,7 +95,11 @@ class PagesController < ApplicationController
     
     def choose_layout
       if action_name == "show"
-        "public"
+        if adminable?
+          "editor"
+        else
+          "public"
+        end
       end
     end
 end
