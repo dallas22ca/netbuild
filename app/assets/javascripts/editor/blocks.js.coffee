@@ -15,13 +15,13 @@ $(document).on
     $(".handle, .delete, .edit").remove()
 , "#timetravel .block"
 
-@showNoWrappers = ->
-  $(".wrapper").each ->
+@showNoBlocks = ->
+  $(".blocks").each ->
     unless $(this).children(".block:visible").length
       $(this).addClass("droppable")
 
 @loadBlocks = ->
-  showNoWrappers()
+  showNoBlocks()
   
   $(".nav:not(.social)").sortable
     placeholder: "drop_placeholder"
@@ -35,9 +35,9 @@ $(document).on
           $(this).html nav.html()
       createSnapshot()
     
-  $("#timetravel .wrapper").sortable
+  $("#timetravel .blocks").sortable
     items: ".block"
-    connectWith: ".wrapper"
+    connectWith: ".blocks"
     placeholder: "placeholder"
     helper: "drop_helper"
     handle: ".handle"
@@ -56,6 +56,6 @@ $(document).on
     stop: (e, ui) ->
       $("body").removeClass("dragging")
       $(".drop_helper").removeClass("drop_helper")
-      showNoWrappers()
+      showNoBlocks()
     update: ->
       createSnapshot()

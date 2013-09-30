@@ -14,7 +14,7 @@
 <%=
 
 	case @page.permalink
-	when "sign_in"
+	when "signin"
 		@yield = render("pages/includes/sessions")
 	when "sitemap"
 		@yield = render("pages/includes/sitemap")
@@ -33,7 +33,7 @@
 		"sign_inout" => user_signed_in? ? destroy_user_session_path : new_user_session_path,
 		"sign_inout_icon" => user_signed_in? ? "unlock" : "lock",
 		"adminable?" => adminable?
-		"yield" => @yield
+		# "yield" => @yield
 	}.merge(@blocks), :filters => [LiquidFilters]).html_safe
 
 %>
