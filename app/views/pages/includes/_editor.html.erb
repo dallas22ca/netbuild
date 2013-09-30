@@ -5,14 +5,14 @@
 <div id="blocks_menu">
 	<ul>
 		<li>
-			<%= link_to "<i class=\"icon-plus\"></i>".html_safe, "#", class: "show_new_page", data: { no_turbolink: true } %>
+			<%= link_to "<i class=\"icon-plus\"></i>".html_safe, new_page_path, class: "show_new_page", data: { no_turbolink: true } %>
 			<p class="hint">
 				Click to add a page
 			</p>
 		</li>
 		
 		<li>
-			<%= link_to "<i class=\"icon-cog\"></i>".html_safe, "#", class: "show_edit_page", data: { no_turbolink: true } %>
+			<%= link_to "<i class=\"icon-cog\"></i>".html_safe, edit_page_path(@page), class: "show_edit_page", data: { no_turbolink: true } %>
 			<p class="hint">
 				Click to edit this page
 			</p>
@@ -161,6 +161,6 @@
 
 <div id="templates">
 	<% %w[p h3 h4 events img social media].each do |genre| %>
-		<%= render @website.blocks.build(id: Random.rand(1000000000..100000000000000), genre: genre) %>
+		<%= render @website.blocks.build(id: Random.rand(10000000000..1000000000000000), genre: genre) %>
 	<% end %>
 </div>

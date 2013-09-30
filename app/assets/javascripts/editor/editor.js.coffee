@@ -1,6 +1,11 @@
 $(window).bind "beforeunload", ->
   "You have unsaved changes." if !timeTravel.active && window.midedit
 
+$(document).on "click", ".nav a", ->
+  if !timeTravel.active && window.midedit
+    if !confirm "You have unsaved changes. Are you sure you want to continue?"
+      false
+
 $(document).on
   mouseenter: ->
     $(this).addClass "hover"
@@ -53,15 +58,16 @@ $(document).on "click", ".delete", ->
 
 $(document).on "click", ".publish", ->
   blocks = []
+  wrappers = []
   
-  $("#timetravel").find(".blocks").each ->
-    parent = $(this).data("parent")
+  $("#timetravel").find(".wrapper").each ->
+    wrapper_id = $(this).data("id")
     n = 0
     
     $(this).find(".block").each ->
       block = {}
       block.id = $(this).data("id")
-      block.parent = parent
+      block.wrapper_id = wrapper_id
       block.genre = $(this).data("genre")
       block.delete = $(this).hasClass("pending_delete")
       block.ordinal = n
@@ -92,6 +98,7 @@ $(document).on "click", ".publish", ->
     pages: $(".nav.roots:first").sortable("toArray")
 
 unload = ->
+  window.midedit = false
   $("#loading").show()
 
 load = ->

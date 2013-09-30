@@ -4,6 +4,7 @@ class Page < ActiveRecord::Base
   
   belongs_to :parent, class_name: "Page", primary_key: "parent_id"
   has_many :children, class_name: "Page", foreign_key: "parent_id"
+  has_many :wrappers
   
   default_scope -> { order(:ordinal) }
   

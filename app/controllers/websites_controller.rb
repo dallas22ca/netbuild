@@ -64,7 +64,7 @@ class WebsitesController < ApplicationController
           b.destroy
         else
           b.update_attributes(
-            parent: block[:parent],
+            wrapper_id: block[:wrapper_id],
             genre: block[:genre],
             ordinal: block[:ordinal],
             details: block[:details]
@@ -72,7 +72,7 @@ class WebsitesController < ApplicationController
         end
       elsif block[:delete] != "true"
         b = @website.blocks.create(
-          parent: block[:parent],
+          wrapper_id: block[:wrapper_id],
           genre: block[:genre],
           ordinal: block[:ordinal],
           details: block[:details],

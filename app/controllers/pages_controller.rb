@@ -21,8 +21,10 @@ class PagesController < ApplicationController
     
     if @page
       @blocks = {}
-      @page.layout.body.scan(/blocks_(\d*)/).each do |b|
-			  @blocks["blocks_#{b.first}"] = render_to_string("pages/block_wrapper", layout: false, locals: { parent: b, blocks: @website.blocks.where(parent: b) })
+      @page.layout.body.scan(/wrapper_(.*?)(\s|\})/).each do |b|
+        wrapper = { identifier: b.first }
+        wrapper[:page_id] = @page.id if wrapper[:identifier] =~ /\?/
+			  @blocks["wrapper_#{wrapper[:identifier]}"] = render_to_string(@website.wrappers.where(wrapper).first_or_create)
       end
     end
     

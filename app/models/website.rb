@@ -4,7 +4,8 @@ class Website < ActiveRecord::Base
   belongs_to :theme
   belongs_to :home, class_name: "Page", foreign_key: "home_id"
   
-  has_many :blocks
+  has_many :wrappers
+  has_many :blocks, through: :wrappers
   has_many :pages
   has_many :themes
   has_many :memberships
@@ -19,14 +20,34 @@ class Website < ActiveRecord::Base
   after_create :seed_content
   
   def seed_content
-    home = pages.create(
-      title: "Welcome",
-      permalink: "welcome",
-      description: "Welcome to our website",
-      visible: true,
-      ordinal: 1,
-      document_id: theme.documents.first.id
-    )
+    if Theme.any?
+      home = pages.create(
+        title: "Welcome",
+        permalink: "welcome",
+        description: "Welcome to our website",
+        visible: true,
+        ordinal: 1,
+        document_id: theme.documents.first.id
+      )
+      
+      sign_in = pages.create(
+        title: "Sign In",
+        permalink: "sign_in",
+        description: "Sign in to our website",
+        visible: false,
+        ordinal: 999,
+        document_id: theme.documents.first.id
+      )
+      
+      sitemap = pages.create(
+        title: "Sitemap",
+        permalink: "sitemap",
+        description: "Sitemap of our website",
+        visible: false,
+        ordinal: 998,
+        document_id: theme.documents.first.id
+      )
+    end
   end
   
   def clone_theme

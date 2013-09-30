@@ -1,4 +1,4 @@
-<% cache do %>
+<% cache block do %>
 	<%= content_tag_for :div, block, data: { genre: block.genre, id: block.id } do %>
 		<% if block.genre == "p" %>
 			<p class="contenteditable"><%= block.data["content"].to_s.html_safe %></p>

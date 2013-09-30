@@ -1,5 +1,0 @@
-<% cache [@website, "block_#{parent.first}"] do %>
-	<%= content_tag :div, id: "blocks_#{parent.first}", class: "blocks", data: { parent: parent.first } do %>
-		<%= render blocks %>
-	<% end %>
-<% end %>
