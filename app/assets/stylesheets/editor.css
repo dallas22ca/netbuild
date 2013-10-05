@@ -11,5 +11,6 @@
  *= require_self
  *= require reset
  *= require font-awesome
+ *= require chosen
  *= require_tree ./editor
  */

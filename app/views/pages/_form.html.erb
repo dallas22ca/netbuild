@@ -33,7 +33,7 @@
   </div>
   <div class="field">
     <%= f.label :document_id %><br>
-    <%= f.collection_select :document_id, @website.theme.documents, :id, :name %>
+    <%= f.collection_select :document_id, @website.theme.documents.html, :id, :name %>
   </div>
   <div class="field">
     <%= f.label :parent_id %><br>

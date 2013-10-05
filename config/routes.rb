@@ -8,7 +8,8 @@ Blocks::Application.routes.draw do
   
     constraints subdomain: /^((?!www).)*$/ do
       devise_for :users, controllers: {
-        sessions: "sessions"
+        sessions: "sessions",
+        registrations: "registrations"
       }
       
       authenticated :user do

@@ -55,6 +55,8 @@ class WebsitesController < ApplicationController
     @deleted = []
     @new = []
     
+    @page = @website.pages.find(params[:page_id])
+    
     params[:blocks].each do |key, block|
       b = @website.blocks.where(id: block[:id]).first
       
@@ -86,7 +88,9 @@ class WebsitesController < ApplicationController
       id = id.gsub("page_", "")
       p = @website.pages.where(id: id).first
       p.update_attributes ordinal: index if p
-    end  
+    end
+    
+    @page.update_attributes(title: params[:title])
   end
 
   # DELETE /websites/1

@@ -1,0 +1,154 @@
+<div id="widget_editor_overlay"></div>
+
+<div class="widget_editor" data-genre="money">
+	<%= form_tag "#", authenticity_token: false do %>
+		<%= hidden_field_tag :block_id, "", class: "block_id", id: nil %>
+		<h3>Money</h3>
+		<div class="field">
+			<p>{{set stripe, currency}}</p>
+			<%= label_tag :amount, "Amount or fluctuating" %><br>
+			<%= text_field_tag :amount, "", class: "amount", id: nil %>
+		</div>
+		<div class="field">
+			<%= label_tag :description %><br>
+			<%= text_field_tag :description, "", class: "description", id: nil %>
+		</div>
+		<div class="actions">
+			<%= submit_tag "Save" %>
+			<%= link_to "Cancel", "#", class: "cancel" %>
+		</div>
+	<% end %>
+</div>
+	
+<div class="widget_editor" data-genre="forms">
+	<%= form_tag "#", authenticity_token: false do %>
+		<%= hidden_field_tag :block_id, "", class: "block_id", id: nil %>
+		<h3>Forms</h3>
+		<div class="field">
+			<%= label_tag :new_or_previous %><br>
+			<%= select_tag :new_or_previous, options_for_select(["Create New", "Choose From Previous"]), class: "new_or_previous", id: nil %>
+		</div>
+		<div class="field">
+			<%= label_tag :contact_specific? %><br>
+			<%= select_tag :contact_specific?, options_for_select(["Create New", "Choose From Previous"]), class: "contact_specific?", id: nil %>
+		</div>
+		<div class="field">
+			<p>{{ each field }}</p>
+		</div>
+		<div class="actions">
+			<%= submit_tag "Save" %>
+			<%= link_to "Cancel", "#", class: "cancel" %>
+		</div>
+	<% end %>
+</div>
+
+<div class="widget_editor" data-genre="social">
+	<%= form_tag "#", authenticity_token: false do %>
+		<%= hidden_field_tag :block_id, "", class: "block_id", id: nil %>
+		<h3>Social</h3>
+		<div class="field">
+			<%= label_tag :style %><br>
+			<%= select_tag :style, options_for_select(["Big Like", "Little Like", "Share"]), class: "style", id: nil %>
+		</div>
+		<div class="field">
+			<%= label_tag :orientation %><br>
+			<%= select_tag :orientation, options_for_select(["Horizontal List", "Vertical List"]), class: "orientation", id: nil %>
+		</div>
+		<div class="field">
+			<%= label_tag :which_page %><br>
+			<%= select_tag :which_page, options_for_select(["Current Page", "Other"]), class: "which_page", id: nil %>
+		</div>
+		<div class="actions">
+			<%= submit_tag "Save" %>
+			<%= link_to "Cancel", "#", class: "cancel" %>
+		</div>
+	<% end %>
+</div>
+
+<div class="widget_editor" data-genre="events">
+	<%= form_tag "#", authenticity_token: false do %>
+		<%= hidden_field_tag :block_id, "", class: "block_id", id: nil %>
+		<h3>Events</h3>
+		<div class="field">
+			<%= label_tag :tags %><br>
+			<%= select_tag :tags, options_for_select(["Awesome", "Cool", "Nice"]), multiple: true, class: "tags", id: nil %><br>
+			<%= link_to "Manage Media", media_path %>
+		</div>
+		<div class="field">
+			<%= label_tag :style %><br>
+			<%= select_tag :style, options_for_select(["Calendar", "Event List"]), class: "style", id: nil %>
+		</div>
+		<div class="field">
+			<%= check_box_tag :list_limit, true, true, class: "list_limit", id: nil %>
+			<%= label_tag :list_limit %>
+		</div>
+		<div class="actions">
+			<%= submit_tag "Save" %>
+			<%= link_to "Cancel", "#", class: "cancel" %>
+		</div>
+	<% end %>
+</div>
+
+<div class="widget_editor" data-genre="img">
+	<%= form_tag "#", authenticity_token: false do %>
+		<%= hidden_field_tag :block_id, "", class: "block_id", id: nil %>
+		<h3>Images</h3>
+		<div class="field">
+			<%= label_tag :tags %><br>
+			<%= select_tag :tags, options_for_select(["Awesome", "Cool", "Nice"]), multiple: true, class: "tags", id: nil %><br>
+			<%= link_to "Manage Media", media_path %>
+		</div>
+		<div class="field">
+			<%= label_tag :style %><br>
+			<%= select_tag :style, options_for_select(["Gallery", "One"]), class: "style", id: nil %>
+		</div>
+		<div class="field">
+			<%= label_tag :gallery_width %><br>
+			<%= select_tag :gallery_width, options_for_select(["1x1", "2x2", "3x3"]), class: "gallery_width", id: nil %>
+		</div>
+		<div class="field">
+			<%= check_box_tag :sharing, true, true, class: "sharing", id: nil %>
+			<%= label_tag :sharing %>
+		</div>
+		<div class="field">
+			<%= text_field_tag :map_location, "", class: "map_location", id: nil %>
+			<%= label_tag :map_location %>
+		</div>
+		<div class="field">
+			<%= check_box_tag :full_width, true, true, class: "full_width", id: nil %>
+			<%= label_tag :full_width %>
+		</div>
+		<div class="actions">
+			<%= submit_tag "Save" %>
+			<%= link_to "Cancel", "#", class: "cancel" %>
+		</div>
+	<% end %>
+</div>
+
+<div class="widget_editor" data-genre="media">
+	<%= form_tag "#", authenticity_token: false do %>
+		<%= hidden_field_tag :block_id, "", class: "block_id", id: nil %>
+		<h3>Media</h3>
+		<div class="field">
+			<%= label_tag :tags %><br>
+			<%= select_tag :tags, options_for_select(["Awesome", "Cool", "Nice"]), multiple: true, class: "tags", id: nil %><br>
+			<%= link_to "Manage Media", media_path %>
+		</div>
+		<div class="field">
+			<%= label_tag :formats %><br>
+			<%= select_tag :formats, options_for_select(["Image", "Audio", "Video", "PDF"]), class: "formats", id: nil, multiple: true %>
+		</div>
+		<div class="field">
+			<%= label_tag :style %><br>
+			<%= select_tag :style, options_for_select(["Gallery", "One"]), class: "style", id: nil %>
+		</div>
+		<div class="field">
+			<%= label_tag :layout %><br>
+			<%= select_tag :layout, options_for_select(["Upload Date", "Name"]), class: "layout", id: nil %>
+		</div>
+		<div class="actions">
+			<%= submit_tag "Save" %>
+			<%= link_to "Cancel", "#", class: "cancel" %>
+		</div>
+	<% end %>
+</div>

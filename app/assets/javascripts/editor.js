@@ -14,4 +14,6 @@
 //= require jquery_ujs
 //= require jquery-ui-1.10.3
 //= require turbolinks
+//= require chosen.jquery
 //= require_tree ./editor
+//= require_tree ./shared

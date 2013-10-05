@@ -1,8 +1,8 @@
 $(window).bind "beforeunload", ->
-  "You have unsaved changes." if !timeTravel.active && window.midedit
+  "You have unsaved changes." if window.midedit #!timeTravel.active && 
 
 $(document).on "click", ".nav a", ->
-  if !timeTravel.active && window.midedit
+  if window.midedit #!timeTravel.active &&
     if !confirm "You have unsaved changes. Are you sure you want to continue?"
       false
 
@@ -14,10 +14,12 @@ $(document).on
 , ".contenteditable"
 
 $(document).on "keydown", "[contenteditable]", (e) ->
+  window.midedit = true
+  
   if !$(this).is("ul") && !$(this).is("ol")
     code = ((if e.keyCode then e.keyCode else e.which))
     if code is 13
-      document.execCommand "insertHTML", false, "<br>"
+      document.execCommand "insertHTML", false, "<br><br>"
       false
 
 $(document).on "click", ".contenteditable", ->
@@ -29,6 +31,11 @@ $(document).on "click", "html, body", (e) ->
 
 $(document).on "blur", "[contenteditable]", ->
   $("body").addClass "mid_edit"
+  
+  if $(this).closest(".block").length
+    details = {}
+    details.content = $(this).html()
+    $(this).closest(".block").attr("data-details", details)
 
   setTimeout ->
     if !$("*:focus").length && $(".mid_edit").length
@@ -44,21 +51,18 @@ $(document).on "click", "[data-action]", (e) ->
   createSnapshot()
   false
 
-$(document).on "click", ".edit", ->
-  block = $(this).closest(".block")
-  genre = block.data("genre")
-  alert genre
-  false
-
-$(document).on "click", ".delete", ->
-  block = $(this).closest(".block")
-  block.addClass("pending_delete")
-  createSnapshot()
-  false
-
 $(document).on "click", ".publish", ->
+  publish()
+  false
+
+@publish = ->
+  url = $(".publish").data("url")
   blocks = []
   wrappers = []
+  
+  window.midedit = false
+  timeTravel.saved_id = timeTravel.current
+  localStorage.setItem "page_#{timeTravel.page_id}_saved_id", timeTravel.saved_id
   
   $("#timetravel").find(".wrapper").each ->
     wrapper_id = $(this).data("id")
@@ -71,41 +75,25 @@ $(document).on "click", ".publish", ->
       block.genre = $(this).data("genre")
       block.delete = $(this).hasClass("pending_delete")
       block.ordinal = n
-      block.details = {}
-      
-      if block.genre == "p" || block.genre == "h3" || block.genre == "h4" || block.genre == "blockquote"
-        block.details.content = $(this).find(".contenteditable").html()
-      else if block.genre == "img"
-        block.details.src = $(this).find("img").attr("src")
-        block.details.href = $(this).find("a").attr("href")
-      else if block.genre == "forms"
-        block.details.style == $(this).data("style")
-      else if block.genre == "events"
-        block.details.style == $(this).data("style")
-      else if block.genre == "social"
-        block.details.style == $(this).data("style")
-      else if block.genre == "finance"
-        block.details.style == $(this).data("style")
-      
+      block.details = $.parseJSON($(this).attr("data-details"))
       blocks.push block
       n += 1
-  
-  window.midedit = false
 
-  $.post "/save.js",
+  $.post url,
     page_id: $("body").data("page_id")
     blocks: blocks
     pages: $(".nav.roots:first").sortable("toArray")
+    title: $("#timetravel [data-title]").text()
 
 unload = ->
   window.midedit = false
   $("#loading").show()
 
 load = ->
-  $("#loading").fadeOut()
-  
+  selectedNav()
   # timeTravel.init() if window && window["localStorage"] != null
   createSnapshot() unless timeTravel.active
+  $("#loading").fadeOut()
 
 $ ->
   load()

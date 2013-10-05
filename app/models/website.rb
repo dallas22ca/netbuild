@@ -1,7 +1,7 @@
 class Website < ActiveRecord::Base
   attr_accessor :duplicate_theme
   
-  belongs_to :theme
+  belongs_to :theme, touch: true
   belongs_to :home, class_name: "Page", foreign_key: "home_id"
   
   has_many :wrappers
@@ -26,8 +26,9 @@ class Website < ActiveRecord::Base
         permalink: "welcome",
         description: "Welcome to our website",
         visible: true,
+        deleteable: false,
         ordinal: 1,
-        document_id: theme.documents.first.id
+        document_id: theme.default_document
       )
       
       sign_in = pages.create(
@@ -35,8 +36,9 @@ class Website < ActiveRecord::Base
         permalink: "sign_in",
         description: "Sign in to our website",
         visible: false,
+        deleteable: false,
         ordinal: 999,
-        document_id: theme.documents.first.id
+        document_id: theme.default_document
       )
       
       sitemap = pages.create(
@@ -44,8 +46,19 @@ class Website < ActiveRecord::Base
         permalink: "sitemap",
         description: "Sitemap of our website",
         visible: false,
+        deleteable: false,
         ordinal: 998,
-        document_id: theme.documents.first.id
+        document_id: theme.default_document
+      )
+      
+      search = pages.create(
+        title: "Search",
+        permalink: "search",
+        description: "Search our website",
+        visible: false,
+        deleteable: false,
+        ordinal: 997,
+        document_id: theme.default_document
       )
     end
   end

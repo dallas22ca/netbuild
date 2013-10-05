@@ -15,3 +15,4 @@
 //= require jquery-ui-1.10.3
 //= require turbolinks
 //= require_tree ./public
+//= require_tree ./shared

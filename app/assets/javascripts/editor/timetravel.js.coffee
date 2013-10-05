@@ -10,12 +10,6 @@ $(document).on "click", ".clear_timetravel", ->
     useSnapshot false, timeTravel.saved_id
   false
 
-$(document).on "click", ".publish", ->
-  timeTravel.saved_id = timeTravel.current
-  localStorage.setItem "page_#{timeTravel.page_id}_saved_id", timeTravel.saved_id
-  loadBlocks()
-  false
-
 @timeTravel =
   init: ->
     timeTravel.page_id = $("body").data("page_id")
@@ -51,7 +45,7 @@ $(document).on "click", ".publish", ->
 
   db: ->
     openDatabase "TimeTravel", "1.0", "Undo and Redo til your heart is content", 5 * 1024 * 1024
-  active: 0
+  active: false
   current: 0
   newest_id: 0
   oldest_id: 0

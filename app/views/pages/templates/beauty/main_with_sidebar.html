@@ -1,0 +1,71 @@
+<div id="loading"></div>
+
+<div id="topbar">
+	<div class="container">
+    <form method="get" action="{{ search_path }}">
+  		<input type="text" name="q" value="{{ q }}" placeholder="Search..." />
+    </form>
+		<div class="cta">
+			{{ wrapper_1 }}
+		</div>
+		<div class="clear"></div>
+	</div>
+</div>
+
+<div id="header" class="container">
+	<h1><a href="/" id="logo"><img src="{{ logo }}"></a></h1>
+	<div class="nav_wrapper">
+		<div id="mini_ban">
+      {{ wrapper_4 }}
+    </div>
+		{{ nav }}
+	</div>
+</div>
+
+<div class="clear"></div>
+
+<div id="main" class="container">
+	
+	<div class="header">
+		<h2 class="contenteditable" data-title>{{ title }}</h2>
+		
+		{{ subnav }}
+		
+		<div class="clear"></div>
+	</div>
+	
+	<div id="yield_wrapper">
+		
+		<div id="yield">
+      {{ wrapper_3? }}
+			{{ yield }}			
+		</div>
+		
+		<div id="sidebar">
+      {{ wrapper_2 }}
+		</div>
+		
+		<div class="clear"></div>
+		
+	</div>
+	
+</div>
+
+<div id="footer" class="container">
+	{{ nav }}
+	
+	<ol class="nav social">
+		<li><a href="#"><i class="icon-facebook"></i></a></li>
+		<li><a href="#"><i class="icon-twitter"></i></a></li>
+		<li><a href="#"><i class="icon-instagram"></i></a></li>
+		<li><a href="#"><i class="icon-rss"></i></a></li>
+  		<li><a href="{{ search_path }}"><i class="icon-search"></i></a></li>
+    {% if adminable? %}
+  		<li><a href="#"><i class="icon-envelope"></i></a></li>
+  		<li><a href="{{ members_path }}"><i class="icon-group"></i></a></li>
+    {% endif %}
+		<li><a href="{{ sign_inout_path }}"><i class="icon-{{ sign_inout_icon }}"></i></a></li>
+	</ol>
+	
+	<div class="clear"></div>
+</div>

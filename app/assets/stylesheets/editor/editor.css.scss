@@ -9,7 +9,7 @@
     display: none;
   }
   
-  .handle, .delete {
+  .handle, .delete, .edit {
     display: none;
   }
 }
@@ -41,8 +41,8 @@
 .delete {
   position: absolute;
   color: rgba(0, 0, 0, 0.5);
-  margin-top: -21px;
-  margin-left: 36px;
+  margin-top: -22px;
+  margin-left: 16px;
   padding: 4px;
   font-size: 15px;
   z-index: 901;
@@ -53,8 +53,8 @@
 .edit {
   position: absolute;
   color: rgba(0, 0, 0, 0.5);
-  margin-top: -21px;
-  margin-left: 16px;
+  margin-top: -22px;
+  margin-left: 36px;
   padding: 4px;
   font-size: 15px;
   z-index: 901;

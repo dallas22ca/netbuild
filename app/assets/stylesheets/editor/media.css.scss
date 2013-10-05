@@ -1,0 +1,21 @@
+#media_gallery {
+  display: none;
+  position: fixed;
+  
+  #library {
+    width: 100%;
+    max-width: 600px;
+    
+    .medium {
+      display: inline-block;
+      width: 17.5%;
+      margin: 0.7% 0.5%;
+      cursor: pointer;
+      text-align: center;
+      
+      img {
+        max-width: 100%;
+      }
+    }
+  }
+}

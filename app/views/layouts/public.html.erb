@@ -2,39 +2,14 @@
 <html>
 <head>
   <title>Blocks</title>
-  <%= stylesheet_link_tag    "public", media: "all", "data-turbolinks-track" => true %>
+	<%= stylesheet_link_tag    "public", theme_path(@website.theme, format: :css), media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "public", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
 
 <div id="timetravel">
-<%=
-
-	case @page.permalink
-	when "sign_in"
-		@yield = render("pages/includes/sessions")
-	when "sitemap"
-		@yield = render("pages/includes/sitemap")
-	else
-		@yield = ""
-	end
-
-	Liquid::Template.parse(@page.layout.body).render({
-		"primary" => "rgb(184, 48, 48)",
-		"secondary" => "rgb(58, 122, 125)",
-		"logo" => "/themes/shared/logo.png",
-		"cta" => "/themes/shared/miniban.png",
-		"nav" => render("pages/includes/nav"),
-		"subnav" => render("pages/includes/subnav"),
-		"title" => @page.title,
-		"sign_inout" => user_signed_in? ? destroy_user_session_path : new_user_session_path,
-		"sign_inout_icon" => user_signed_in? ? "unlock" : "lock",
-		"adminable?" => adminable?,
-		"yield" => @yield
-	}.merge(@blocks), :filters => [LiquidFilters]).html_safe
-
-%>
+	<%= render "pages/includes/yield" %>
 </div>
 
 </body>

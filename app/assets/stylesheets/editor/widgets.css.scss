@@ -1,0 +1,72 @@
+#widget_editor_overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 998;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.widget_editor {
+  display: none;
+  z-index: 999;
+  position: absolute;
+  background: #fff;
+  border-radius: 7px;
+  border: 1px solid rgba(0, 0, 0, 0.9);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+  padding: 0px 15px;
+  width: 250px;
+  
+  h3 {
+    font-weight: bold;
+    font-size: 16px;
+    background: rgba(0, 0, 0, 0.9);
+    margin: 0 -15px 8px -15px;
+    padding: 11px;
+    border-radius: 4px 4px 0 0;
+    text-align: center;
+    border-bottom: 1px solid #ccc;
+    color: #eee;
+    cursor: move;
+  }
+  
+  p {
+    padding: 8px 0;
+  }
+  
+  .field {
+    padding: 8px 0;
+    color: #333;
+    font-size: 13px;
+    
+    input[type="text"] {
+      width: 100%;
+      box-sizing: border-box;
+    }
+    
+    label {
+      display: inline-block;
+      padding-bottom: 3px;
+    }
+  }
+  
+  .actions {
+    padding: 9px;
+    color: #333;
+    font-size: 13px;
+    background: #eee;
+    border-radius: 0 0 7px 7px;
+    margin: 8px -15px 0 -15px;
+    border-top: 1px solid #ccc;
+    
+    .cancel {
+      display: inline-block;
+      color: #AC0000;
+      font-size: 12px;
+      margin-left: 10px;
+    }
+  }
+}

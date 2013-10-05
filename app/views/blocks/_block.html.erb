@@ -1,5 +1,5 @@
 <% cache block do %>
-	<%= content_tag_for :div, block, data: { genre: block.genre, id: block.id } do %>
+	<%= content_tag_for :div, block, data: { genre: block.genre, id: block.id, details: block.details } do %>
 		<% if block.genre == "p" %>
 			<p class="contenteditable"><%= block.data["content"].to_s.html_safe %></p>
 		<% elsif block.genre == "h3" %>
@@ -29,14 +29,24 @@
 				<img src="/themes/shared/map.png">
 			</div>
 		<% elsif block.genre == "social" %>
-		<div class="img_wrapper">
-			<img src="/themes/shared/social.png">
-		</div>
+			<div class="img_wrapper">
+				<img src="/themes/shared/social.png">
+			</div>
+		<% elsif block.genre == "money" %>
+			<div class="img_wrapper">
+				<% if block.data["amount"].downcase == "fluctuating" %>
+					<div class="field">
+						<%= label_tag :how_much, block.data["description"] %><br>
+						<%= text_field_tag :how_much %>
+					</div>
+				<% else %>
+					<p><%= block.data["description"] %></p>
+					<h1><%= number_to_currency(block.data["amount"].to_i / 100.00) %></h1>
+				<% end %>
+				<button>Pay</button>
+			</div>
 		<% elsif block.genre == "media" %>
 			<div class="media_wrapper">
-				<div class="block_header">
-					<h2>Media Gallery</h2>
-				</div>
 				<div class="block_content">
 					<div class="video"></div>
 					<ul class="playlist">

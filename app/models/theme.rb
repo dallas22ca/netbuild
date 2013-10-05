@@ -5,6 +5,10 @@ class Theme < ActiveRecord::Base
   
   scope :pristine, -> { where(pristine: true) }
   
+  def default_document
+    documents.first
+  end
+  
   def to_param
     "#{id}-#{name.parameterize}"
   end

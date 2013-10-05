@@ -1,8 +1,10 @@
 <div class="section">
   
-  <h3>Sign In</h2>
+  <h3>Sign Up</h2>
 
-  <%= form_for(User.new, :as => "user", :url => session_path("user")) do |f| %>
+  <%= form_for(User.new, :as => "user", :url => registration_path("user")) do |f| %>
+		<%= f.hidden_field :subdomain, value: @website.permalink %>
+	
     <div class="field">
       <%= f.label :email %><br />
       <%= f.email_field :email, class: "full_width" %>
@@ -12,10 +14,10 @@
       <%= f.label :password %><br />
       <%= f.password_field :password, class: "full_width" %>
     </div>
-
+		
     <div class="field">
-      <%= f.check_box :remember_me, checked: true %> 
-			<%= f.label :remember_me %>
+      <%= f.label :password_confirmation %><br />
+      <%= f.password_field :password_confirmation, class: "full_width" %>
     </div>
 
     <div class="actions">
