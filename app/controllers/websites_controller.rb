@@ -112,6 +112,6 @@ class WebsitesController < ApplicationController
   private
     # Never trust parameters from the scary internet, only allow the white list through.
     def website_params
-      params.require(:website).permit(:title, :permalink, :theme_id, :duplicate_theme, :home_id, members_attributes: [:email, :password])
+      params.require(:website).permit(:title, :domain, :permalink, :theme_id, :duplicate_theme, :home_id, members_attributes: [:email, :password])
     end
 end
