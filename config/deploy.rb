@@ -1,4 +1,4 @@
-require "bundler/capistrano"
+# require "bundler/capistrano"
 # require 'sidekiq/capistrano'
 
 Dir.glob("config/recipes/*.rb").each do |file|
