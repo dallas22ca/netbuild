@@ -24,16 +24,18 @@
     <%= f.text_field :theme_id %>
   </div>
 	
-	<%= f.fields_for :members do |m| %>
-	  <div class="field">
-			<%= m.label :email %><br />
-			<%= m.email_field :email %>
-		</div>
+	<% unless user_signed_in? %>
+		<%= f.fields_for :members do |m| %>
+		  <div class="field">
+				<%= m.label :email %><br />
+				<%= m.email_field :email %>
+			</div>
 
-	  <div class="field">
-			<%= m.label :password %><br />
-			<%= m.password_field :password %>
-		</div>
+		  <div class="field">
+				<%= m.label :password %><br />
+				<%= m.password_field :password %>
+			</div>
+		<% end %>
 	<% end %>
 	
   <div class="actions">
