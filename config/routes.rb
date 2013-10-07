@@ -17,13 +17,15 @@ Netbuild::Application.routes.draw do
       resources :themes do
         resources :documents
       end
+      
+      post "/save" => "websites#save", as: :save
     end
     
-    constraints subdomain: "app" do
+    constraints subdomain: "www" do
       resources :websites, only: [:new, :create]
     end
     
-    post "/save" => "websites#save", as: :save
+    resources :themes, only: [:index, :show]
     get "/:permalink" => "pages#show", as: :public_page
     root to: "pages#show"
 
