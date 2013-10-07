@@ -9,4 +9,4 @@
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-Blocks::Application.config.secret_key_base = 'c1fa963316c4caf2952aac0fa56a9acd0d58bcf7214fc729449b1d587ce54f0d4e94f016c85819fa9c22ad1a75ae8039c9091974abce97bb5b7aed0cf173df31'
+Netbuild::Application.config.secret_key_base = 'c1fa963316c4caf2952aac0fa56a9acd0d58bcf7214fc729449b1d587ce54f0d4e94f016c85819fa9c22ad1a75ae8039c9091974abce97bb5b7aed0cf173df31'

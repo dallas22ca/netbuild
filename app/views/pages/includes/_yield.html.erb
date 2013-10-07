@@ -7,13 +7,15 @@
 		@yield = render("pages/includes/yields/registrations")
 	when "sitemap"
 		@yield = render("pages/includes/yields/sitemap")
+	when "members"
+		@yield = render("pages/includes/yields/members")
 	when "search"
 		@yield = render("pages/includes/yields/search")
 	else
 		@yield = ""
 	end
 	#
-	Liquid::Template.parse( IO.read(File.expand_path("app/views/pages/templates/hope/homepage.html")) ).render({
+	Liquid::Template.parse( IO.read(File.expand_path("app/views/templates/hope/homepage.html")) ).render({
 		"primary" => "rgb(240, 110, 48)",
 		"secondary" => "rgb(50, 50, 50)",
 		"logo" => "/themes/shared/white_logo.png",

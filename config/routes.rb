@@ -1,11 +1,5 @@
-Blocks::Application.routes.draw do
+Netbuild::Application.routes.draw do
   
-  resources :media
-
-  resources :wrappers
-
-  resources :blocks
-
   devise_scope :user do
   
     constraints subdomain: /^((?!www).)*$/ do
@@ -16,9 +10,10 @@ Blocks::Application.routes.draw do
       
       authenticated :user do
         resources :websites
-        resources :memberships, path: :members
+        resources :memberships, path: :members, except: :index
         resources :pages
         resources :block, only: :show
+        resources :media
         
         resources :themes do
           resources :documents
