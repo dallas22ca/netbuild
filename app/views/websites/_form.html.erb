@@ -20,6 +20,10 @@
     <%= f.text_field :permalink %>
   </div>
   <div class="field">
+    <%= f.label :domain %><br>
+    <%= f.text_field :domain %>
+  </div>
+  <div class="field">
     <%= f.label :theme_id %><br>
     <%= f.collection_select :theme_id, @website.available_themes, :id, :name %>
   </div>
