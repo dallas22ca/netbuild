@@ -22,12 +22,6 @@ i, em {
   font-style: oblique;
 }
 
-body {
-	background-color: {{ secondary | rgb_alpha: 0.2 }};
-	font-family: helvetica neue, helvetica, sans-serif;
-	font-size: 16px;
-}
-
 a {
 	color: inherit;
 	text-decoration: none;
@@ -41,6 +35,12 @@ a {
 
 .contenteditable.hover {
   outline: 3px dotted rgba(0, 0, 0, 0.15);
+}
+
+body {
+	background-color: {{ secondary | rgb_alpha: 0.2 }};
+	font-family: helvetica neue, helvetica, sans-serif;
+	font-size: 16px;
 }
 
 #loading {

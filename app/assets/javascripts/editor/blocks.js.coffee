@@ -15,50 +15,13 @@ $(document).on "submit", ".widget_editor", ->
   $(this).fadeOut()
   
   if $("#timetravel #block_#{block_id}").attr("data-details", JSON.stringify(block))
+    $.getScript $("#timetravel #block_#{block_id}").data("url")
     window.midedit = true
     createSnapshot()
   false
 
 $(document).on "click", ".edit", ->
-  window.midedit = true
-  block = $(this).closest(".block")
-  genre = block.data("genre")
-  editor = $(".widget_editor[data-genre='#{genre}']")
-  
-  $(".widget_editor").hide()
-  $("#widget_editor_overlay").fadeIn(150)
-  
-  top = block.position().top - 35
-  left = block.position().left + block.outerWidth() + 20
-  left = block.position().left - block.outerWidth() - 70 if left + editor.width() > $(window).width()
-
-  for field,value of $.parseJSON(block.attr("data-details"))
-    if editor.find(".#{field}").is("select")
-      editor.find(".#{field} option").removeAttr("selected")
-      editor.find(".#{field} option").each ->
-        try value = $.parseJSON(value)
-        if $.inArray($(this).text(), value) != -1
-         $(this).attr("selected", true)
-    else if editor.find(".#{field}").is(":checkbox")
-      if value == "true"
-        editor.find(".#{field}").attr("checked", true)
-      else
-        editor.find(".#{field}").removeAttr("checked")
-    else
-      editor.find(".#{field}").val value
-  
-  editor.find(".block_id").val block.data("id")
-  editor.css
-    top: top
-    left: left
-  editor.fadeIn(150)
-  
-  if $(".chosen-container").length
-    $(".tags").trigger("chosen:updated")
-  else
-    $(".tags").chosen
-      width: "100%"
-      search_contains: true
+  editBlock $(this).closest(".block")
   false
   
 $(document).on "click", ".widget_editor input:checkbox", ->
@@ -102,6 +65,46 @@ $(document).on
     unless $(this).children(".block:visible").length
       $(this).addClass("droppable")
 
+@editBlock = (block) ->
+  window.midedit = true
+  genre = block.data("genre")
+  editor = $(".widget_editor[data-genre='#{genre}']")
+  
+  $(".widget_editor").hide()
+  $("#widget_editor_overlay").fadeIn(150)
+  
+  top = block.position().top - 35
+  left = block.position().left + block.outerWidth() + 20
+  left = block.position().left - block.outerWidth() - 70 if left + editor.width() > $(window).width()
+
+  for field,value of $.parseJSON(block.attr("data-details"))
+    if editor.find(".#{field}").is("select")
+      editor.find(".#{field} option").removeAttr("selected")
+      editor.find(".#{field} option").each ->
+        try value = $.parseJSON(value)
+        if $.inArray($(this).text(), value) != -1
+         $(this).attr("selected", true)
+    else if editor.find(".#{field}").is(":checkbox")
+      if value == "true"
+        editor.find(".#{field}").attr("checked", true)
+      else
+        editor.find(".#{field}").removeAttr("checked")
+    else
+      editor.find(".#{field}").val value
+  
+  editor.find(".block_id").val block.data("id")
+  editor.css
+    top: top
+    left: left
+  editor.fadeIn(150)
+  
+  if $(".chosen-container").length
+    $(".tags").trigger("chosen:updated")
+  else
+    $(".tags").chosen
+      width: "100%"
+      search_contains: true
+      
 @loadBlocks = ->
   showNoWrappers()
   

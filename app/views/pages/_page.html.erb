@@ -2,8 +2,10 @@
 	<% path = @website.home_id == page.id ? root_path : public_page_path(page.permalink) %>
 	<%= content_tag_for :li, page do %>
 		<%= link_to page.title, path %>
-		<ol class="subnav">
-			<%= render page.children %>
-		</ol>
+		<% if page.children.visible.any?  %>
+			<ol class="subnav">
+				<%= render page.children.visible %>
+			</ol>
+		<% end %>
 	<% end %>
 <% end %>

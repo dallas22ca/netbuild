@@ -11,6 +11,7 @@ class User < ActiveRecord::Base
   
   has_many :memberships
   has_many :websites, through: :memberships
+  has_many :media, through: :websites
   
   def make_admin
     self.admin = true

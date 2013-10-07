@@ -10,6 +10,7 @@ class Website < ActiveRecord::Base
   has_many :themes
   has_many :memberships
   has_many :members, through: :memberships, source: :user
+  has_many :media
   
   accepts_nested_attributes_for :members
   
@@ -17,7 +18,12 @@ class Website < ActiveRecord::Base
   validates_uniqueness_of :permalink
   before_validation :create_permalink, if: Proc.new { |w| w.permalink.blank? }
   after_save :clone_theme, if: Proc.new { |w| self.duplicate_theme }
+  after_save :update_page_templates
   after_create :seed_content
+  
+  def update_page_templates
+    self.pages.update_all document_id: self.theme.default_document
+  end
   
   def seed_content
     if Theme.any?
@@ -58,6 +64,16 @@ class Website < ActiveRecord::Base
         visible: false,
         deleteable: false,
         ordinal: 997,
+        document_id: theme.default_document
+      )
+      
+      live = pages.create(
+        title: "Live",
+        permalink: "live",
+        description: "Live",
+        visible: false,
+        deleteable: false,
+        ordinal: 996,
         document_id: theme.default_document
       )
     end

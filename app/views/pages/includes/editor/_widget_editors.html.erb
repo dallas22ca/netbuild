@@ -5,6 +5,10 @@
 		<%= hidden_field_tag :block_id, "", class: "block_id", id: nil %>
 		<h3>Money</h3>
 		<div class="field">
+			<%= label_tag :style %><br>
+			<%= select_tag :style, options_for_select(["Big Like", "Little Like", "Share"]), class: "style", id: nil %>
+		</div>
+		<div class="field">
 			<p>{{set stripe, currency}}</p>
 			<%= label_tag :amount, "Amount or fluctuating" %><br>
 			<%= text_field_tag :amount, "", class: "amount", id: nil %>
@@ -70,13 +74,13 @@
 		<%= hidden_field_tag :block_id, "", class: "block_id", id: nil %>
 		<h3>Events</h3>
 		<div class="field">
-			<%= label_tag :tags %><br>
-			<%= select_tag :tags, options_for_select(["Awesome", "Cool", "Nice"]), multiple: true, class: "tags", id: nil %><br>
-			<%= link_to "Manage Media", media_path %>
-		</div>
-		<div class="field">
 			<%= label_tag :style %><br>
 			<%= select_tag :style, options_for_select(["Calendar", "Event List"]), class: "style", id: nil %>
+		</div>
+		<div class="field">
+			<%= label_tag :tags %><br>
+			<%= select_tag :tags, options_for_select(["Awesome", "Cool", "Nice"]), multiple: true, class: "tags", id: nil %><br>
+			<%= link_to "Manage Media", media_path, class: "show_media" %>
 		</div>
 		<div class="field">
 			<%= check_box_tag :list_limit, true, true, class: "list_limit", id: nil %>
@@ -94,13 +98,13 @@
 		<%= hidden_field_tag :block_id, "", class: "block_id", id: nil %>
 		<h3>Images</h3>
 		<div class="field">
-			<%= label_tag :tags %><br>
-			<%= select_tag :tags, options_for_select(["Awesome", "Cool", "Nice"]), multiple: true, class: "tags", id: nil %><br>
-			<%= link_to "Manage Media", media_path %>
-		</div>
-		<div class="field">
 			<%= label_tag :style %><br>
 			<%= select_tag :style, options_for_select(["Gallery", "One"]), class: "style", id: nil %>
+		</div>
+		<div class="field">
+			<%= label_tag :tags %><br>
+			<%= select_tag :tags, options_for_select(["Awesome", "Cool", "Nice"]), multiple: true, class: "tags", id: nil %><br>
+			<%= link_to "Manage Media", media_path, class: "show_media" %>
 		</div>
 		<div class="field">
 			<%= label_tag :gallery_width %><br>
@@ -130,17 +134,17 @@
 		<%= hidden_field_tag :block_id, "", class: "block_id", id: nil %>
 		<h3>Media</h3>
 		<div class="field">
+			<%= label_tag :style %><br>
+			<%= select_tag :style, options_for_select(["Gallery", "One"]), class: "style", id: nil %>
+		</div>
+		<div class="field">
 			<%= label_tag :tags %><br>
 			<%= select_tag :tags, options_for_select(["Awesome", "Cool", "Nice"]), multiple: true, class: "tags", id: nil %><br>
-			<%= link_to "Manage Media", media_path %>
+			<%= link_to "Manage Media", media_path, class: "show_media" %>
 		</div>
 		<div class="field">
 			<%= label_tag :formats %><br>
 			<%= select_tag :formats, options_for_select(["Image", "Audio", "Video", "PDF"]), class: "formats", id: nil, multiple: true %>
-		</div>
-		<div class="field">
-			<%= label_tag :style %><br>
-			<%= select_tag :style, options_for_select(["Gallery", "One"]), class: "style", id: nil %>
 		</div>
 		<div class="field">
 			<%= label_tag :layout %><br>

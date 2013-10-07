@@ -1,5 +1,7 @@
 Blocks::Application.routes.draw do
   
+  resources :media
+
   resources :wrappers
 
   resources :blocks
@@ -16,6 +18,7 @@ Blocks::Application.routes.draw do
         resources :websites
         resources :memberships, path: :members
         resources :pages
+        resources :block, only: :show
         
         resources :themes do
           resources :documents
