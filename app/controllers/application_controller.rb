@@ -1,12 +1,11 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
-  before_filter :set_website, unless: Proc.new { request.subdomain == "www" }
+  before_filter :set_website
 
   private
   
   def set_website
     @website = Website.where(domain: "#{request.subdomain + "." unless request.subdomain.blank?}#{request.domain}").first
-    p ">>>>>>>>>>>>>>>>>> #{request.subdomain + "." unless request.subdomain.blank?}#{request.domain}"
     @website = Website.where(permalink: request.subdomain).first unless @website
   end
   
