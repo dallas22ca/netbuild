@@ -4,6 +4,9 @@
   <title><%= @page.title %> - <%= @website.title %></title>
   <%= stylesheet_link_tag    "editor", theme_path(@website.theme, format: :css), media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "editor", "data-turbolinks-track" => true %>
+	<%= tag :meta, name: "viewport", content: "initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" %>
+	<%= tag :meta, name: "apple-mobile-web-app-capable", content: "yes" %>
+	<%= tag :meta, name: "apple-mobile-web-app-status-bar-style", content: "black" %>
   <%= csrf_meta_tags %>
 </head>
 <body data-page_id="<%= @page.id if @page %>">
