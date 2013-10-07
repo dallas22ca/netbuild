@@ -2,7 +2,7 @@ class WebsitesController < ApplicationController
   # GET /websites
   # GET /websites.json
   def index
-    @websites = Website.all
+    @websites = current_user.websites
   end
 
   # GET /websites/1
