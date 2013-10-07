@@ -76,6 +76,16 @@ class Website < ActiveRecord::Base
         ordinal: 996,
         document_id: theme.default_document
       )
+      
+      members = pages.create(
+        title: "Members",
+        permalink: "members",
+        description: "Members",
+        visible: false,
+        deleteable: false,
+        ordinal: 995,
+        document_id: theme.default_document
+      )
     end
   end
   

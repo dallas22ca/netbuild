@@ -3,4 +3,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-Blocks::Application.load_tasks
+Netbuild::Application.load_tasks
