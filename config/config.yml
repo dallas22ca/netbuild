@@ -1,12 +1,15 @@
 development:
+  domain: netbuild.dev
   s3_id: AKIAIAG4BLB5CUCNAWZQ
   s3_secret: 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
   s3_bucket: assets-dev.website.com
 test:
+  domain: netbuild.dev
   s3_id: AKIAIAG4BLB5CUCNAWZQ
   s3_secret: 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
   s3_bucket: assets-dev.website.com
 production:
+  domain: netbuild.co
   s3_id: AKIAIAG4BLB5CUCNAWZQ
   s3_secret: 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
   s3_bucket: assets-dev.website.com

@@ -5,7 +5,8 @@ class ApplicationController < ActionController::Base
   private
   
   def set_website
-    @website = Website.where(permalink: request.subdomain).first
+    @website = Website.where(domain: "#{request.subdomain + "." unless request.subdomain.blank?}#{request.domain}").first
+    @website = Website.where(permalink: request.subdomain).first unless @website
   end
   
   def signed_in?
