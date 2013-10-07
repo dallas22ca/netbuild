@@ -23,11 +23,15 @@ class WebsitesController < ApplicationController
   # POST /websites
   # POST /websites.json
   def create
-    @website = Website.new(website_params)
+    if user_signed_in?
+      @website = current_user.websites.new(website_params)
+    else
+      @website = Website.new(website_params)
+    end
 
     respond_to do |format|
       if @website.save
-        sign_in @website.members.first
+        sign_in @website.members.first unless user_signed_in?
         format.html { redirect_to root_url(subdomain: @website.permalink), notice: 'Website was successfully created.' }
         format.json { render action: 'show', status: :created, location: @website }
       else

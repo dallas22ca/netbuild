@@ -7,7 +7,7 @@ server {
 	listen 443 ssl;
 	ssl_certificate /etc/ssl/ssl.crt;
 	ssl_certificate_key /etc/ssl/domain.key;
-	server_name touch-base.co;
+	server_name *.netbuild.co;
 	
   root <%= current_path %>/public;
 
