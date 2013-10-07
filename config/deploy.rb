@@ -1,4 +1,6 @@
-# require "bundler/capistrano"
+load 'deploy/assets'
+
+require "bundler/capistrano"
 # require 'sidekiq/capistrano'
 
 Dir.glob("config/recipes/*.rb").each do |file|
