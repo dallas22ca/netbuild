@@ -14,6 +14,6 @@
 * cap deploy:setup
 * cap deploy:cold # BUNDLE MAY HANG, IF SO RUN AGAIN
 * cap db:seed
-* cat ~/.ssh/id_rsa.pub | ssh deployer@66.228.40.130 'cat >> ~/.ssh/authorized_keys'
+* cat ~/.ssh/id_rsa.pub | ssh deployer@162.243.33.47 'cat >> ~/.ssh/authorized_keys'
 * ssh-add -K
 * if ctrl+c doesn't stop server: ps aux | grep rails | awk '{print $2}' |  xargs kill -9
