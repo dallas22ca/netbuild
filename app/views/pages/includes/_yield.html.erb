@@ -14,8 +14,10 @@
 	else
 		@yield = ""
 	end
-
-	Liquid::Template.parse( IO.read(File.expand_path("app/views/templates/hope/homepage.html")) ).render({
+	
+	# IO.read(File.expand_path("app/views/templates/hope/homepage.html"))
+	
+	Liquid::Template.parse( @page.layout.body ).render({
 		"primary" => "rgb(240, 110, 48)",
 		"secondary" => "rgb(50, 50, 50)",
 		"logo" => "/themes/shared/white_logo.png",
