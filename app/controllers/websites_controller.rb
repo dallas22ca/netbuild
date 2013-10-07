@@ -57,40 +57,46 @@ class WebsitesController < ApplicationController
     
     @page = @website.pages.find(params[:page_id])
     
-    params[:blocks].each do |key, block|
-      b = @website.blocks.where(id: block[:id]).first
+    if params[:blocks]
+      params[:blocks].each do |key, block|
+        b = @website.blocks.where(id: block[:id]).first
       
-      if b
-        if block[:delete] == "true"
-          @deleted.push b.id
-          b.destroy
-        else
-          b.update_attributes(
+        if b
+          if block[:delete] == "true"
+            @deleted.push b.id
+            b.destroy
+          else
+            b.update_attributes(
+              wrapper_id: block[:wrapper_id],
+              genre: block[:genre],
+              ordinal: block[:ordinal],
+              details: block[:details]
+            )
+          end
+        elsif block[:delete] != "true"
+          b = @website.blocks.create(
             wrapper_id: block[:wrapper_id],
             genre: block[:genre],
             ordinal: block[:ordinal],
-            details: block[:details]
+            details: block[:details],
+            initial_id: block[:id]
           )
+          @new.push b
         end
-      elsif block[:delete] != "true"
-        b = @website.blocks.create(
-          wrapper_id: block[:wrapper_id],
-          genre: block[:genre],
-          ordinal: block[:ordinal],
-          details: block[:details],
-          initial_id: block[:id]
-        )
-        @new.push b
       end
     end
     
-    params[:pages].each_with_index do |id, index|
-      id = id.gsub("page_", "")
-      p = @website.pages.where(id: id).first
-      p.update_attributes ordinal: index if p
+    if params[:pages]
+      params[:pages].each_with_index do |id, index|
+        id = id.gsub("page_", "")
+        p = @website.pages.where(id: id).first
+        p.update_attributes ordinal: index if p
+      end
     end
     
-    @page.update_attributes(title: params[:title])
+    if params[:title]
+      @page.update_attributes(title: params[:title])
+    end
   end
 
   # DELETE /websites/1

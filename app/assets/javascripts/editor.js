@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery-ui-1.10.3
+//= require s3_direct_upload
 //= require turbolinks
 //= require chosen.jquery
 //= require_tree ./editor

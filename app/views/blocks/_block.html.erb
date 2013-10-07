@@ -1,11 +1,15 @@
 <% cache block do %>
-	<%= content_tag_for :div, block, data: { genre: block.genre, id: block.id, details: block.details } do %>
+	<%= content_tag_for :div, block, data: { genre: block.genre, id: block.id, details: block.details, url: block_path(block) } do %>
 		<% if block.genre == "p" %>
 			<p class="contenteditable"><%= block.data["content"].to_s.html_safe %></p>
 		<% elsif block.genre == "h3" %>
 			<h3 class="contenteditable"><%= block.data["content"].to_s.html_safe %></h3>
 		<% elsif block.genre == "h4" %>
 			<h4 class="contenteditable"><%= block.data["content"].to_s.html_safe %></h4>
+		<% elsif block.genre == "button" %>
+			<button class="contenteditable"><%= block.data["content"].to_s.html_safe %></button>
+		<% elsif block.genre == "blockquote" %>
+			<blockquote class="contenteditable"><%= block.data["content"].to_s.html_safe %></blockquote>
 		<% elsif block.genre == "events" %>
 			<ol>
 				<li>

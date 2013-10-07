@@ -12,6 +12,8 @@ gem 'jquery-rails'
 gem 'turbolinks'
 gem 'jbuilder', '~> 1.2'
 gem 'activerecord-postgres-hstore'
+gem 'aws-sdk'
+gem 's3_direct_upload'
 
 group :doc do
   gem 'sdoc', require: false

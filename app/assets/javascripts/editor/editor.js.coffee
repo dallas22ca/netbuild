@@ -35,7 +35,7 @@ $(document).on "blur", "[contenteditable]", ->
   if $(this).closest(".block").length
     details = {}
     details.content = $(this).html()
-    $(this).closest(".block").attr("data-details", details)
+    $(this).closest(".block").attr("data-details", JSON.stringify(details))
 
   setTimeout ->
     if !$("*:focus").length && $(".mid_edit").length
@@ -94,6 +94,7 @@ load = ->
   # timeTravel.init() if window && window["localStorage"] != null
   createSnapshot() unless timeTravel.active
   $("#loading").fadeOut()
+  $("#s3-uploader").S3Uploader()
 
 $ ->
   load()

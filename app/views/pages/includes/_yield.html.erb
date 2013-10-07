@@ -12,17 +12,19 @@
 	else
 		@yield = ""
 	end
-
-	Liquid::Template.parse(@page.layout.body).render({
-		"primary" => "rgb(184, 48, 48)",
-		"secondary" => "rgb(58, 122, 125)",
-		"logo" => "/themes/shared/logo.png",
+	#
+	Liquid::Template.parse( IO.read(File.expand_path("app/views/pages/templates/hope/homepage.html")) ).render({
+		"primary" => "rgb(240, 110, 48)",
+		"secondary" => "rgb(50, 50, 50)",
+		"logo" => "/themes/shared/white_logo.png",
 		"cta" => "/themes/shared/miniban.png",
 		"nav" => render("pages/includes/nav"),
+		"social" => render("pages/includes/social"),
 		"subnav" => render("pages/includes/subnav"),
 		"title" => @page.title,
 		"sign_inout_icon" => user_signed_in? ? "unlock" : "lock",
 		"sign_inout_path" => user_signed_in? ? destroy_user_session_path : public_page_path("sign_in"),
+		"home_path" => root_path,
 		"members_path" => public_page_path("members"),
 		"search_path" => public_page_path("search"),
 		"adminable?" => adminable?,

@@ -1,0 +1,49 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Website:</strong>
+  <%= @medium.website %>
+</p>
+
+<p>
+  <strong>Path:</strong>
+  <%= @medium.path %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @medium.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @medium.description %>
+</p>
+
+<p>
+  <strong>Width:</strong>
+  <%= @medium.width %>
+</p>
+
+<p>
+  <strong>Height:</strong>
+  <%= @medium.height %>
+</p>
+
+<p>
+  <strong>Size:</strong>
+  <%= @medium.size %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @medium.user %>
+</p>
+
+<p>
+  <strong>Extension:</strong>
+  <%= @medium.extension %>
+</p>
+
+<%= link_to 'Edit', edit_medium_path(@medium) %> |
+<%= link_to 'Back', media_path %>

@@ -1,9 +1,9 @@
-<div id="media_gallery">
+<div id="media_gallery" data-url="<%= media_path %>">
+	<%= s3_uploader_form callback_url: media_url, callback_param: "medium[path]", key_starts_with: "#{@website.permalink}/", key: "#{@website.permalink}/{timestamp}-{unique_id}-#{SecureRandom.hex}/original/${filename}", id: "s3-uploader" do %>
+	  <%= file_field_tag :file, multiple: true %>
+	<% end %>
+	
 	<ul id="library">
-		<% 0.times do %>
-			<li class="medium">
-				<%= image_tag "/themes/shared/logo.png" %>
-			</li>
-		<% end %>
+		<li class="loading">Loading...</li>
 	</ul>
 </div>
