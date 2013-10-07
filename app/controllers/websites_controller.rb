@@ -23,11 +23,8 @@ class WebsitesController < ApplicationController
   # POST /websites
   # POST /websites.json
   def create
-    if user_signed_in?
-      @website = current_user.websites.new(website_params)
-    else
-      @website = Website.new(website_params)
-    end
+    @website = Website.new(website_params)
+    @website.members.push current_user if user_signed_in?
 
     respond_to do |format|
       if @website.save
