@@ -18,7 +18,7 @@ set :repository, "git@github.com:dallas22ca/#{application}.git"
 set :maintenance_template_path, File.expand_path("../recipes/templates/maintenance.html.erb", __FILE__)
 set :whenever_command, "bundle exec whenever"
 
-set :server_name, "162.243.33.47"
+set :server_name, "162.243.34.45"
 set :rails_env, "production"
 set :branch, "master"
 set :root_url, "http://www.netbuild.co"
