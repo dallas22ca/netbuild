@@ -1,6 +1,6 @@
 class RegistrationsController < Devise::RegistrationsController
   def create
-    if request.subdomain == "www"
+    if request.subdomain == "app"
       super
     else
       build_resource(sign_up_params)

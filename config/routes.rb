@@ -19,7 +19,10 @@ Netbuild::Application.routes.draw do
       end
     end
     
-    resources :websites, only: [:new, :create]
+    constraints subdomain: "app" do
+      resources :websites, only: [:new, :create]
+    end
+    
     post "/save" => "websites#save", as: :save
     get "/:permalink" => "pages#show", as: :public_page
     root to: "pages#show"
