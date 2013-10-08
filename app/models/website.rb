@@ -37,6 +37,8 @@ class Website < ActiveRecord::Base
         document_id: theme.default_document
       )
       
+      self.update_attributes :home_id, home.id
+      
       sign_in = pages.create(
         title: "Sign In",
         permalink: "sign_in",
