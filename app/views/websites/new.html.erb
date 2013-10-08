@@ -21,7 +21,7 @@
   </div>
   <div class="field">
     <%= f.label :theme_id %><br>
-    <%= f.text_field :theme_id %>
+    <%= f.collection_select :theme_id, @website.available_themes, :id, :name %>
   </div>
 	
 	<% unless user_signed_in? %>
