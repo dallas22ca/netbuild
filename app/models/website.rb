@@ -26,7 +26,7 @@ class Website < ActiveRecord::Base
   end
   
   def seed_content
-    if Theme.any?
+    if theme
       home = pages.create(
         title: "Welcome",
         permalink: "welcome",
