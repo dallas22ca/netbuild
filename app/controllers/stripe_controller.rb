@@ -5,7 +5,7 @@ class StripeController < ApplicationController
     begin
       json = JSON.parse(request.body.read)
       
-      if json["object"] == "invoice"
+      if json["type"].include? "invoice"
         invoice = Invoice.where(stripe_id: json["id"]).first_or_initialize
         invoice.date = Time.at(json["date"])
         invoice.period_start = Time.at(json["period_start"])
@@ -18,7 +18,7 @@ class StripeController < ApplicationController
         render json: invoice
       end
     rescue
-      render text: "Fail."
+      render json: { fail: true }
     end
   end
   
