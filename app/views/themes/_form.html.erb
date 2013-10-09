@@ -16,6 +16,11 @@
     <%= f.text_field :name %>
   </div>
 	
+  <div class="field">
+    <%= f.label :theme_id %><br>
+    <%= f.collection_select :theme_id, @website.available_themes, :id, :name %>
+  </div>
+	
 	<% if current_user.try(:admin) %>
 	  <div class="field">
 	    <%= f.label :pristine %><br>

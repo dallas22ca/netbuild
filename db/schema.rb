@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131007115958) do
+ActiveRecord::Schema.define(version: 20131008231108) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -94,9 +94,11 @@ ActiveRecord::Schema.define(version: 20131007115958) do
     t.integer  "website_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "pristine",   default: false
+    t.boolean  "pristine",            default: false
+    t.integer  "default_document_id"
   end
 
+  add_index "themes", ["default_document_id"], name: "index_themes_on_default_document_id", using: :btree
   add_index "themes", ["website_id"], name: "index_themes_on_website_id", using: :btree
 
   create_table "users", force: true do |t|
