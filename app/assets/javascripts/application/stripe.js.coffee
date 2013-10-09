@@ -1,5 +1,12 @@
+$(document).on "click", ".toggle_billing", ->
+  text = if $(this).text() == "Update my credit card" then "Don't update my credit card" else "Update my credit card"
+  $(this).text text
+  $(".billing").toggle()
+  false
+
 $(document).on "keyup", "#website_domain", ->
-  hideBilling()
+  if !$("[data-customer-token='true']").length
+    hideBilling()
 
 $(document).on "submit", ".edit_website", ->
   if $("[data-stripe]:visible").length

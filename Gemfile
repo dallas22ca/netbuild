@@ -15,6 +15,7 @@ gem 'activerecord-postgres-hstore'
 gem 'aws-sdk'
 gem 's3_direct_upload'
 gem 'stripe'
+gem 'whenever', :require => false
 
 group :doc do
   gem 'sdoc', require: false

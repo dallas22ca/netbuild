@@ -11,11 +11,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131009120651) do
+ActiveRecord::Schema.define(version: 20131009181243) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "hstore"
+
+  create_table "addons", force: true do |t|
+    t.string   "name"
+    t.string   "permalink"
+    t.integer  "price"
+    t.boolean  "quantifiable"
+    t.boolean  "available"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "addonships", force: true do |t|
+    t.integer  "website_id"
+    t.integer  "addon_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "quantity"
+  end
+
+  add_index "addonships", ["addon_id"], name: "index_addonships_on_addon_id", using: :btree
+  add_index "addonships", ["website_id"], name: "index_addonships_on_website_id", using: :btree
 
   create_table "blocks", force: true do |t|
     t.integer  "website_id"
@@ -41,6 +62,24 @@ ActiveRecord::Schema.define(version: 20131009120651) do
   end
 
   add_index "documents", ["theme_id"], name: "index_documents_on_theme_id", using: :btree
+
+  create_table "invoices", force: true do |t|
+    t.integer  "website_id"
+    t.datetime "date"
+    t.string   "stripe_id"
+    t.datetime "period_start"
+    t.datetime "period_end"
+    t.hstore   "lines"
+    t.integer  "subtotal"
+    t.integer  "total"
+    t.boolean  "paid"
+    t.integer  "attemp_count"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "attempt_count"
+  end
+
+  add_index "invoices", ["website_id"], name: "index_invoices_on_website_id", using: :btree
 
   create_table "media", force: true do |t|
     t.integer  "website_id"
@@ -132,6 +171,9 @@ ActiveRecord::Schema.define(version: 20131009120651) do
     t.string   "secondary_colour"
     t.string   "stripe_token"
     t.string   "customer_token"
+    t.integer  "bill_day_of_month", default: 1
+    t.integer  "last_4"
+    t.hstore   "addons"
   end
 
   add_index "websites", ["domain"], name: "index_websites_on_domain", using: :btree

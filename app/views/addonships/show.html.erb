@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Website:</strong>
+  <%= @addonship.website %>
+</p>
+
+<p>
+  <strong>Addon:</strong>
+  <%= @addonship.addon %>
+</p>
+
+<%= link_to 'Edit', edit_addonship_path(@addonship) %> |
+<%= link_to 'Back', addonships_path %>

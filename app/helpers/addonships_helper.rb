@@ -1,0 +1,2 @@
+module AddonshipsHelper
+end

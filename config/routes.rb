@@ -13,6 +13,7 @@ Netbuild::Application.routes.draw do
       resources :pages
       resources :block, only: :show
       resources :media
+      resources :invoices
       
       resources :themes do
         resources :documents
@@ -23,9 +24,12 @@ Netbuild::Application.routes.draw do
     
     constraints subdomain: "www" do
       resources :websites, only: [:new, :create]
+      resources :themes, only: [:index, :show]
+      resources :addons
+      post "/stripe" => "stripe#webhook", as: :stripe
+      get "/stripe" => "stripe#webhook" # TESTING
     end
     
-    resources :themes, only: [:index, :show]
     get "/:permalink" => "pages#show", as: :public_page
     root to: "pages#show"
 

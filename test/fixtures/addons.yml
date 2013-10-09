@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  permalink: MyString
+  price: 1
+  quantifiable: false
+  available: false
+
+two:
+  name: MyString
+  permalink: MyString
+  price: 1
+  quantifiable: false
+  available: false

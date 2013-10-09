@@ -1,0 +1,41 @@
+<h1>Listing invoices</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Website</th>
+      <th>Date</th>
+      <th>Stripe</th>
+      <th>Period start</th>
+      <th>Period end</th>
+      <th>Lines</th>
+      <th>Subtotal</th>
+      <th>Total</th>
+      <th>Paid</th>
+      <th>Attemp count</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @invoices.each do |invoice| %>
+      <tr>
+        <td><%= invoice.website %></td>
+        <td><%= invoice.date %></td>
+        <td><%= invoice.stripe_id %></td>
+        <td><%= invoice.period_start %></td>
+        <td><%= invoice.period_end %></td>
+        <td><%= invoice.lines %></td>
+        <td><%= invoice.subtotal %></td>
+        <td><%= invoice.total %></td>
+        <td><%= invoice.paid %></td>
+        <td><%= invoice.attemp_count %></td>
+        <td><%= link_to 'Show', invoice %></td>
+        <td><%= link_to 'Edit', edit_invoice_path(invoice) %></td>
+        <td><%= link_to 'Destroy', invoice, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

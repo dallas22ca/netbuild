@@ -1,0 +1,54 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Website:</strong>
+  <%= @invoice.website %>
+</p>
+
+<p>
+  <strong>Date:</strong>
+  <%= @invoice.date %>
+</p>
+
+<p>
+  <strong>Stripe:</strong>
+  <%= @invoice.stripe_id %>
+</p>
+
+<p>
+  <strong>Period start:</strong>
+  <%= @invoice.period_start %>
+</p>
+
+<p>
+  <strong>Period end:</strong>
+  <%= @invoice.period_end %>
+</p>
+
+<p>
+  <strong>Lines:</strong>
+  <%= @invoice.lines %>
+</p>
+
+<p>
+  <strong>Subtotal:</strong>
+  <%= @invoice.subtotal %>
+</p>
+
+<p>
+  <strong>Total:</strong>
+  <%= @invoice.total %>
+</p>
+
+<p>
+  <strong>Paid:</strong>
+  <%= @invoice.paid %>
+</p>
+
+<p>
+  <strong>Attemp count:</strong>
+  <%= @invoice.attemp_count %>
+</p>
+
+<%= link_to 'Edit', edit_invoice_path(@invoice) %> |
+<%= link_to 'Back', invoices_path %>

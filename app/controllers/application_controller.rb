@@ -18,6 +18,18 @@ class ApplicationController < ActionController::Base
   end
   helper_method :signed_in?
   
+  def authenticate_super_admin?
+    unless user_signed_in? && current_user.admin?
+      redirect_to root_path
+    end
+  end
+  helper_method :authenticate_super_admin?
+  
+  def super_admin?
+    user_signed_in? && current_user.admin?
+  end
+  helper_method :super_admin?
+  
   def adminable?
     if user_signed_in?
       @adminable ||= @website && @website.memberships.admin.where(user_id: current_user.id).any?

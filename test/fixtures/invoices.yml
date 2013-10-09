@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  website_id: 
+  date: 2013-10-09 15:12:44
+  stripe_id: MyString
+  period_start: 2013-10-09 15:12:44
+  period_end: 2013-10-09 15:12:44
+  lines: 
+  subtotal: 1
+  total: 1
+  paid: false
+  attemp_count: 1
+
+two:
+  website_id: 
+  date: 2013-10-09 15:12:44
+  stripe_id: MyString
+  period_start: 2013-10-09 15:12:44
+  period_end: 2013-10-09 15:12:44
+  lines: 
+  subtotal: 1
+  total: 1
+  paid: false
+  attemp_count: 1
