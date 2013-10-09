@@ -17,8 +17,8 @@
   </div>
 	
   <div class="field">
-    <%= f.label :theme_id %><br>
-    <%= f.collection_select :theme_id, @website.available_themes, :id, :name %>
+    <%= f.label :default_document_id %><br>
+    <%= f.collection_select :default_document_id, @theme.documents.html, :id, :name %>
   </div>
 	
 	<% if current_user.try(:admin) %>

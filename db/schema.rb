@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131008231108) do
+ActiveRecord::Schema.define(version: 20131009120651) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -128,6 +128,10 @@ ActiveRecord::Schema.define(version: 20131008231108) do
     t.datetime "updated_at"
     t.integer  "home_id"
     t.string   "domain"
+    t.string   "primary_colour"
+    t.string   "secondary_colour"
+    t.string   "stripe_token"
+    t.string   "customer_token"
   end
 
   add_index "websites", ["domain"], name: "index_websites_on_domain", using: :btree

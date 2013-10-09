@@ -6,10 +6,17 @@ class Page < ActiveRecord::Base
   has_many :children, class_name: "Page", foreign_key: "parent_id"
   has_many :wrappers
   
+  before_validation :permalink_is_not_safe, if: Proc.new { |p| %w[sign_in sign_out live sitemap search members].include? p.permalink }
+  validates_uniqueness_of :permalink, scope: :website_id
+  
   default_scope -> { order(:ordinal) }
   
   scope :roots, -> { where parent_id: nil }
   scope :visible, -> { where visible: true }
+  
+  def permalink_is_not_safe
+    self.errors.add :permalink, "is a reserved word and cannot be used."
+  end
   
   def siblings
     website.pages.where(parent_id: parent_id)

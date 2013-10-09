@@ -3,13 +3,19 @@ development:
   s3_id: AKIAIAG4BLB5CUCNAWZQ
   s3_secret: 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
   s3_bucket: assets-dev.website.com
+  stripe_api_key: sk_test_z6wkAp1B7lHBmNe7KdmglZR4
+  stripe_public_key: pk_test_hGCVnCKU8cieDL6fcrVJQ6e9
 test:
   domain: netbuild.dev
   s3_id: AKIAIAG4BLB5CUCNAWZQ
   s3_secret: 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
   s3_bucket: assets-dev.website.com
+  stripe_api_key: sk_test_z6wkAp1B7lHBmNe7KdmglZR4
+  stripe_public_key: pk_test_hGCVnCKU8cieDL6fcrVJQ6e9
 production:
   domain: netbuild.co
   s3_id: AKIAIAG4BLB5CUCNAWZQ
   s3_secret: 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
   s3_bucket: assets-dev.website.com
+  stripe_api_key: sk_test_z6wkAp1B7lHBmNe7KdmglZR4
+  stripe_public_key: pk_test_hGCVnCKU8cieDL6fcrVJQ6e9

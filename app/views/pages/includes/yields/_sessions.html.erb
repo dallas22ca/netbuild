@@ -1,6 +1,8 @@
 <div class="section">
   
   <h3>Sign In</h2>
+		
+	<%= flash[:notice] %>
 
   <%= form_for(User.new, :as => "user", :url => session_path("user")) do |f| %>
 		<%= f.hidden_field :subdomain, value: @website.permalink %>
