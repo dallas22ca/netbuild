@@ -1,0 +1,29 @@
+<h1>Listing addonships</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Website</th>
+      <th>Addon</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @addonships.each do |addonship| %>
+      <tr>
+        <td><%= addonship.website %></td>
+        <td><%= addonship.addon %></td>
+        <td><%= link_to 'Show', addonship %></td>
+        <td><%= link_to 'Edit', edit_addonship_path(addonship) %></td>
+        <td><%= link_to 'Destroy', addonship, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Addonship', new_addonship_path %>

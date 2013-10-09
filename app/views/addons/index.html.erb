@@ -1,0 +1,35 @@
+<h1>Listing addons</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Permalink</th>
+      <th>Price</th>
+      <th>Quantifiable</th>
+      <th>Available</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @addons.each do |addon| %>
+      <tr>
+        <td><%= addon.name %></td>
+        <td><%= addon.permalink %></td>
+        <td><%= addon.price %></td>
+        <td><%= addon.quantifiable %></td>
+        <td><%= addon.available %></td>
+        <td><%= link_to 'Show', addon %></td>
+        <td><%= link_to 'Edit', edit_addon_path(addon) %></td>
+        <td><%= link_to 'Destroy', addon, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Addon', new_addon_path %>

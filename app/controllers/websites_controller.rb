@@ -41,6 +41,18 @@ class WebsitesController < ApplicationController
   # PATCH/PUT /websites/1
   # PATCH/PUT /websites/1.json
   def update
+    if params[:addons]
+      @website.addonships.destroy_all
+      params[:addons].each do |addon|
+        if !addon.is_a?(String) && !addon[:id].blank?
+          @website.addonships.where(
+            addon_id: addon[:id],
+            quantity: addon[:quantity].blank? ? nil : addon[:quantity]
+          ).create
+        end
+      end
+    end
+    
     respond_to do |format|
       if @website.update(website_params)
         format.html { redirect_to @website, notice: 'Website was successfully updated.' }
@@ -117,6 +129,12 @@ class WebsitesController < ApplicationController
     end
     
     def website_params
-      params.require(:website).permit(:title, :domain, :theme_id, :duplicate_theme, :home_id, :primary_colour, :secondary_colour, :card_token)
+      if super_admin?
+        params.require(:website).permit(:title, :domain, :theme_id, :duplicate_theme, :home_id, :primary_colour, :secondary_colour, :card_token, :customer_token)
+      elsif @website.adminable_by(user)
+        params.require(:website).permit(:title, :domain, :theme_id, :duplicate_theme, :home_id, :primary_colour, :secondary_colour, :card_token)
+      else
+        params.require(:website).permit(:title, :domain, :theme_id, :duplicate_theme, :home_id, :primary_colour, :secondary_colour, :card_token)
+      end
     end
 end

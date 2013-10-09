@@ -1,0 +1,25 @@
+<%= form_for(@addonship) do |f| %>
+  <% if @addonship.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@addonship.errors.count, "error") %> prohibited this addonship from being saved:</h2>
+
+      <ul>
+      <% @addonship.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :website %><br>
+    <%= f.text_field :website %>
+  </div>
+  <div class="field">
+    <%= f.label :addon %><br>
+    <%= f.text_field :addon %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

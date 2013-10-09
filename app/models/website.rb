@@ -9,23 +9,35 @@ class Website < ActiveRecord::Base
   has_many :pages, dependent: :destroy
   has_many :themes, dependent: :destroy
   has_many :memberships, dependent: :destroy
-  has_many :members, through: :memberships, source: :user
   has_many :media, dependent: :destroy
+  has_many :members, through: :memberships, source: :user
+  has_many :addonships
+  has_many :addons, through: :addonships
+  has_many :invoices
   
   accepts_nested_attributes_for :members
   
   validates_presence_of :title, :permalink, :theme_id
+  before_validation :permalink_is_not_safe, if: Proc.new { |p| %w[app secure www help].include? p.permalink }
   validates_uniqueness_of :permalink
   before_validation :theme_does_not_have_default_document, if: Proc.new { theme_id_changed? && theme.default_document_id.blank? }
   before_validation :create_permalink, if: Proc.new { permalink.blank? }
   before_save :set_defaults
   before_save :stripify, if: Proc.new { billing_info_required? || !card_token.blank? }
+  after_create :seed_content
   after_save :clone_theme, if: :duplicate_theme
   after_save :update_page_templates, if: :theme_id_changed?
-  after_create :seed_content
+  
+  def permalink_is_not_safe
+    self.errors.add :permalink, "is a reserved word and cannot be used."
+  end
   
   def billing_info_required?
-    customer_token.blank? && !domain.blank?
+    customer_token.blank? && price > 0
+  end
+  
+  def has_payment_info?
+    !customer_token.blank?
   end
   
   def stripify
@@ -33,16 +45,20 @@ class Website < ActiveRecord::Base
       self.errors.add :base, "Billing information is required to use a domain name."
       false
     else
-      customer = Stripe::Customer.retrieve(customer_token)
+      customer = Stripe::Customer.retrieve(customer_token) unless customer_token.blank?
       
       if customer
         customer.card = card_token
         customer.save
+        self.last_4 = customer.cards.data.first.last4
       else
         customer = Stripe::Customer.create(
           card: card_token,
+          plan: "WEH",
           description: permalink
         )
+        
+        self.last_4 = customer.cards.data.first.last4
         self.customer_token = customer.id
       end
     end
@@ -105,16 +121,6 @@ class Website < ActiveRecord::Base
         document_id: theme.default_document
       )
       
-      live = pages.create(
-        title: "Live",
-        permalink: "live",
-        description: "Live",
-        visible: false,
-        deleteable: false,
-        ordinal: 996,
-        document_id: theme.default_document
-      )
-      
       members = pages.create(
         title: "Members",
         permalink: "members",
@@ -159,5 +165,24 @@ class Website < ActiveRecord::Base
   
   def theme_locked?
     theme.try(:pristine?)
+  end
+  
+  def price
+    price = 0
+    price += 4000 unless domain.blank?
+    addonships.map { |a| price += a.addon.price * (a.quantity.blank? ? 1 : a.quantity) }
+    price
+  end
+  
+  def admins
+    members.where("memberships.security = ?", "admin")
+  end
+  
+  def adminable_by(user)
+    if user.admin? || admins.include?(user)
+      @adminable_by ||= true
+    else
+      @adminable_by ||= false
+    end
   end
 end
