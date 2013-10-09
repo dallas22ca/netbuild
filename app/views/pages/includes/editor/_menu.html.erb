@@ -1,6 +1,13 @@
 <div id="blocks_menu">
 	<ul>
 		<li>
+			<%= link_to "<i class=\"icon-desktop\"></i>".html_safe, edit_website_path(@website), class: "show_new_page", data: { no_turbolink: true } %>
+			<p class="hint">
+				Edit Website
+			</p>
+		</li>
+		
+		<li>
 			<%= link_to "<i class=\"icon-plus\"></i>".html_safe, new_page_path, class: "show_new_page", data: { no_turbolink: true } %>
 			<p class="hint">
 				Click to add a page
@@ -144,15 +151,6 @@
 			<%= link_to "<i class=\"icon-link\"></i>".html_safe, "#" %>
 			<p class="hint">
 				Click to link selection to a page
-			</p>
-		</li>
-		
-		<li class="separator"></li>
-		
-		<li class="code_editor_tool">
-			<%= link_to "<i class=\"icon-code\"></i>".html_safe, "#", class: "edit_layout_file" %>
-			<p class="hint">
-				Click to edit this page's layout file
 			</p>
 		</li>
 	</ul>

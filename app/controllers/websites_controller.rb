@@ -23,7 +23,7 @@ class WebsitesController < ApplicationController
   # POST /websites
   # POST /websites.json
   def create
-    @website = Website.new(website_params)
+    @website = Website.new(create_website_params)
     @website.members.push current_user if user_signed_in?
 
     respond_to do |format|
@@ -112,7 +112,11 @@ class WebsitesController < ApplicationController
 
   private
     # Never trust parameters from the scary internet, only allow the white list through.
+    def create_website_params
+      params.require(:website).permit(:title, :permalink, :theme_id, members_attributes: [:email, :password])
+    end
+    
     def website_params
-      params.require(:website).permit(:title, :domain, :permalink, :theme_id, :duplicate_theme, :home_id, members_attributes: [:email, :password])
+      params.require(:website).permit(:title, :domain, :theme_id, :duplicate_theme, :home_id, :primary_colour, :secondary_colour, :card_token)
     end
 end

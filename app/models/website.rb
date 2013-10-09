@@ -1,5 +1,5 @@
 class Website < ActiveRecord::Base
-  attr_accessor :duplicate_theme
+  attr_accessor :duplicate_theme, :card_token
   
   belongs_to :theme, touch: true
   belongs_to :home, class_name: "Page", foreign_key: "home_id"
@@ -16,13 +16,49 @@ class Website < ActiveRecord::Base
   
   validates_presence_of :title, :permalink, :theme_id
   validates_uniqueness_of :permalink
-  before_validation :create_permalink, if: Proc.new { |w| w.permalink.blank? }
-  after_save :clone_theme, if: Proc.new { |w| self.duplicate_theme }
-  after_save :update_page_templates
+  before_validation :theme_does_not_have_default_document, if: Proc.new { theme_id_changed? && theme.default_document_id.blank? }
+  before_validation :create_permalink, if: Proc.new { permalink.blank? }
+  before_save :set_defaults
+  before_save :stripify, if: Proc.new { billing_info_required? || !card_token.blank? }
+  after_save :clone_theme, if: :duplicate_theme
+  after_save :update_page_templates, if: :theme_id_changed?
   after_create :seed_content
+  
+  def billing_info_required?
+    customer_token.blank? && !domain.blank?
+  end
+  
+  def stripify
+    if card_token.blank?
+      self.errors.add :base, "Billing information is required to use a domain name."
+      false
+    else
+      customer = Stripe::Customer.retrieve(customer_token)
+      
+      if customer
+        customer.card = card_token
+        customer.save
+      else
+        customer = Stripe::Customer.create(
+          card: card_token,
+          description: permalink
+        )
+        self.customer_token = customer.id
+      end
+    end
+  end
   
   def update_page_templates
     self.pages.update_all document_id: self.theme.default_document
+  end
+  
+  def theme_does_not_have_default_document
+    self.errors.add :base, "You cannot use this theme because it doesn't have a default document assigned."
+  end
+  
+  def set_defaults
+    self.primary_colour = "rgb(240, 110, 48)"
+    self.secondary_colour = "rgb(12, 118, 177)"
   end
   
   def seed_content

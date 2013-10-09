@@ -85,9 +85,9 @@ class ThemesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def theme_params
       if current_user.try(:admin?)
-        params.require(:theme).permit(:name, :pristine)
+        params.require(:theme).permit(:name, :default_document_id, :pristine)
       else
-        params.require(:theme).permit(:name)
+        params.require(:theme).permit(:name, :default_document_id)
       end
     end
 end
