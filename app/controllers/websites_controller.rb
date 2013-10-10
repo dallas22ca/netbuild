@@ -131,7 +131,7 @@ class WebsitesController < ApplicationController
     def website_params
       if super_admin?
         params.require(:website).permit(:title, :domain, :theme_id, :duplicate_theme, :home_id, :primary_colour, :secondary_colour, :card_token, :customer_token)
-      elsif @website.adminable_by(user)
+      elsif @website.adminable_by(current_user)
         params.require(:website).permit(:title, :domain, :theme_id, :duplicate_theme, :home_id, :primary_colour, :secondary_colour, :card_token)
       else
         params.require(:website).permit(:title, :domain, :theme_id, :duplicate_theme, :home_id, :primary_colour, :secondary_colour, :card_token)
