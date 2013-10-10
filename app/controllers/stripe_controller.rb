@@ -1,4 +1,6 @@
 class StripeController < ApplicationController
+  skip_before_action :verify_authenticity_token
+  
   def webhook
     begin
       json = JSON.parse(request.body.read)
