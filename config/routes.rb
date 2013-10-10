@@ -6,21 +6,24 @@ Netbuild::Application.routes.draw do
       sessions: "sessions",
       registrations: "registrations"
     }
-    
-    authenticated :user do
-      resources :websites
-      resources :memberships, path: :members, except: :index
-      resources :pages
-      resources :block, only: :show
-      resources :media
-      resources :invoices
+
+    constraints subdomain: /.*?/ do
       resources :themes, only: :show
+    
+      authenticated :user do
+        resources :websites
+        resources :memberships, path: :members, except: :index
+        resources :pages
+        resources :block, only: :show
+        resources :media
+        resources :invoices
       
-      resources :themes do
-        resources :documents
+        resources :themes do
+          resources :documents
+        end
+      
+        post "/save" => "websites#save", as: :save
       end
-      
-      post "/save" => "websites#save", as: :save
     end
     
     constraints subdomain: "www" do
