@@ -10,7 +10,7 @@ class StripeController < ApplicationController
         invoice = website.invoices.where(stripe_id: json["id"]).first_or_initialize
         
         if json["type"].include? "create"
-          Invoice.add_addons_to_invoices website.id
+          Invoice.add_addons_to_invoices website
           render json: { invoice_created: "Now adding addons to the invoice." }
         else
           invoice.date = Time.at(json["date"])

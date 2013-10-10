@@ -55,16 +55,19 @@
 		</table>
 	
 		The package you have selected including addons is <b><%= number_to_currency @website.price / 100 %> / month</b>.<br>
+		
+		<% if @website.customer_token.blank? %>
+			There is no credit card associated with your account.
+			<%= link_to "Add my billing information", "#", class: "toggle_billing" %><br><br>
+		<% else %>
+			Your current credit card ends with <b><%= @website.last_4 %></b>.
+			<%= link_to "Update my credit card", "#", class: "toggle_billing" %><br><br>
+		<% end %>
 	
-	<% end %>
+		<% if @website.addons.pluck(:permalink).include?("extra_email") %>
+			Awesome!
+		<% end %>
 	
-	<% unless @website.customer_token.blank? %>
-		Your current credit card ends with <b><%= @website.last_4 %></b>.
-		<%= link_to "Update my credit card", "#", class: "toggle_billing" %><br><br>
-	<% end %>
-	
-	<% if @website.addons.pluck(:permalink).include?("extra_email") %>
-		Awesome!
 	<% end %>
 
 	<div class="billing <%= "hide" if !@website.customer_token.blank? || @website.customer_token.blank? %>">
