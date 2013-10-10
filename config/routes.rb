@@ -14,6 +14,7 @@ Netbuild::Application.routes.draw do
       resources :block, only: :show
       resources :media
       resources :invoices
+      resources :themes, only: :show
       
       resources :themes do
         resources :documents
