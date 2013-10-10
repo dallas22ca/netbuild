@@ -28,6 +28,8 @@ class Website < ActiveRecord::Base
   after_save :clone_theme, if: :duplicate_theme
   after_save :update_page_templates, if: :theme_id_changed?
   
+  scope :connected_to_stripe, -> { where("customer_token is not ?", nil) }
+  
   def permalink_is_not_safe
     self.errors.add :permalink, "is a reserved word and cannot be used."
   end
@@ -54,6 +56,7 @@ class Website < ActiveRecord::Base
       else
         customer = Stripe::Customer.create(
           card: card_token,
+          email: website.admins.last.email,
           plan: "WEH",
           description: permalink
         )

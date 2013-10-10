@@ -2,6 +2,7 @@ load 'deploy/assets'
 
 require "bundler/capistrano"
 # require 'sidekiq/capistrano'
+require "whenever/capistrano"
 
 Dir.glob("config/recipes/*.rb").each do |file|
   load file
@@ -25,6 +26,7 @@ set :rails_env, "production"
 set :branch, "master"
 set :root_url, "http://app.netbuild.co"
 server server_name, :web, :app, :db, primary: true
+set :whenever_command, "bundle exec whenever"
 
 # set :sidekiq_cmd, "RAILS_ENV=#{rails_env} bundle exec sidekiq -q ListParser,1 -q DesignCapturer,1 -q MessageEnqueuer,1 -q WebhookHitter,1 -q BulkSender,1 -q ApiSender,1 -q ApiHitter,1"
 
