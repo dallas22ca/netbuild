@@ -57,12 +57,15 @@ class Website < ActiveRecord::Base
         customer = Stripe::Customer.create(
           card: card_token,
           email: admins.last.email,
-          plan: "WEH",
           description: permalink
         )
         
         self.last_4 = customer.cards.data.first.last4
         self.customer_token = customer.id
+
+        if Invoice.add_addons_to_invoices(self)
+         customer.update_subscription(plan: "WEH")
+        end
       end
     end
   end
@@ -172,8 +175,12 @@ class Website < ActiveRecord::Base
   
   def price
     price = 0
-    price += 4000 unless domain.blank?
-    addonships.map { |a| price += a.addon.price * (a.quantity.blank? ? 1 : a.quantity) }
+    
+    unless domain.blank?
+      price += 4000
+      addonships.map { |a| price += a.addon.price * (a.quantity.blank? ? 1 : a.quantity) }
+    end
+    
     price
   end
   
