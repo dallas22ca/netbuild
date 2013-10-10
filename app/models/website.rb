@@ -56,7 +56,7 @@ class Website < ActiveRecord::Base
       else
         customer = Stripe::Customer.create(
           card: card_token,
-          email: website.admins.last.email,
+          email: admins.last.email,
           plan: "WEH",
           description: permalink
         )
