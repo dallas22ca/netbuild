@@ -1,21 +1,25 @@
 class StripeController < ApplicationController
-  layout false
-  
   def webhook
     begin
       json = JSON.parse(request.body.read)
       
       if json["type"].include? "invoice"
-        invoice = Invoice.where(stripe_id: json["id"]).first_or_initialize
-        invoice.date = Time.at(json["date"])
-        invoice.period_start = Time.at(json["period_start"])
-        invoice.period_end = Time.at(json["period_end"])
-        invoice.lines = json["lines"]["data"]
-        invoice.subtotal = json["subtotal"]
-        invoice.total = json["total"]
-        invoice.paid = json["paid"]
-        invoice.attempt_count = json["attempt_count"]
-        render json: invoice
+        if json["type"].include? "create"
+          Invoice.add_addons_to_invoices invoice.website.id
+          render json: { invoice_created: "Now adding addons to the invoice." }
+        else
+          invoice = website.invoices.where(stripe_id: json["id"]).first_or_initialize
+          invoice.date = Time.at(json["date"])
+          invoice.period_start = Time.at(json["period_start"])
+          invoice.period_end = Time.at(json["period_end"])
+          invoice.lines = json["lines"]["data"]
+          invoice.subtotal = json["subtotal"]
+          invoice.total = json["total"]
+          invoice.paid = json["paid"]
+          invoice.attempt_count = json["attempt_count"]
+          invoice.website_id = Website.where(customer_token: json["data"]["customer"]).first.try(:id)
+          render json: invoice
+        end
       end
     rescue
       render json: { fail: true }
