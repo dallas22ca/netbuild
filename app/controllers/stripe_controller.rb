@@ -3,7 +3,7 @@ class StripeController < ApplicationController
   
   def webhook
     begin
-      json = JSON.parse(request.body.read)
+      json = JSON.parse(params["stripe"])
       
       if json["type"].include? "invoice"
         if json["type"].include? "create"
