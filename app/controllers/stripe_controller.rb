@@ -6,8 +6,7 @@ class StripeController < ApplicationController
       json = JSON.parse(request.body.read)
       
       if json["type"].include? "invoice"
-        # website = Website.where(customer_token: json["data"]["customer"]).first.try(:id)
-        website = Website.first
+        website = Website.where(customer_token: json["data"]["customer"]).first.id
         invoice = website.invoices.where(stripe_id: json["id"]).first_or_initialize
         
         if json["type"].include? "create"
