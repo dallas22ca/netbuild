@@ -21,7 +21,7 @@ class Membership < ActiveRecord::Base
   end
   
   def cpanel_create_email_account
-    RestClient.get "https://dallasca:D4a5l1l9a8S8@netbuild.co:2087/json-api/cpanel", { 
+    RestClient.get "https://#{CONFIG["whm_user"]}:#{CONFIG["whm_pass"]}@netbuild.co:2087/json-api/cpanel", { 
       params: { 
         cpanel_jsonapi_user: website.permalink,
         cpanel_jsonapi_module: "Email", 
@@ -35,7 +35,7 @@ class Membership < ActiveRecord::Base
   end
   
   def cpanel_update_email_password
-    RestClient.get "https://dallasca:D4a5l1l9a8S8@netbuild.co:2087/json-api/cpanel", { 
+    RestClient.get "https://#{CONFIG["whm_user"]}:#{CONFIG["whm_pass"]}@netbuild.co:2087/json-api/cpanel", { 
       params: { 
         cpanel_jsonapi_user: website.permalink,
         cpanel_jsonapi_module: "Email", 
@@ -50,7 +50,7 @@ class Membership < ActiveRecord::Base
   def cpanel_delete_forward
     forward_to_was.to_s.split(",").each do |forward|
       forward = forward.strip
-      RestClient.get "https://dallasca:D4a5l1l9a8S8@netbuild.co:2087/json-api/cpanel", { 
+      RestClient.get "https://#{CONFIG["whm_user"]}:#{CONFIG["whm_pass"]}@netbuild.co:2087/json-api/cpanel", { 
         params: { 
           "cpanel_jsonapi_user" => website.permalink,
           "cpanel_jsonapi_apiversion" => 1,
@@ -65,7 +65,7 @@ class Membership < ActiveRecord::Base
   def cpanel_create_forward
     forward_to.to_s.split(",").each do |forward|
       forward = forward.strip
-      RestClient.get "https://dallasca:D4a5l1l9a8S8@netbuild.co:2087/json-api/cpanel", { 
+      RestClient.get "https://#{CONFIG["whm_user"]}:#{CONFIG["whm_pass"]}@netbuild.co:2087/json-api/cpanel", { 
         params: { 
           cpanel_jsonapi_user: website.permalink,
           cpanel_jsonapi_module: "Email", 
@@ -80,7 +80,7 @@ class Membership < ActiveRecord::Base
   end
   
   def cpanel_delete_email_account
-    RestClient.get "https://dallasca:D4a5l1l9a8S8@netbuild.co:2087/json-api/cpanel", { 
+    RestClient.get "https://#{CONFIG["whm_user"]}:#{CONFIG["whm_pass"]}@netbuild.co:2087/json-api/cpanel", { 
       params: { 
         cpanel_jsonapi_user: website.permalink,
         cpanel_jsonapi_module: "Email", 
