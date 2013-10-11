@@ -1,53 +1,61 @@
+<%= render "manage_nav" %>
+
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Website:</strong>
-  <%= @invoice.website %>
+  <strong><%= @invoice.website.stripped_domain(@invoice.website.domain).to_s %></strong>
 </p>
 
 <p>
   <strong>Date:</strong>
-  <%= @invoice.date %>
+  <%= @invoice.date.strftime("%B %d, %Y") %>
 </p>
 
 <p>
-  <strong>Stripe:</strong>
-  <%= @invoice.stripe_id %>
+  <strong>ID:</strong>
+  <%= @invoice.visible_id %>
 </p>
 
 <p>
   <strong>Period start:</strong>
-  <%= @invoice.period_start %>
+  <%= @invoice.period_start.strftime("%B %d, %Y") %>
 </p>
 
 <p>
   <strong>Period end:</strong>
-  <%= @invoice.period_end %>
+  <%= @invoice.period_end.strftime("%B %d, %Y") %>
 </p>
 
-<p>
-  <strong>Lines:</strong>
-  <%= @invoice.lines %>
-</p>
+<table>
+	<thead>
+		<tr>
+			<th>Description</th>
+			<th>Amount</th>
+		</tr>
+	</thead>
+	
+	<tbody>
+		<% @invoice.lines.each do |line| %>
+			<tr>
+				<td><%= line["plan"] ? line["plan"]["name"] : line["description"] %></td>
+				<td><%= number_to_currency line["amount"] / 100 %></td>
+			</tr>
+		<% end %>
+	</tbody>
+</table>
 
 <p>
   <strong>Subtotal:</strong>
-  <%= @invoice.subtotal %>
+  <%= number_to_currency @invoice.subtotal / 100 %>
 </p>
 
 <p>
   <strong>Total:</strong>
-  <%= @invoice.total %>
+  <%= number_to_currency @invoice.total / 100 %>
 </p>
 
 <p>
-  <strong>Paid:</strong>
-  <%= @invoice.paid %>
-</p>
-
-<p>
-  <strong>Attemp count:</strong>
-  <%= @invoice.attemp_count %>
+	<strong><%= "PAID" if @invoice.paid %></strong>
 </p>
 
 <%= link_to 'Edit', edit_invoice_path(@invoice) %> |

@@ -1,10 +1,11 @@
 class MembershipsController < ApplicationController
+  before_action :authenticate_adminable?
   before_action :set_membership, only: [:show, :edit, :update, :destroy]
 
   # GET /memberships
   # GET /memberships.json
   def index
-    @memberships = Membership.all
+    @memberships = @website.memberships
   end
 
   # GET /memberships/1
@@ -24,7 +25,7 @@ class MembershipsController < ApplicationController
   # POST /memberships
   # POST /memberships.json
   def create
-    @membership = Membership.new(membership_params)
+    @membership = @website.memberships.new(membership_params)
 
     respond_to do |format|
       if @membership.save
@@ -64,11 +65,11 @@ class MembershipsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_membership
-      @membership = Membership.find(params[:id])
+      @membership = @website.memberships.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def membership_params
-      params.require(:membership).permit(:user_id, :website_id, :security)
+      params.require(:membership).permit(:security, :has_email_account, :username, :password, :forward_to)
     end
 end

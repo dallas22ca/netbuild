@@ -1,5 +1,4 @@
 class InvoicesController < ApplicationController
-  before_filter :authenticate_super_admin?
   before_action :set_invoice, only: [:show]
 
   # GET /invoices

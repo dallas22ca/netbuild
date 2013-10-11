@@ -80,6 +80,7 @@ $(document).on "click", ".publish", ->
       n += 1
 
   $.post url,
+    _method: "patch"
     page_id: $("body").data("page_id")
     blocks: blocks
     pages: $(".nav.roots:first").sortable("toArray")

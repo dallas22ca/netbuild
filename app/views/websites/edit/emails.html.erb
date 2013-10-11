@@ -1,0 +1,82 @@
+<%= render "manage_nav" %>
+
+<%= form_for @website, url: save_path, data: { customer_token: @website.has_payment_info? } do |f| %>
+	<%= hidden_field_tag :redirect, manage_path("emails") %>
+
+  <% if @website.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@website.errors.count, "error") %> prohibited this website from being saved:</h2>
+
+      <ul>
+      <% @website.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+	
+	<% if @website.adminable_by(current_user) %>
+	
+		<% if @website.has_payment_info? %>
+			<% if @website.email_addresses.size > @website.allowed_email_addresses %>
+				<b>You have downgraded your account. Which <%= @website.allowed_email_addresses %> email addresses would you like to keep?</b><br>
+				If this was a mistake, visit the <%= link_to "account", manage_path("account") %> page to purchase more email addresses.
+				
+				<table id="email_addresses">
+					<% n = 0 %>
+					<% @website.email_addresses.each do |address| %>
+						<% email = address.split(":").first %>
+						<tr>
+							<td><%= check_box_tag "allowed_#{email}", email, n < @website.allowed_email_addresses, name: "website[email_addresses][]" %></td>
+							<td>
+								<%= label_tag "allowed_#{email}", "<span class=\"email\">#{email}</span>@#{@website.stripped_domain(domain)}".html_safe %>
+							</td>
+						</tr>
+						<% n += 1 %>
+					<% end %>
+				</table>
+			<% else %>
+				<table id="email_addresses">
+					<thead>
+						<tr>
+							<th>Address</th>
+							<th>Password</th>
+							<th>Forward To</th>
+							<th></th>
+						</tr>
+					</thead>
+					
+					<% @website.email_addresses.each do |address| %>
+						<% email = address.split(":").first %>
+						<tr>
+							<td>
+								<%= hidden_field_tag "email_addresses[][user]", email %>
+								<%= "#{email}@#{@website.stripped_domain(@website.domain)}" %>
+							</td>
+							<td><%= hidden_field_tag "email_addresses[][pass]" %></td>
+							<td><%= text_field_tag "email_addresses[][forward_to]" %></td>
+							<td><%= hidden_field_tag "email_addresses[][delete]" %></td>
+							<td><%= link_to "Webmail", public_page_path("webmail") %></td>
+						</tr>
+					<% end %>
+					
+					<tr class="template">
+						<td>
+							<%= text_field_tag "email_addresses[][user]" %>
+							@<%= @website.stripped_domain(@website.domain) %>
+						</td>
+						<td><%= password_field_tag "email_addresses[][pass]" %></td>
+						<td><%= text_field_tag "email_addresses[][forward_to]" %></td>
+					</tr>
+				</table>
+			<% end %>
+		<% end %>
+		
+		<%= @website.email_addon.quantity %>
+	
+	<% end %>
+
+  <div class="actions">
+    <%= f.submit "Save Email Addresses" %>
+  </div>
+<% end %>

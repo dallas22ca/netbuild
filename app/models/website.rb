@@ -1,5 +1,5 @@
 class Website < ActiveRecord::Base
-  attr_accessor :duplicate_theme, :card_token
+  attr_accessor :duplicate_theme, :card_token, :warnings
   
   belongs_to :theme, touch: true
   belongs_to :home, class_name: "Page", foreign_key: "home_id"
@@ -17,25 +17,39 @@ class Website < ActiveRecord::Base
   
   accepts_nested_attributes_for :members
   
-  validates_presence_of :title, :permalink, :theme_id
-  before_validation :permalink_is_not_safe, if: Proc.new { |p| %w[app secure www help].include? p.permalink }
-  validates_uniqueness_of :permalink
+  before_validation :permalink_is_not_safe, if: Proc.new { |p| %w[app secure www help manage].include? p.permalink }
   before_validation :theme_does_not_have_default_document, if: Proc.new { theme_id_changed? && theme.default_document_id.blank? }
   before_validation :create_permalink, if: Proc.new { permalink.blank? }
+  
+  validates_associated :addonships
+  validates_presence_of :title, :permalink, :theme_id
+  validates_length_of :permalink, minimum: 1, maximum: 8
+  validates_uniqueness_of :permalink
+  validates_uniqueness_of :domain, allow_blank: true
+  
+  before_save :update_email_addresses_count, if: :free_email_addresses_changed?
   before_save :set_defaults
-  before_save :stripify, if: Proc.new { billing_info_required? || !card_token.blank? }
-  after_create :seed_content
+  before_save :billing_info_required, if: Proc.new { billing_info_required? && card_token.blank? && customer_token.blank? }
+  before_save :stripify, if: Proc.new { billing_info_required? && !card_token.blank? }
+  after_create :seed_content, if: :theme_id?
+  after_save :remove_all_email_accounts, if: :domain_changed?
   after_save :clone_theme, if: :duplicate_theme
   after_save :update_page_templates, if: :theme_id_changed?
+  after_save :manage_cpanel
   
   scope :connected_to_stripe, -> { where("customer_token is not ?", nil) }
   
+  def billing_info_required
+    self.errors.add :base, "With this setup, billing information is required."
+    false
+  end
+  
   def permalink_is_not_safe
-    self.errors.add :permalink, "is a reserved word and cannot be used."
+    self.errors.add :permalink, "is a reserved permalink and cannot be used."
   end
   
   def billing_info_required?
-    customer_token.blank? && price > 0
+    price > 0
   end
   
   def has_payment_info?
@@ -43,29 +57,24 @@ class Website < ActiveRecord::Base
   end
   
   def stripify
-    if card_token.blank?
-      self.errors.add :base, "Billing information is required to use a domain name."
-      false
+    customer = Stripe::Customer.retrieve(customer_token) unless customer_token.blank?
+    
+    if customer
+      customer.card = card_token
+      customer.save
+      self.last_4 = customer.cards.data.first.last4
     else
-      customer = Stripe::Customer.retrieve(customer_token) unless customer_token.blank?
+      customer = Stripe::Customer.create(
+        card: card_token,
+        email: admins.last.email,
+        description: permalink
+      )
       
-      if customer
-        customer.card = card_token
-        customer.save
-        self.last_4 = customer.cards.data.first.last4
-      else
-        customer = Stripe::Customer.create(
-          card: card_token,
-          email: admins.last.email,
-          description: permalink
-        )
-        
-        self.last_4 = customer.cards.data.first.last4
-        self.customer_token = customer.id
+      self.last_4 = customer.cards.data.first.last4
+      self.customer_token = customer.id
 
-        if Invoice.add_addons_to_invoices(self)
-         customer.update_subscription(plan: "WEH")
-        end
+      if Invoice.add_addons_to_invoices(self)
+       customer.update_subscription(plan: "WEH")
       end
     end
   end
@@ -81,62 +90,65 @@ class Website < ActiveRecord::Base
   def set_defaults
     self.primary_colour = "rgb(240, 110, 48)"
     self.secondary_colour = "rgb(12, 118, 177)"
+    
+    if !domain.blank?
+      self.domain = self.domain.to_s.downcase.gsub(/http:\/\/|https:\/\//, "")
+      self.domain = "www.#{self.domain}" if get_subdomain(domain).blank?
+    end
   end
   
   def seed_content
-    if theme
-      home = pages.create(
-        title: "Welcome",
-        permalink: "welcome",
-        description: "Welcome to our website",
-        visible: true,
-        deleteable: false,
-        ordinal: 1,
-        document_id: theme.default_document
-      )
-      
-      self.update_attributes home_id: home.id
-      
-      sign_in = pages.create(
-        title: "Sign In",
-        permalink: "sign_in",
-        description: "Sign in to our website",
-        visible: false,
-        deleteable: false,
-        ordinal: 999,
-        document_id: theme.default_document
-      )
-      
-      sitemap = pages.create(
-        title: "Sitemap",
-        permalink: "sitemap",
-        description: "Sitemap of our website",
-        visible: false,
-        deleteable: false,
-        ordinal: 998,
-        document_id: theme.default_document
-      )
-      
-      search = pages.create(
-        title: "Search",
-        permalink: "search",
-        description: "Search our website",
-        visible: false,
-        deleteable: false,
-        ordinal: 997,
-        document_id: theme.default_document
-      )
-      
-      members = pages.create(
-        title: "Members",
-        permalink: "members",
-        description: "Members",
-        visible: false,
-        deleteable: false,
-        ordinal: 995,
-        document_id: theme.default_document
-      )
-    end
+    home = pages.create(
+      title: "Welcome",
+      permalink: "welcome",
+      description: "Welcome to our website",
+      visible: true,
+      deleteable: false,
+      ordinal: 1,
+      document_id: theme.default_document.id
+    )
+    
+    self.update_attributes home_id: home.id
+    
+    sign_in = pages.create(
+      title: "Sign In",
+      permalink: "sign_in",
+      description: "Sign in to our website",
+      visible: false,
+      deleteable: false,
+      ordinal: 999,
+      document_id: theme.default_document.id
+    )
+    
+    sitemap = pages.create(
+      title: "Sitemap",
+      permalink: "sitemap",
+      description: "Sitemap of our website",
+      visible: false,
+      deleteable: false,
+      ordinal: 998,
+      document_id: theme.default_document.id
+    )
+    
+    search = pages.create(
+      title: "Search",
+      permalink: "search",
+      description: "Search our website",
+      visible: false,
+      deleteable: false,
+      ordinal: 997,
+      document_id: theme.default_document.id
+    )
+    
+    members = pages.create(
+      title: "Members",
+      permalink: "members",
+      description: "Members",
+      visible: false,
+      deleteable: false,
+      ordinal: 995,
+      document_id: theme.default_document.id
+    )
   end
   
   def clone_theme
@@ -175,12 +187,8 @@ class Website < ActiveRecord::Base
   
   def price
     price = 0
-    
-    unless domain.blank?
-      price += 4000
-      addonships.map { |a| price += a.addon.price * (a.quantity.blank? ? 1 : a.quantity) }
-    end
-    
+    price += 4000 if !domain.blank?
+    addonships.where(addon_id: self.addon_ids).map{ |a| price += a.addon.price * (a.addon.quantifiable? ? a.quantity : 1) }
     price
   end
   
@@ -193,6 +201,183 @@ class Website < ActiveRecord::Base
       @adminable_by ||= true
     else
       @adminable_by ||= false
+    end
+  end
+  
+  def email_addon
+    addon = addons.where(permalink: "email").first
+    addonships.where(addon_id: addon.id).first if addon
+  end
+  
+  def stripped_domain(full)
+    strip = full.split(".")
+    "#{strip[strip.length - 2]}.#{strip.last}"
+  end
+  
+  def update_email_addresses_count
+    quantity = memberships.with_email_account.count - free_email_addresses
+    quantity = 0 if quantity < 0
+    email_addon.update_columns quantity: quantity
+  end
+  
+  def manage_cpanel
+    if domain_changed?
+      if !domain_was.blank? && domain.blank?
+        cpanel_delete_previous_record
+        cpanel_suspend_account
+      elsif domain_was.blank? && !domain.blank?
+        cpanel_create_account
+        cpanel_unsuspend_account
+        cpanel_update_domain
+        cpanel_delete_www_redirect if domain_was.to_s.include? "www"
+        cpanel_create_zone_records
+        cpanel_redirect_to_www if domain.to_s.include? "www"
+      else
+        cpanel_update_domain
+        cpanel_delete_www_redirect if domain_was.to_s.include? "www"
+        cpanel_delete_previous_record unless domain_was.to_s.blank?
+        cpanel_create_zone_records
+        cpanel_redirect_to_www if domain.to_s.include? "www"
+      end
+    end
+  end
+  
+  def cpanel_delete_www_redirect
+    RestClient.get "https://dallasca:D4a5l1l9a8S8@netbuild.co:2087/json-api/cpanel", { 
+      params: { 
+        "cpanel_jsonapi_user" => permalink,
+        "cpanel_jsonapi_apiversion" => 1,
+        "cpanel_jsonapi_module" => "Mime", 
+        "cpanel_jsonapi_func" => "del_redirect",
+        "arg-0" => "",
+        "arg-1" => stripped_domain(domain),
+        "arg-2" => ""
+      }
+    }
+  end
+  
+  def cpanel_redirect_to_www
+    RestClient.get "https://dallasca:D4a5l1l9a8S8@netbuild.co:2087/json-api/cpanel", { 
+      params: { 
+        "cpanel_jsonapi_user" => permalink,
+        "cpanel_jsonapi_apiversion" => 1,
+        "cpanel_jsonapi_module" => "Mime", 
+        "cpanel_jsonapi_func" => "add_redirect",
+        "arg-0" => "",
+        "arg-1" => "permanent",
+        "arg-2" => "http://#{domain}",
+        "arg-3" => stripped_domain(domain),
+        "arg-4" => 1,
+        "arg-5" => 0
+      }
+    }
+  end
+  
+  def cpanel_delete_previous_record
+    line = false
+    zonefile = JSON.parse RestClient.get "https://dallasca:D4a5l1l9a8S8@netbuild.co:2087/json-api/cpanel", { 
+      params: { 
+        cpanel_jsonapi_user: permalink,
+        cpanel_jsonapi_module: "ZoneEdit", 
+        cpanel_jsonapi_func: "fetchzone",
+        domain: stripped_domain(domain_was)
+      }
+    }
+    
+    if zonefile["cpanelresult"] && zonefile["cpanelresult"]["data"] && zonefile["cpanelresult"]["data"][0] && zonefile["cpanelresult"]["data"][0]["record"]
+      zonefile["cpanelresult"]["data"][0]["record"].each do |zone|
+        unless zone["cname"].blank?
+          if zone["name"] == "#{domain_was}."
+            line = zone["line"]
+          end
+        end
+      end
+    end
+  
+    if line
+      zonefile = JSON.parse RestClient.get "https://dallasca:D4a5l1l9a8S8@netbuild.co:2087/json-api/cpanel", { 
+        params: { 
+          cpanel_jsonapi_user: permalink,
+          cpanel_jsonapi_module: "ZoneEdit", 
+          cpanel_jsonapi_func: "remove_zone_record",
+          domain: stripped_domain(domain_was),
+          line: line
+        }
+      }
+    end
+  end
+  
+  def cpanel_create_zone_records
+    RestClient.get "https://dallasca:D4a5l1l9a8S8@netbuild.co:2087/json-api/cpanel", { 
+      params: { 
+        cpanel_jsonapi_user: permalink,
+        cpanel_jsonapi_module: "ZoneEdit", 
+        cpanel_jsonapi_func: "add_zone_record",
+        domain: stripped_domain(domain),
+        name: get_subdomain(domain),
+        type: "CNAME",
+        cname: "#{permalink}.#{CONFIG["domain"]}",
+        ttl: 14400
+      }
+    }
+  end
+  
+  def cpanel_update_domain
+    RestClient.get "https://dallasca:D4a5l1l9a8S8@netbuild.co:2087/json-api/modifyacct", { 
+      params: {
+        user: permalink, 
+        domain: stripped_domain(domain)
+      }
+    }
+  end
+  
+  def cpanel_suspend_account
+    RestClient.get "https://dallasca:D4a5l1l9a8S8@netbuild.co:2087/json-api/suspendacct", { 
+      params: {
+        user: permalink, 
+        reason: "Set domain to be empty on #{Time.now}."
+      }
+    }
+  end
+  
+  def cpanel_unsuspend_account
+    RestClient.get "https://dallasca:D4a5l1l9a8S8@netbuild.co:2087/json-api/unsuspendacct", { 
+      params: {
+        user: permalink
+      }
+    }
+  end
+  
+  def cpanel_create_account
+    RestClient.get "https://dallasca:D4a5l1l9a8S8@netbuild.co:2087/json-api/createacct", { 
+      params: {
+        username: permalink, 
+        domain: stripped_domain(domain),
+        plan: "dallasca_Basic",
+        contactemail: admins.first.email
+      }
+    }
+    RestClient.get "https://dallasca:D4a5l1l9a8S8@netbuild.co:2087/json-api/modifyacct", { 
+      params: {
+        user: permalink, 
+        HASDKIM: 1,
+        HASSPF: 1,
+        HASCGI: 0
+      }
+    }
+  end
+  
+  def remove_all_email_accounts
+    memberships.update_all has_email_account: false
+  end
+  
+  def get_subdomain(full)
+    split = full.split(".")
+    
+    if split.size > 2
+      split[0..split.size - 3].join(".")
+    else
+      ""
     end
   end
 end
