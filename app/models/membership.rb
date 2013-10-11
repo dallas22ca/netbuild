@@ -23,11 +23,11 @@ class Membership < ActiveRecord::Base
   def cpanel_create_email_account
     RestClient.get "https://#{CONFIG["whm_user"]}:#{CONFIG["whm_pass"]}@netbuild.co:2087/json-api/cpanel", { 
       params: { 
-        cpanel_jsonapi_user: website.permalink,
+        cpanel_jsonapi_user: (website.permalink == "nb-www" ? "dallasca" : website.permalink),
         cpanel_jsonapi_module: "Email", 
         cpanel_jsonapi_func: "addpop",
         email: username, 
-        domain: website.stripped_domain(website.domain),
+        domain: (website.permalink == "nb-www" ? "netbuild.co" : website.stripped_domain(website.domain)),
         password: password, 
         quota: 0
       }
@@ -37,11 +37,11 @@ class Membership < ActiveRecord::Base
   def cpanel_update_email_password
     RestClient.get "https://#{CONFIG["whm_user"]}:#{CONFIG["whm_pass"]}@netbuild.co:2087/json-api/cpanel", { 
       params: { 
-        cpanel_jsonapi_user: website.permalink,
+        cpanel_jsonapi_user: (website.permalink == "nb-www" ? "dallasca" : website.permalink),
         cpanel_jsonapi_module: "Email", 
         cpanel_jsonapi_func: "passwdpop",
         email: username, 
-        domain: website.stripped_domain(website.domain),
+        domain: (website.permalink == "nb-www" ? "netbuild.co" : website.stripped_domain(website.domain)),
         password: password
       }
     }
@@ -52,7 +52,7 @@ class Membership < ActiveRecord::Base
       forward = forward.strip
       RestClient.get "https://#{CONFIG["whm_user"]}:#{CONFIG["whm_pass"]}@netbuild.co:2087/json-api/cpanel", { 
         params: { 
-          "cpanel_jsonapi_user" => website.permalink,
+          "cpanel_jsonapi_user" => (website.permalink == "nb-www" ? "dallasca" : website.permalink),
           "cpanel_jsonapi_apiversion" => 1,
           "cpanel_jsonapi_module" => "Email", 
           "cpanel_jsonapi_func" => "delforward",
@@ -67,11 +67,11 @@ class Membership < ActiveRecord::Base
       forward = forward.strip
       RestClient.get "https://#{CONFIG["whm_user"]}:#{CONFIG["whm_pass"]}@netbuild.co:2087/json-api/cpanel", { 
         params: { 
-          cpanel_jsonapi_user: website.permalink,
+          cpanel_jsonapi_user: (website.permalink == "nb-www" ? "dallasca" : website.permalink),
           cpanel_jsonapi_module: "Email", 
           cpanel_jsonapi_func: "addforward",
           email: username, 
-          domain: website.stripped_domain(website.domain),
+          domain: (website.permalink == "nb-www" ? "netbuild.co" : website.stripped_domain(website.domain)),
           fwdopt: "fwd",
           fwdemail: forward
         }
@@ -82,11 +82,11 @@ class Membership < ActiveRecord::Base
   def cpanel_delete_email_account
     RestClient.get "https://#{CONFIG["whm_user"]}:#{CONFIG["whm_pass"]}@netbuild.co:2087/json-api/cpanel", { 
       params: { 
-        cpanel_jsonapi_user: website.permalink,
+        cpanel_jsonapi_user: (website.permalink == "nb-www" ? "dallasca" : website.permalink),
         cpanel_jsonapi_module: "Email", 
         cpanel_jsonapi_func: "delpop",
         email: username, 
-        domain: website.stripped_domain(website.domain)
+        (website.permalink == "nb-www" ? "netbuild.co" : website.stripped_domain(website.domain))
       }
     }
 
