@@ -17,7 +17,7 @@ class Website < ActiveRecord::Base
   
   accepts_nested_attributes_for :members
   
-  before_validation :permalink_is_not_safe, if: Proc.new { |p| %w[app secure www help manage].include? p.permalink }
+  before_validation :permalink_is_not_safe, if: Proc.new { |p| %w[app secure www help manage support].include? p.permalink }
   before_validation :theme_does_not_have_default_document, if: Proc.new { theme_id_changed? && theme.default_document_id.blank? }
   before_validation :create_permalink, if: Proc.new { permalink.blank? }
   
