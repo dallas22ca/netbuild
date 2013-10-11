@@ -17,6 +17,7 @@ namespace :sidekiq do
     run "chmod +x /tmp/sidekiq_init"
     run "#{sudo} mv /tmp/sidekiq_init /etc/init.d/sidekiq_#{application}"
     run "#{sudo} update-rc.d sidekiq_#{application} defaults 99"
+    run "#{sudo} chmod +x /etc/init.d/sidekiq_#{application}"
   end
   after "deploy:setup", "sidekiq:setup"
 end
