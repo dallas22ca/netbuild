@@ -38,13 +38,13 @@ essence = Theme.create({
 essence.documents.create({
   name: "Style",
   extension: "css",
-  body: IO.read(File.expand_path("../app/views/templates/essence/style.css"))
+  body: IO.read(File.expand_path("app/views/templates/essence/style.css"))
 })
 
 essence_default = essence.documents.create({
   name: "Homepage",
   extension: "html",
-  body: IO.read(File.expand_path("../app/views/templates/essence/homepage.html"))
+  body: IO.read(File.expand_path("app/views/templates/essence/homepage.html"))
 })
 
 essence.update default_document_id: essence_default.id
