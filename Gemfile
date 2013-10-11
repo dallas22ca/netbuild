@@ -12,15 +12,17 @@ gem 'jquery-rails'
 gem 'turbolinks'
 gem 'jbuilder', '~> 1.2'
 gem 'activerecord-postgres-hstore'
+
 gem 'aws-sdk'
 gem 's3_direct_upload'
 gem 'stripe'
 gem 'whenever', :require => false
 gem 'rest-client'
 
-group :doc do
-  gem 'sdoc', require: false
-end
+gem 'sidekiq'
+gem 'sidekiq-failures'
+gem 'sinatra', require: false
+gem 'slim'
 
 group :production do
   gem 'unicorn'
@@ -29,4 +31,5 @@ end
 group :development do
   gem 'capistrano'
   gem 'thin'
+  gem 'foreman'
 end

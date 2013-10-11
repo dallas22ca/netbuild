@@ -1,3 +1,5 @@
+require "sidekiq/web"
+
 Netbuild::Application.routes.draw do
 
   devise_for :users, controllers: {
@@ -11,6 +13,10 @@ Netbuild::Application.routes.draw do
     resources :addons
     post "/stripe" => "stripe#webhook", as: :stripe
     get "/stripe" => "stripe#webhook" # TESTING
+    
+    authenticated :user, lambda { |u| u.super_admin? } do
+      mount Sidekiq::Web => "/sidekiq"
+    end
   end
   
   constraints subdomain: /.*?/ do

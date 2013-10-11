@@ -214,26 +214,19 @@ class Website < ActiveRecord::Base
   def manage_cpanel
     if domain_changed?
       if !domain_was.blank? && domain.blank?
-        cpanel_delete_previous_record
-        cpanel_suspend_account
+        WHMWorker.perform_async id, "suspend_domain", { domain: domain, domain_was: domain_was }
       elsif domain_was.blank? && !domain.blank?
-        cpanel_create_account
-        cpanel_unsuspend_account
-        cpanel_update_domain
-        cpanel_delete_www_redirect if domain_was.to_s.include? "www"
-        cpanel_create_zone_records
-        cpanel_redirect_to_www if domain.to_s.include? "www"
+        WHMWorker.perform_async id, "create_domain", { domain: domain, domain_was: domain_was }
       else
-        cpanel_update_domain
-        cpanel_delete_www_redirect if domain_was.to_s.include? "www"
-        cpanel_delete_previous_record unless domain_was.to_s.blank?
-        cpanel_create_zone_records
-        cpanel_redirect_to_www if domain.to_s.include? "www"
+        WHMWorker.perform_async id, "update_domain", { domain: domain, domain_was: domain_was }
       end
     end
   end
   
-  def cpanel_delete_www_redirect
+  def cpanel_delete_www_redirect(d = false, dwas = false)
+    d = domain unless d
+    dwas = domain_was unless dwas
+    
     RestClient.get "https://#{CONFIG["whm_user"]}:#{CONFIG["whm_pass"]}@netbuild.co:2087/json-api/cpanel", { 
       params: { 
         "cpanel_jsonapi_user" => permalink,
@@ -241,13 +234,16 @@ class Website < ActiveRecord::Base
         "cpanel_jsonapi_module" => "Mime", 
         "cpanel_jsonapi_func" => "del_redirect",
         "arg-0" => "",
-        "arg-1" => stripped_domain(domain),
+        "arg-1" => stripped_domain(d),
         "arg-2" => ""
       }
     }
   end
   
-  def cpanel_redirect_to_www
+  def cpanel_redirect_to_www(d = false, dwas = false)
+    d = domain unless d
+    dwas = domain_was unless dwas
+    
     RestClient.get "https://#{CONFIG["whm_user"]}:#{CONFIG["whm_pass"]}@netbuild.co:2087/json-api/cpanel", { 
       params: { 
         "cpanel_jsonapi_user" => permalink,
@@ -257,28 +253,31 @@ class Website < ActiveRecord::Base
         "arg-0" => "",
         "arg-1" => "permanent",
         "arg-2" => "http://#{domain}",
-        "arg-3" => stripped_domain(domain),
+        "arg-3" => stripped_domain(d),
         "arg-4" => 1,
         "arg-5" => 0
       }
     }
   end
   
-  def cpanel_delete_previous_record
+  def cpanel_delete_previous_record(d = false, dwas = false)
+    d = domain unless d
+    dwas = domain_was unless dwas
+    
     line = false
     zonefile = JSON.parse RestClient.get "https://#{CONFIG["whm_user"]}:#{CONFIG["whm_pass"]}@netbuild.co:2087/json-api/cpanel", { 
       params: { 
         cpanel_jsonapi_user: permalink,
         cpanel_jsonapi_module: "ZoneEdit", 
         cpanel_jsonapi_func: "fetchzone",
-        domain: stripped_domain(domain_was)
+        domain: stripped_domain(dwas)
       }
     }
     
     if zonefile["cpanelresult"] && zonefile["cpanelresult"]["data"] && zonefile["cpanelresult"]["data"][0] && zonefile["cpanelresult"]["data"][0]["record"]
       zonefile["cpanelresult"]["data"][0]["record"].each do |zone|
         unless zone["cname"].blank?
-          if zone["name"] == "#{domain_was}."
+          if zone["name"] == "#{dwas}."
             line = zone["line"]
           end
         end
@@ -291,21 +290,24 @@ class Website < ActiveRecord::Base
           cpanel_jsonapi_user: permalink,
           cpanel_jsonapi_module: "ZoneEdit", 
           cpanel_jsonapi_func: "remove_zone_record",
-          domain: stripped_domain(domain_was),
+          domain: stripped_domain(dwas),
           line: line
         }
       }
     end
   end
   
-  def cpanel_create_zone_records
+  def cpanel_create_zone_records(d = false, dwas = false)
+    d = domain unless d
+    dwas = domain_was unless dwas
+    
     RestClient.get "https://#{CONFIG["whm_user"]}:#{CONFIG["whm_pass"]}@netbuild.co:2087/json-api/cpanel", { 
       params: { 
         cpanel_jsonapi_user: permalink,
         cpanel_jsonapi_module: "ZoneEdit", 
         cpanel_jsonapi_func: "add_zone_record",
-        domain: stripped_domain(domain),
-        name: get_subdomain(domain),
+        domain: stripped_domain(d),
+        name: get_subdomain(d),
         type: "CNAME",
         cname: "#{permalink}.#{CONFIG["domain"]}",
         ttl: 14400
@@ -313,16 +315,19 @@ class Website < ActiveRecord::Base
     }
   end
   
-  def cpanel_update_domain
+  def cpanel_update_domain(d = false, dwas = false)
+    d = domain unless d
+    dwas = domain_was unless dwas
+    
     RestClient.get "https://#{CONFIG["whm_user"]}:#{CONFIG["whm_pass"]}@netbuild.co:2087/json-api/modifyacct", { 
       params: {
         user: permalink, 
-        domain: stripped_domain(domain)
+        domain: stripped_domain(d)
       }
     }
   end
   
-  def cpanel_suspend_account
+  def cpanel_suspend_account(d = false, dwas = false)
     RestClient.get "https://#{CONFIG["whm_user"]}:#{CONFIG["whm_pass"]}@netbuild.co:2087/json-api/suspendacct", { 
       params: {
         user: permalink, 
@@ -339,11 +344,14 @@ class Website < ActiveRecord::Base
     }
   end
   
-  def cpanel_create_account
+  def cpanel_create_account(d = false, dwas = false)
+    d = domain unless d
+    dwas = domain_was unless dwas
+    
     RestClient.get "https://#{CONFIG["whm_user"]}:#{CONFIG["whm_pass"]}@netbuild.co:2087/json-api/createacct", { 
       params: {
         username: permalink, 
-        domain: stripped_domain(domain),
+        domain: stripped_domain(d),
         plan: "#{CONFIG["whm_user"]}_Basic",
         contactemail: admins.first.email
       }

@@ -1,0 +1,1 @@
+nice: bundle exec sidekiq -q WHMWorker,1

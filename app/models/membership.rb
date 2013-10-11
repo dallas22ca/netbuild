@@ -20,7 +20,9 @@ class Membership < ActiveRecord::Base
     self.security = "admin" if self.security.nil?
   end
   
-  def cpanel_create_email_account
+  def cpanel_create_email_account(p = false)
+    p = password unless p
+    
     RestClient.get "https://#{CONFIG["whm_user"]}:#{CONFIG["whm_pass"]}@netbuild.co:2087/json-api/cpanel", { 
       params: { 
         cpanel_jsonapi_user: (website.permalink == "nb-www" ? "dallasca" : website.permalink),
@@ -28,13 +30,15 @@ class Membership < ActiveRecord::Base
         cpanel_jsonapi_func: "addpop",
         email: username, 
         domain: (website.permalink == "nb-www" ? "netbuild.co" : website.stripped_domain(website.domain)),
-        password: password, 
+        password: p, 
         quota: 0
       }
     }
   end
   
-  def cpanel_update_email_password
+  def cpanel_update_email_password(p = false)
+    p = password unless p
+
     RestClient.get "https://#{CONFIG["whm_user"]}:#{CONFIG["whm_pass"]}@netbuild.co:2087/json-api/cpanel", { 
       params: { 
         cpanel_jsonapi_user: (website.permalink == "nb-www" ? "dallasca" : website.permalink),
@@ -42,13 +46,15 @@ class Membership < ActiveRecord::Base
         cpanel_jsonapi_func: "passwdpop",
         email: username, 
         domain: (website.permalink == "nb-www" ? "netbuild.co" : website.stripped_domain(website.domain)),
-        password: password
+        password: p
       }
     }
   end
   
-  def cpanel_delete_forward
-    forward_to_was.to_s.split(",").each do |forward|
+  def cpanel_delete_forward(ftowas = false)
+    ftowas = forward_to_was unless ftowas
+    
+    ftowas.to_s.split(",").each do |forward|
       forward = forward.strip
       RestClient.get "https://#{CONFIG["whm_user"]}:#{CONFIG["whm_pass"]}@netbuild.co:2087/json-api/cpanel", { 
         params: { 
@@ -62,8 +68,10 @@ class Membership < ActiveRecord::Base
     end
   end
   
-  def cpanel_create_forward
-    forward_to.to_s.split(",").each do |forward|
+  def cpanel_create_forward(fto = false)
+    fto = forward_to unless fto
+    
+    fto.to_s.split(",").each do |forward|
       forward = forward.strip
       RestClient.get "https://#{CONFIG["whm_user"]}:#{CONFIG["whm_pass"]}@netbuild.co:2087/json-api/cpanel", { 
         params: { 
@@ -110,32 +118,13 @@ class Membership < ActiveRecord::Base
           self.errors.add :base, "You must supply a password for the email account."
           false
         else
-          cpanel_create_email_account
-          
-          if forward_to_changed?
-            cpanel_delete_forward
-        
-            unless forward_to.blank?
-              cpanel_create_forward
-            end
-          end
+          WHMWorker.perform_async id, "create_email_account", { forward_to: forward_to, forward_to_was: forward_to_was, forward_to_changed: forward_to_changed?, p: password }
         end
       else
-        if !password.blank?
-          cpanel_update_email_password
-        end
-        
-        if forward_to_changed?
-          cpanel_delete_forward
-        
-          unless forward_to.blank?
-            cpanel_create_forward
-          end
-        end
+        WHMWorker.perform_async id, "update_email_account", { forward_to: forward_to, forward_to_was: forward_to_was, forward_to_changed: forward_to_changed?, p: password }
       end
     elsif has_email_account_changed?
-      cpanel_delete_forward
-      cpanel_delete_email_account
+      WHMWorker.perform_async id, "delete_email_account", { forward_to_was: forward_to_was }
     end
   end
 end
