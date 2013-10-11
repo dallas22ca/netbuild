@@ -9,7 +9,7 @@ class Membership < ActiveRecord::Base
   
   before_create :set_security
   validates_uniqueness_of :username, scope: :website_id
-  after_validation :manage_cpanel, if: Proc.new { website.email_addon }
+  after_validation :manage_cpanel, if: Proc.new { website && website.has_payment_info? && website.email_addon }
   after_save :update_website_email_addresses_count, if: :has_email_account_changed?
   
   def update_website_email_addresses_count
