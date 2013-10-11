@@ -86,7 +86,7 @@ class Membership < ActiveRecord::Base
         cpanel_jsonapi_module: "Email", 
         cpanel_jsonapi_func: "delpop",
         email: username, 
-        (website.permalink == "nb-www" ? "netbuild.co" : website.stripped_domain(website.domain))
+        domain: (website.permalink == "nb-www" ? "netbuild.co" : website.stripped_domain(website.domain))
       }
     }
 
