@@ -88,8 +88,8 @@ class Website < ActiveRecord::Base
   end
   
   def set_defaults
-    self.primary_colour = "rgb(240, 110, 48)"
-    self.secondary_colour = "rgb(12, 118, 177)"
+    self.primary_colour = "rgb(240, 110, 48)" if self.primary_colour.blank?
+    self.secondary_colour = "rgb(12, 118, 177)" if self.secondary_colour.blank?
     self.permalink = self.permalink.parameterize
     
     if !domain.blank?
