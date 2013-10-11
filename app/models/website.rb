@@ -243,7 +243,7 @@ class Website < ActiveRecord::Base
   end
   
   def cpanel_delete_www_redirect
-    RestClient.get "https://dallasca:D4a5l1l9a8S8@netbuild.co:2087/json-api/cpanel", { 
+    RestClient.get "https://#{CONFIG["whm_user"]}:#{CONFIG["whm_pass"]}@netbuild.co:2087/json-api/cpanel", { 
       params: { 
         "cpanel_jsonapi_user" => permalink,
         "cpanel_jsonapi_apiversion" => 1,
@@ -257,7 +257,7 @@ class Website < ActiveRecord::Base
   end
   
   def cpanel_redirect_to_www
-    RestClient.get "https://dallasca:D4a5l1l9a8S8@netbuild.co:2087/json-api/cpanel", { 
+    RestClient.get "https://#{CONFIG["whm_user"]}:#{CONFIG["whm_pass"]}@netbuild.co:2087/json-api/cpanel", { 
       params: { 
         "cpanel_jsonapi_user" => permalink,
         "cpanel_jsonapi_apiversion" => 1,
@@ -275,7 +275,7 @@ class Website < ActiveRecord::Base
   
   def cpanel_delete_previous_record
     line = false
-    zonefile = JSON.parse RestClient.get "https://dallasca:D4a5l1l9a8S8@netbuild.co:2087/json-api/cpanel", { 
+    zonefile = JSON.parse RestClient.get "https://#{CONFIG["whm_user"]}:#{CONFIG["whm_pass"]}@netbuild.co:2087/json-api/cpanel", { 
       params: { 
         cpanel_jsonapi_user: permalink,
         cpanel_jsonapi_module: "ZoneEdit", 
@@ -295,7 +295,7 @@ class Website < ActiveRecord::Base
     end
   
     if line
-      zonefile = JSON.parse RestClient.get "https://dallasca:D4a5l1l9a8S8@netbuild.co:2087/json-api/cpanel", { 
+      zonefile = JSON.parse RestClient.get "https://#{CONFIG["whm_user"]}:#{CONFIG["whm_pass"]}@netbuild.co:2087/json-api/cpanel", { 
         params: { 
           cpanel_jsonapi_user: permalink,
           cpanel_jsonapi_module: "ZoneEdit", 
@@ -308,7 +308,7 @@ class Website < ActiveRecord::Base
   end
   
   def cpanel_create_zone_records
-    RestClient.get "https://dallasca:D4a5l1l9a8S8@netbuild.co:2087/json-api/cpanel", { 
+    RestClient.get "https://#{CONFIG["whm_user"]}:#{CONFIG["whm_pass"]}@netbuild.co:2087/json-api/cpanel", { 
       params: { 
         cpanel_jsonapi_user: permalink,
         cpanel_jsonapi_module: "ZoneEdit", 
@@ -323,7 +323,7 @@ class Website < ActiveRecord::Base
   end
   
   def cpanel_update_domain
-    RestClient.get "https://dallasca:D4a5l1l9a8S8@netbuild.co:2087/json-api/modifyacct", { 
+    RestClient.get "https://#{CONFIG["whm_user"]}:#{CONFIG["whm_pass"]}@netbuild.co:2087/json-api/modifyacct", { 
       params: {
         user: permalink, 
         domain: stripped_domain(domain)
@@ -332,7 +332,7 @@ class Website < ActiveRecord::Base
   end
   
   def cpanel_suspend_account
-    RestClient.get "https://dallasca:D4a5l1l9a8S8@netbuild.co:2087/json-api/suspendacct", { 
+    RestClient.get "https://#{CONFIG["whm_user"]}:#{CONFIG["whm_pass"]}@netbuild.co:2087/json-api/suspendacct", { 
       params: {
         user: permalink, 
         reason: "Set domain to be empty on #{Time.now}."
@@ -341,7 +341,7 @@ class Website < ActiveRecord::Base
   end
   
   def cpanel_unsuspend_account
-    RestClient.get "https://dallasca:D4a5l1l9a8S8@netbuild.co:2087/json-api/unsuspendacct", { 
+    RestClient.get "https://#{CONFIG["whm_user"]}:#{CONFIG["whm_pass"]}@netbuild.co:2087/json-api/unsuspendacct", { 
       params: {
         user: permalink
       }
@@ -349,15 +349,15 @@ class Website < ActiveRecord::Base
   end
   
   def cpanel_create_account
-    RestClient.get "https://dallasca:D4a5l1l9a8S8@netbuild.co:2087/json-api/createacct", { 
+    RestClient.get "https://#{CONFIG["whm_user"]}:#{CONFIG["whm_pass"]}@netbuild.co:2087/json-api/createacct", { 
       params: {
         username: permalink, 
         domain: stripped_domain(domain),
-        plan: "dallasca_Basic",
+        plan: "#{CONFIG["whm_user"]}_Basic",
         contactemail: admins.first.email
       }
     }
-    RestClient.get "https://dallasca:D4a5l1l9a8S8@netbuild.co:2087/json-api/modifyacct", { 
+    RestClient.get "https://#{CONFIG["whm_user"]}:#{CONFIG["whm_pass"]}@netbuild.co:2087/json-api/modifyacct", { 
       params: {
         user: permalink, 
         HASDKIM: 1,

@@ -16,13 +16,13 @@ beauty = Theme.create({
 beauty.documents.create({
   name: "Style",
   extension: "css",
-  body: IO.read(File.expand_path("../app/views/templates/beauty/style.css"))
+  body: IO.read(File.expand_path("app/views/templates/beauty/style.css"))
 })
 
 beauty_default = beauty.documents.create({
   name: "Main With Sidebar",
   extension: "html",
-  body: IO.read(File.expand_path("../app/views/templates/beauty/main_with_sidebar.html"))
+  body: IO.read(File.expand_path("app/views/templates/beauty/main_with_sidebar.html"))
 })
 
 beauty.update default_document_id: beauty_default.id
