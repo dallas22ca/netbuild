@@ -14,7 +14,6 @@ namespace :sidekiq do
   task :setup, roles: :app do
     run "mkdir -p #{shared_path}/config"
     template "sidekiq_init.erb", "/tmp/sidekiq_init"
-    run "chmod +x /tmp/sidekiq_init"
     run "#{sudo} mv /tmp/sidekiq_init /etc/init.d/sidekiq_#{application}"
     run "#{sudo} update-rc.d sidekiq_#{application} defaults 99"
     run "#{sudo} chmod +x /etc/init.d/sidekiq_#{application}"
