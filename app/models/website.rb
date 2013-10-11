@@ -90,6 +90,7 @@ class Website < ActiveRecord::Base
   def set_defaults
     self.primary_colour = "rgb(240, 110, 48)"
     self.secondary_colour = "rgb(12, 118, 177)"
+    self.permalink = self.permalink.parameterize
     
     if !domain.blank?
       self.domain = self.domain.to_s.downcase.gsub(/http:\/\/|https:\/\//, "")

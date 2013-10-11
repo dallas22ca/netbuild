@@ -6,8 +6,8 @@ class ApplicationController < ActionController::Base
   
   def set_website
     if request.domain == CONFIG["domain"]
-      if %w[app secure www help manage support].include? request.subdomain
-        @website = Website.where(permalink: "netbuild_#{request.subdomain}").first
+      if %w[www help faq].include? request.subdomain
+        @website = Website.where(permalink: "nb-#{request.subdomain}").first
       else
         @website = Website.where(permalink: request.subdomain).first
       end
