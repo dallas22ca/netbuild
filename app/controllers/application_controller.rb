@@ -5,8 +5,12 @@ class ApplicationController < ActionController::Base
   private
   
   def set_website
-    @website = Website.where(domain: "#{request.subdomain + "." unless request.subdomain.blank?}#{request.domain}").first
-    @website = Website.where(permalink: request.subdomain).first unless @website
+    if request.domain == CONFIG["domain"]
+      @website = Website.where(permalink: request.subdomain).first
+    else
+      @website = Website.where(domain: "#{request.subdomain + "." unless request.subdomain.blank?}#{request.domain}").first
+      @website = Website.where(domain: request.domain).first if !@website
+    end
   end
   
   def signed_in?
@@ -17,6 +21,13 @@ class ApplicationController < ActionController::Base
     end
   end
   helper_method :signed_in?
+  
+  def authenticate_adminable?
+    if !user_signed_in? || !@website.adminable_by(current_user)
+      redirect_to root_path
+    end
+  end
+  helper_method :authenticate_adminable?
   
   def authenticate_super_admin?
     unless user_signed_in? && current_user.admin?

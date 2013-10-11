@@ -1,5 +1,5 @@
 development:
-  domain: netbuild.dev
+  domain: lvh.me
   s3_id: AKIAIAG4BLB5CUCNAWZQ
   s3_secret: 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
   s3_bucket: assets-dev.website.com

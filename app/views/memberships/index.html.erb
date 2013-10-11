@@ -1,10 +1,17 @@
-<h1>Listing memberships</h1>
+<%= render "manage_nav" %>
+
+<h1>Members</h1>
+
+<p>
+	How do you check your email? Visit <%= link_to public_page_url("webmail"), public_page_path("webmail") %>.
+</p>
 
 <table>
   <thead>
     <tr>
       <th>Email</th>
       <th>Security</th>
+      <th>Custom Email Account</th>
       <th></th>
     </tr>
   </thead>
@@ -12,8 +19,9 @@
   <tbody>
     <% @memberships.each do |membership| %>
       <tr>
-        <td><%= membership.user.email %></td>
+        <td><%= link_to membership.user.email, edit_membership_path(membership) %></td>
         <td><%= membership.security %></td>
+				<td><%= "#{membership.username}@#{membership.website.stripped_domain(membership.website.domain)} #{"forwarding to #{membership.forward_to}" unless membership.forward_to.blank?}" if membership.has_email_account %></td>
         <td><%= link_to 'Destroy', membership, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>

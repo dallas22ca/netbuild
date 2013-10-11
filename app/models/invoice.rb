@@ -1,4 +1,5 @@
 class Invoice < ActiveRecord::Base
+  serialize :lines, Array
   belongs_to :website
   
   def self.add_addons_to_invoices(website = false)
@@ -16,11 +17,10 @@ class Invoice < ActiveRecord::Base
       
       if !upcoming || upcoming.lines.data.size <= 1
         for a in Addonship.where(website_id: website.id)
-          p ">>> GETS HERE 3"
           addon = a.addon
           description = addon.name
-          description = "#{addon.name} (#{Invoice.helpers.number_to_currency addon.price / 100} x #{a.quantity})" if addon.quantifiable?
-          addon.quantifiable? ? addon_price = addon.price * a.quantity : addon_price = addon.price
+          description = "#{addon.name} (#{Invoice.helpers.number_to_currency addon.price / 100} x #{a.quantity.to_i})" if addon.quantifiable?
+          addon.quantifiable? ? addon_price = addon.price.to_i * a.quantity.to_i : addon_price = addon.price.to_i
         
           item = Stripe::InvoiceItem.create(
             customer: website.customer_token,
@@ -31,6 +31,10 @@ class Invoice < ActiveRecord::Base
         end
       end
     end
+  end
+  
+  def visible_id
+    stripe_id.to_s[-10, 8].upcase
   end
   
   def self.helpers

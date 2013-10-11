@@ -14,7 +14,11 @@ class PagesController < ApplicationController
     @path = request.path
     
     if params[:permalink]
-      @page = @website.pages.where(permalink: params[:permalink]).first
+      if params[:permalink] == "webmail"
+        redirect_to "https://porsche.websitewelcome.com:2096"
+      else
+        @page = @website.pages.where(permalink: params[:permalink]).first
+      end
     elsif @website
       @page = @website.home
     end
@@ -31,7 +35,7 @@ class PagesController < ApplicationController
     if @path != root_path && @page == @website.home
       redirect_to root_path
     elsif !@website
-      render text: "This account has been suspended."
+      render text: "This website does not exist."
     end
   end
 

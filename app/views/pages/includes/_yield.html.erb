@@ -15,8 +15,6 @@
 		@yield = ""
 	end
 	
-	# IO.read(File.expand_path("app/views/templates/hope/homepage.html"))
-	
 	Liquid::Template.parse( @page.layout.body ).render({
 		"primary" => "rgb(240, 110, 48)",
 		"secondary" => "rgb(50, 50, 50)",
@@ -29,7 +27,7 @@
 		"sign_inout_icon" => user_signed_in? ? "unlock" : "lock",
 		"sign_inout_path" => user_signed_in? ? destroy_user_session_path : public_page_path("sign_in"),
 		"home_path" => root_path,
-		"members_path" => public_page_path("members"),
+		"manage_path" => public_page_path("members"),
 		"search_path" => public_page_path("search"),
 		"adminable?" => adminable?,
 		"q" => params[:q],

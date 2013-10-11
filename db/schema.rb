@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131009181243) do
+ActiveRecord::Schema.define(version: 20131010182213) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,7 +32,7 @@ ActiveRecord::Schema.define(version: 20131009181243) do
     t.integer  "addon_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "quantity"
+    t.integer  "quantity",   default: 0
   end
 
   add_index "addonships", ["addon_id"], name: "index_addonships_on_addon_id", using: :btree
@@ -63,13 +63,25 @@ ActiveRecord::Schema.define(version: 20131009181243) do
 
   add_index "documents", ["theme_id"], name: "index_documents_on_theme_id", using: :btree
 
+  create_table "email_addresses", force: true do |t|
+    t.integer  "website_id"
+    t.string   "user"
+    t.string   "domain"
+    t.string   "encrypted_password"
+    t.string   "forward_to"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "email_addresses", ["website_id"], name: "index_email_addresses_on_website_id", using: :btree
+
   create_table "invoices", force: true do |t|
     t.integer  "website_id"
     t.datetime "date"
     t.string   "stripe_id"
     t.datetime "period_start"
     t.datetime "period_end"
-    t.hstore   "lines"
+    t.text     "lines"
     t.integer  "subtotal"
     t.integer  "total"
     t.boolean  "paid"
@@ -104,6 +116,11 @@ ActiveRecord::Schema.define(version: 20131009181243) do
     t.string   "security"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "username"
+    t.boolean  "has_email_account"
+    t.string   "forward_to"
+    t.string   "encrpyted_password"
+    t.string   "encrypted_password"
   end
 
   add_index "memberships", ["user_id"], name: "index_memberships_on_user_id", using: :btree
@@ -171,9 +188,11 @@ ActiveRecord::Schema.define(version: 20131009181243) do
     t.string   "secondary_colour"
     t.string   "stripe_token"
     t.string   "customer_token"
-    t.integer  "bill_day_of_month", default: 1
+    t.integer  "bill_day_of_month",     default: 1
     t.integer  "last_4"
     t.hstore   "addons"
+    t.integer  "free_email_addresses",  default: 2
+    t.integer  "email_addresses_count", default: 0
   end
 
   add_index "websites", ["domain"], name: "index_websites_on_domain", using: :btree

@@ -186,6 +186,7 @@ DEPENDENCIES
   liquid
   pg
   rails (= 4.0.0)
+  rest-client
   s3_direct_upload
   sass-rails (~> 4.0.0)
   sdoc

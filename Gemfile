@@ -16,6 +16,7 @@ gem 'aws-sdk'
 gem 's3_direct_upload'
 gem 'stripe'
 gem 'whenever', :require => false
+gem 'rest-client'
 
 group :doc do
   gem 'sdoc', require: false

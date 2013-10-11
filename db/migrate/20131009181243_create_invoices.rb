@@ -6,7 +6,7 @@ class CreateInvoices < ActiveRecord::Migration
       t.string :stripe_id
       t.datetime :period_start
       t.datetime :period_end
-      t.hstore :lines
+      t.text :lines
       t.integer :subtotal
       t.integer :total
       t.boolean :paid

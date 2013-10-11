@@ -1,18 +1,20 @@
+<%= render "manage_nav" %>
+
 <p id="notice"><%= notice %></p>
-
-<p>
-  <strong>User:</strong>
-  <%= @membership.user %>
-</p>
-
-<p>
-  <strong>Website:</strong>
-  <%= @membership.website %>
-</p>
 
 <p>
   <strong>Security:</strong>
   <%= @membership.security %>
+</p>
+
+<p>
+  <strong>Email Account:</strong>
+  <%= @membership.email_account %>
+</p>
+
+<p>
+  <strong>Has email account:</strong>
+  <%= @membership.has_email_account %>
 </p>
 
 <%= link_to 'Edit', edit_membership_path(@membership) %> |
