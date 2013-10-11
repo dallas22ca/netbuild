@@ -139,16 +139,6 @@ class Website < ActiveRecord::Base
       ordinal: 997,
       document_id: theme.default_document.id
     )
-    
-    members = pages.create(
-      title: "Members",
-      permalink: "members",
-      description: "Members",
-      visible: false,
-      deleteable: false,
-      ordinal: 995,
-      document_id: theme.default_document.id
-    )
   end
   
   def clone_theme
