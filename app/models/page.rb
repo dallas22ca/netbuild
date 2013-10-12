@@ -9,6 +9,7 @@ class Page < ActiveRecord::Base
   before_validation :permalink_is_not_safe, if: Proc.new { |p| %w[webmail manage pages blocks media invoices sign_out].include? p.permalink }
   validates_uniqueness_of :permalink, scope: :website_id
   validates_presence_of :document_id
+  validates_presence_of :title, allow_blank: false
   
   default_scope -> { order(:ordinal) }
   
