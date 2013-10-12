@@ -16,8 +16,8 @@
 	end
 	
 	Liquid::Template.parse( @page.layout.body ).render({
-		"primary" => "rgb(240, 110, 48)",
-		"secondary" => "rgb(50, 50, 50)",
+		"primary" => @website.primary_colour,
+		"secondary" => @website.secondary_colour,
 		"logo" => "/themes/shared/white_logo.png",
 		"cta" => "/themes/shared/miniban.png",
 		"nav" => render("pages/includes/nav"),
