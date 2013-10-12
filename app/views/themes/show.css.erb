@@ -1,6 +1,6 @@
 <% cache [@theme, "css"] do %>
 <%= Liquid::Template.parse(@theme.documents.css.map { |d| d.body }.join).render({
-		"primary" => "rgb(184, 48, 48)",
-		"secondary" => "rgb(58, 122, 125)"
+		"primary" => @website.primary_colour,
+		"secondary" => @website.secondary_colour
 		}, :filters => [LiquidFilters]).html_safe %>
 <% end %>
