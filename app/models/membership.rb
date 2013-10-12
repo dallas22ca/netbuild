@@ -101,6 +101,7 @@ class Membership < ActiveRecord::Base
     self.username = nil
     self.has_email_account = false
     self.forward_to = nil
+    self.save
   end
   
   def email_account
