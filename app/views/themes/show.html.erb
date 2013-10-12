@@ -5,11 +5,9 @@
   <%= @theme.name %>
 </p>
 
-<p>
-  <strong>Website:</strong>
-  <%= @theme.website %>
-</p>
-
-<%= link_to 'Edit', edit_theme_path(@theme) %> |
 <%= link_to 'Back', themes_path %> |
-<%= link_to "Docs", theme_documents_path(@theme) %>
+
+<% if @website.editable_themes.include? @theme %>
+	<%= link_to 'Edit', edit_theme_path(@theme) %> |
+	<%= link_to "Docs", theme_documents_path(@theme) %>
+<% end %>

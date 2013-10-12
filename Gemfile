@@ -18,6 +18,7 @@ gem 's3_direct_upload'
 gem 'stripe'
 gem 'whenever', :require => false
 gem 'rest-client'
+gem 'paper_trail', '>= 3.0.0.beta1'
 
 gem 'sidekiq'
 gem 'sidekiq-failures'

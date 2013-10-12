@@ -143,21 +143,22 @@ class Website < ActiveRecord::Base
   end
   
   def clone_theme
+    chosen = available_themes.find(self.duplicate_theme)
     self.duplicate_theme = false
     
-    new_theme = self.theme.clone
-    new_theme.website_id = id
-    new_theme.name = "My #{theme.name}"
-    new_theme.pristine = false
-    new_theme.save
+    if chosen
+      new_theme = chosen.dup
+      new_theme.website_id = id
+      new_theme.name = "My #{chosen.name}"
+      new_theme.pristine = false
+      new_theme.save
     
-    for doc in theme.documents
-      new_doc = doc.clone
-      new_doc.theme_id = new_theme.id
-      new_doc.save
+      for doc in chosen.documents
+        new_doc = doc.dup
+        new_doc.theme_id = new_theme.id
+        new_doc.save
+      end
     end
-    
-    self.update_attributes theme_id: new_theme.id
   end
   
   def create_permalink

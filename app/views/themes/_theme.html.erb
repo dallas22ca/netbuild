@@ -1,0 +1,17 @@
+<tr id="<%= dom_id theme %>" class="theme">
+	<td><%= link_to theme.name, theme_path(theme) %></td>
+	<td><%= link_to "Duplicate", save_path("website[duplicate_theme]" => theme.id, redirect: manage_path("themes")), method: :patch %></td>
+	
+	<% if @website.editable_themes.include? theme %>
+		<td><%= link_to 'Edit', edit_theme_path(theme) %></td>
+		<td><%= link_to 'Docs', theme_documents_path(theme) %></td>
+		
+    <% if @website.theme != theme %>
+			<td><%= link_to 'Destroy', "/manage#{theme_path(theme)}", method: :delete, data: { confirm: 'Are you sure?' } %></td>
+		<% end %>
+	<% end %>
+	
+	<% if @website.theme != theme %>
+		<td><%= link_to "Use Theme", save_path("website[theme_id]" => theme.id, redirect: manage_path("themes")), method: :patch %></td>
+	<% end %>
+</tr>

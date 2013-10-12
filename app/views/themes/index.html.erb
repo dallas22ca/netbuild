@@ -1,4 +1,4 @@
-<h1>Listing themes</h1>
+<h1>Themes</h1>
 
 <table>
   <thead>
@@ -12,15 +12,7 @@
   </thead>
 
   <tbody>
-    <% @themes.each do |theme| %>
-      <tr>
-        <td><%= theme.name %></td>
-        <td><%= theme.website %></td>
-        <td><%= link_to 'Show', theme %></td>
-        <td><%= link_to 'Edit', edit_theme_path(theme) %></td>
-        <td><%= link_to 'Destroy', theme, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
+    <%= render @themes %>
   </tbody>
 </table>
 

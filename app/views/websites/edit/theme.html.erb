@@ -31,6 +31,7 @@
   <div class="field">
     <%= f.label :theme_id %><br>
     <%= f.collection_select :theme_id, @website.available_themes, :id, :name %>
+		<%= link_to "Theme Manager", manage_path("themes") %>
   </div>
   <div class="field">
     <%= f.label :home_id %><br>
