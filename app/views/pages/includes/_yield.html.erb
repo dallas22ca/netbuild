@@ -15,7 +15,7 @@
 		@yield = ""
 	end
 	
-	Liquid::Template.parse( @page.layout.body ).render({
+	@details = {
 		"primary" => @website.primary_colour,
 		"secondary" => @website.secondary_colour,
 		"logo" => "/themes/shared/white_logo.png",
@@ -32,6 +32,8 @@
 		"adminable?" => adminable?,
 		"q" => params[:q],
 		"yield" => @yield
-	}.merge(@blocks), :filters => [LiquidFilters]).html_safe
+	}
+	
+	Liquid::Template.parse( find_renders(@page.layout.body) ).render(@details.merge(@blocks), filters: [LiquidFilters]).html_safe
 
 %>

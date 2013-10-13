@@ -5,6 +5,7 @@ load = ->
   Stripe.setPublishableKey $("meta[name='stripe-key']").attr("content")
   $("#loading").fadeOut()
   setCodeMirror()
+  selectedNav()
 
 $ ->
   load()

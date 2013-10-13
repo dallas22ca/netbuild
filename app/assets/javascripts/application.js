@@ -17,3 +17,4 @@
 //= require codemirror
 //= require codemirror/modes/css
 //= require_tree ./application
+//= require_tree ./shared

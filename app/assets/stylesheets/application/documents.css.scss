@@ -27,7 +27,6 @@
     font-size: 13px;
     
     .documents {
-      margin-left: 22px;
       margin-bottom: 13px;
       margin-top: 3px;
       font-size: 13px;
@@ -37,11 +36,19 @@
         i {
           color: #A59400;
         }
+        
+        .document.selected {
+          background: #A59400;
+        }
       }
       
       &.html_documents {
         i {
           color: #005491;
+        }
+        
+        .document.selected {
+          background: #005491;
         }
       }
       
@@ -49,22 +56,45 @@
         i {
           color: #5D087D;
         }
+        
+        .document.selected {
+          background: #5D087D;
+        }
       }
       
       &.partial_documents {
         i {
           color: #007917;
         }
+        
+        .document.selected {
+          background: #007917;
+        }
       }
       
       .document {
         color: #777;
         text-transform: none;
+        padding-left: 22px;
+        margin: 0 -10px;
+        
+        a {
+          display: block;
+        }
+        
+        &.selected {
+          color: #fff;
+          
+          i, .delete i {
+            color: #fff;
+          }
+        }
         
         .delete {
           display: none;
           padding-right: 0px;
           padding-left: 5px;
+          float: right;
           
           i {
             color: #990004;
@@ -91,6 +121,10 @@
   outline: none;
   font-size: 14px;
   height: auto;
+  
+  .cm-tab {
+    visibility: hidden;;
+  }
 }
 
 #document_name {

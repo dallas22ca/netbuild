@@ -4,8 +4,8 @@
 	<% %w[html css js partial].each do |ext| %>
 		<li class="extension">
 			<i class="icon-folder-open"></i>
-			<%= ext %>
-			<ul class="documents <%= "#{ext}_documents" %>">
+			<%= ext == "partial" ? ext.pluralize : ext %>
+			<ul class="nav documents <%= "#{ext}_documents" %>">
 				<%= render @theme.documents.where(extension: ext) %>
 			</ul>
 		</li>

@@ -12,6 +12,6 @@
  *= require reset
  *= require font-awesome
  *= require codemirror
- *= require codemirror/themes/lesser-dark
+ *= require codemirror/themes/solarized
  *= require_tree ./application
  */

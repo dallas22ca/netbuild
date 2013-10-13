@@ -13,5 +13,6 @@ $(document).on
       smartIndent: true
       lineWrapping: true
       lineNumbers: true
-      theme: "lesser-dark"
+      styleActiveLine: true
+      theme: "solarized dark"
       mode: "css"
