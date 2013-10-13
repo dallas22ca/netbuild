@@ -1,0 +1,6 @@
+<% cache document do %>
+	<%= content_tag_for :li, document do %>
+		<%= link_to "<i class=\"icon-file-text\"></i> #{document.name}".html_safe, edit_theme_document_path(document.theme_id, document) %>
+		<%= link_to "<i class=\"icon-trash\"></i>".html_safe, theme_document_path(document.theme_id, document), method: :delete, data: { confirm: "Are you sure you want to delete this file?" }, class: "delete", remote: true %>
+	<% end %>
+<% end %>

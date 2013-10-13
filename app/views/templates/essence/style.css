@@ -209,6 +209,19 @@ body {
   padding: 2.5%;
 }
 
+#yield .column {
+  line-height: 1.4em;
+}
+
+#yield .column p {
+  font-size: 0.9em;
+}
+
+#yield .column b {
+  font-size: 1.2em;
+  line-height: 1.6em;
+}
+
 .container {
 	width: 95%;
 	max-width: 1140px;
@@ -221,6 +234,12 @@ body {
     line-height: 36px;
     font-weight: 100;
   }
+
+  #yield .column {
+    width: 28%;
+    padding: 0 2.5%;
+    float: left;
+  }
 }
 
 @media screen and (max-width: 860px){
@@ -228,6 +247,11 @@ body {
     font-size: 20px;
     line-height: 26px;
     font-weight: 100;
+  }
+
+  #yield .column {
+    width: 100%;
+    margin: 25px 0;
   }
 }
 

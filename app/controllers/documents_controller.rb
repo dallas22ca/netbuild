@@ -29,7 +29,7 @@ class DocumentsController < ApplicationController
 
     respond_to do |format|
       if @document.save
-        format.html { redirect_to theme_document_path(@theme, @document), notice: 'Document was successfully created.' }
+        format.html { redirect_to edit_theme_document_path(@theme, @document), notice: 'Document was successfully created.' }
         format.json { render action: 'show', status: :created, location: @document }
       else
         format.html { render action: 'new' }
@@ -57,8 +57,9 @@ class DocumentsController < ApplicationController
   def destroy
     @document.destroy
     respond_to do |format|
-      format.html { redirect_to theme_documents_path(@theme) }
+      format.html { redirect_to edit_theme_documents_path(@theme) }
       format.json { head :no_content }
+      format.js
     end
   end
 

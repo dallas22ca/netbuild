@@ -1,0 +1,13 @@
+<ul id="documents">
+	<li><%= link_to "New Document", new_theme_document_path(@theme) %></li>
+	
+	<% %w[html css js partial].each do |ext| %>
+		<li class="extension">
+			<i class="icon-folder-open"></i>
+			<%= ext %>
+			<ul class="documents <%= "#{ext}_documents" %>">
+				<%= render @theme.documents.where(extension: ext) %>
+			</ul>
+		</li>
+	<% end %>
+</ul>

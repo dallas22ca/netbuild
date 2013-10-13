@@ -14,4 +14,6 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require stripe.v2
+//= require codemirror
+//= require codemirror/modes/css
 //= require_tree ./application

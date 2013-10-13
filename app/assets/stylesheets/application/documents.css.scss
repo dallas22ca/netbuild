@@ -1,0 +1,121 @@
+#documents {
+  background: #eee;
+  padding: 10px;
+  font-size: 14px;
+  line-height: 22px;
+  position: fixed;
+  top: 40px;
+  bottom: 0;
+  left: 0;
+  width: 180px;
+  overflow-y: auto;
+  color: #222;
+  
+  a {
+    text-decoration: none;
+  }
+  
+  i {
+    font-size: 13px;
+    padding-right: 6px;
+  }
+  
+  .extension {
+    color: #333;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 13px;
+    
+    .documents {
+      margin-left: 22px;
+      margin-bottom: 13px;
+      margin-top: 3px;
+      font-size: 13px;
+      font-weight: normal;
+      
+      &.css_documents {
+        i {
+          color: #A59400;
+        }
+      }
+      
+      &.html_documents {
+        i {
+          color: #005491;
+        }
+      }
+      
+      &.js_documents {
+        i {
+          color: #5D087D;
+        }
+      }
+      
+      &.partial_documents {
+        i {
+          color: #007917;
+        }
+      }
+      
+      .document {
+        color: #777;
+        text-transform: none;
+        
+        .delete {
+          display: none;
+          padding-right: 0px;
+          padding-left: 5px;
+          
+          i {
+            color: #990004;
+          }
+        }
+      }
+    }
+  }
+}
+
+.document_form {
+  position: fixed;
+  left: 200px;
+  top: 40px;
+}
+
+#document_body, .CodeMirror {
+  position: fixed;
+  top: 68px;
+  left: 200px;
+  right: 0;
+  bottom: 0;
+  margin: 0;
+  outline: none;
+  font-size: 14px;
+  height: auto;
+}
+
+#document_name {
+  position: fixed;
+  left: 200px;
+  top: 40px;
+  right: 200px;
+  margin: 0;
+  font-size: 18px;
+  padding: 3px 6px;
+  border: 1px solid black;
+}
+
+#document_extension {
+  position: fixed;
+  top: 40px;
+  right: 0;
+  width: 200px;
+  font-size: 18px;
+  padding: 3px 6px;
+  
+}
+
+.save_document {
+  position: fixed;
+  bottom: 5px;
+  right: 5px;
+}

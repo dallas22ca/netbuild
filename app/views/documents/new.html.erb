@@ -1,5 +1,7 @@
-<h1>New document</h1>
+<% cache [@theme, "documents"] do %>
+	<%= render "documents" %>
+<% end %>
 
-<%= render 'form' %>
-
-<%= link_to 'Back', theme_documents_path(@theme) %>
+<div class="document_form">
+	<%= render 'form' %>
+</div>

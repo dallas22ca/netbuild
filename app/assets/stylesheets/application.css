@@ -9,5 +9,9 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
+ *= require reset
+ *= require font-awesome
+ *= require codemirror
+ *= require codemirror/themes/lesser-dark
  *= require_tree ./application
  */

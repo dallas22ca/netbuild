@@ -1,0 +1,5 @@
+<% if @document.errors.any? %>
+  alert("<%= @document.errors.full_messages.map{|m|m}.join %>");
+<% else %>
+  $("#<%= dom_id @document %>").remove();
+<% end %>

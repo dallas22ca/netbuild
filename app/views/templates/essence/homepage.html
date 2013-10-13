@@ -21,14 +21,14 @@
 </div>
 
 <div id="main" class="container">
-	
-	<div class="header">
-		<h2 class="contenteditable" data-title>{{ title }}</h2>
-	</div>
-	
+
 	<div id="yield_wrapper">
 		<div id="yield">
-      {{ wrapper_3? }}
+			<div class="column">{{ wrapper_2 }}</div>
+			<div class="column">{{ wrapper_3 }}</div>
+			<div class="column">{{ wrapper_4 }}</div>
+			<div class="clear"></div>
+			{{ wrapper_5 }}
 			{{ yield }}
 		</div>
 	</div>
