@@ -22,11 +22,11 @@
 	
   <div class="field">
     <%= f.label :primary_colour %><br>
-    <%= f.text_field :primary_colour %>
+    <%= f.text_field :primary_colour, id: "primary_colorpicker", autocomplete: :off, style: "color: #fff; background: #{@website.primary_colour}; " %>
   </div>
   <div class="field">
     <%= f.label :secondary_colour %><br>
-    <%= f.text_field :secondary_colour %>
+    <%= f.text_field :secondary_colour, id: "secondary_colorpicker", autocomplete: :off, style: "color: #fff; background: #{@website.secondary_colour}; " %>
   </div>
   <div class="field">
     <%= f.label :theme_id %><br>

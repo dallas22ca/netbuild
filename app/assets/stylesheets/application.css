@@ -13,5 +13,6 @@
  *= require font-awesome
  *= require codemirror
  *= require codemirror/themes/solarized
+ *= require colorpicker
  *= require_tree ./application
  */

@@ -1,7 +1,7 @@
 <div id="blocks_menu">
 	<ul>
 		<li>
-			<%= link_to "<i class=\"icon-dashboard\"></i>".html_safe, manage_path("account"), class: "show_new_page", data: { no_turbolink: true } %>
+			<%= link_to "<i class=\"icon-dashboard\"></i>".html_safe, manage_path("theme"), class: "show_new_page", data: { no_turbolink: true } %>
 			<p class="hint">
 				Manage your site
 			</p>
@@ -22,11 +22,11 @@
 		</li>
 		
 		<li>
-				<%= link_to "<i class=\"icon-sitemap\"></i>".html_safe, "/sitemap" %>
-				<p class="hint">
-					Click to visit site map
-				</p>
-			</li>
+			<%= link_to "<i class=\"icon-code\"></i>".html_safe, edit_theme_document_path(@website.theme, @page.layout) %>
+			<p class="hint">
+				Edit your theme's code
+			</p>
+		</li>
 		
 		<li class="separator"></li>
 		
@@ -120,37 +120,6 @@
 			<%= link_to "<i class=\"icon-columns\"></i>".html_safe, "#" %>
 			<p class="hint">
 				Add columns
-			</p>
-		</li>
-		
-		<li class="separator"></li>
-		
-		<li class="text_editor_tool">
-			<%= link_to "<i class=\"icon-bold\"></i>".html_safe, "#", data: { action: "Bold" } %>
-			<p class="hint">
-				Click to bold
-			</p>
-		</li>
-		
-		<li class="text_editor_tool">
-			<%= link_to "<i class=\"icon-italic\"></i>".html_safe, "#", data: { action: "Italic" } %>
-			<p class="hint">
-				Click to italicize
-			</p>
-		</li>
-		
-		<li class="text_editor_tool">
-			<%= link_to "<i class=\"icon-underline\"></i>".html_safe, "#", data: { action: "Underline" } %>
-			<p class="hint">
-				Click to underline
-			</p>
-		</li>
-		
-		
-		<li class="text_editor_tool">
-			<%= link_to "<i class=\"icon-link\"></i>".html_safe, "#" %>
-			<p class="hint">
-				Click to link selection to a page
 			</p>
 		</li>
 	</ul>

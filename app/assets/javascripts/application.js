@@ -16,5 +16,6 @@
 //= require stripe.v2
 //= require codemirror
 //= require codemirror/modes/css
+//= require colorpicker
 //= require_tree ./application
 //= require_tree ./shared

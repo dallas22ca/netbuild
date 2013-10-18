@@ -9,6 +9,7 @@ body {
   margin: -40px -40px 40px -40px;
   
   h1 {
+    margin-left: 15px;
     float: left;
   
     img {
@@ -23,7 +24,7 @@ body {
   
     li {
       display: inline-block;
-      margin-left: 3px;
+      margin-left: -1px;
       position: relative;
       
       a {
