@@ -120,11 +120,11 @@ class WebsitesController < ApplicationController
     
     def website_params
       if super_admin?
-        params.require(:website).permit(:title, :domain, :theme_id, :duplicate_theme, :home_id, :primary_colour, :secondary_colour, :card_token, :customer_token, addon_ids: [])
+        params.require(:website).permit(:title, :domain, :theme_id, :duplicate_theme, :home_id, :primary_colour, :secondary_colour, :header, :card_token, :customer_token, addon_ids: [])
       elsif @website.adminable_by(current_user)
-        params.require(:website).permit(:title, :domain, :theme_id, :duplicate_theme, :home_id, :primary_colour, :secondary_colour, :card_token, addon_ids: [])
+        params.require(:website).permit(:title, :domain, :theme_id, :duplicate_theme, :home_id, :primary_colour, :secondary_colour, :header, :card_token, addon_ids: [])
       else
-        params.require(:website).permit(:title, :domain, :theme_id, :duplicate_theme, :home_id, :primary_colour, :secondary_colour)
+        params.require(:website).permit(:title, :domain, :theme_id, :duplicate_theme, :home_id, :primary_colour, :secondary_colour, :header)
       end
     end
 end
