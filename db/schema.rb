@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131012101506) do
+ActiveRecord::Schema.define(version: 20131023205548) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -204,6 +204,7 @@ ActiveRecord::Schema.define(version: 20131012101506) do
     t.hstore   "addons"
     t.integer  "free_email_addresses",  default: 2
     t.integer  "email_addresses_count", default: 0
+    t.text     "header"
   end
 
   add_index "websites", ["domain"], name: "index_websites_on_domain", using: :btree
