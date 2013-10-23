@@ -1,5 +1,5 @@
 @selectedNav = ->
-  $(".nav a").each ->
+  $("li a").each ->
     if window.location.pathname == $(this).attr("href")
       li = $(this).closest("li")
       li.addClass("selected")
