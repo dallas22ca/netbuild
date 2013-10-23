@@ -1,0 +1,8 @@
+<% cache [@theme, "js"] do %>
+<%=
+	Liquid::Template.parse(@theme.documents.js.map { |d| d.body }.join(" ").gsub(/\s\s+/, "")).render({
+		"primary" => @website.primary_colour,
+		"secondary" => @website.secondary_colour
+	}, :filters => [LiquidFilters]).html_safe
+%>
+<% end %>
