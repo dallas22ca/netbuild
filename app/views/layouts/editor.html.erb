@@ -9,6 +9,7 @@
 	<%= tag :meta, name: "apple-mobile-web-app-capable", content: "yes" %>
 	<%= tag :meta, name: "apple-mobile-web-app-status-bar-style", content: "black" %>
   <%= csrf_meta_tags %>
+	<%= @website.header.html_safe %>
 </head>
 <body data-primary_colour="<%= @website.primary_colour %>" data-secondary_colour="<%= @website.secondary_colour %>" data-page_id="<%= @page.id if @page %>">
 	
