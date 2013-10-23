@@ -38,7 +38,7 @@ class ThemesController < ApplicationController
 
     respond_to do |format|
       if @theme.save
-        format.html { redirect_to @theme, notice: 'Theme was successfully created.' }
+        format.html { redirect_to theme_documents_path(@theme), notice: 'Theme was successfully created.' }
         format.json { render action: 'show', status: :created, location: @theme }
       else
         format.html { render action: 'new' }
@@ -52,7 +52,7 @@ class ThemesController < ApplicationController
   def update
     respond_to do |format|
       if @theme.update(theme_params)
-        format.html { redirect_to @theme, notice: 'Theme was successfully updated.' }
+        format.html { redirect_to theme_documents_path(@theme), notice: 'Theme was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }

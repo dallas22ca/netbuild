@@ -1,4 +1,4 @@
-<%= form_for(@theme) do |f| %>
+<%= form_for @theme, url: (@theme.new_record? ? manage_path("themes") : "/manage#{theme_path(@theme)}") do |f| %>
   <% if @theme.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@theme.errors.count, "error") %> prohibited this theme from being saved:</h2>

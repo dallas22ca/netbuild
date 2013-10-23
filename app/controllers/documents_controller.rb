@@ -6,6 +6,7 @@ class DocumentsController < ApplicationController
   # GET /documents.json
   def index
     @documents = @theme.documents
+    redirect_to edit_theme_document_path(@theme, @documents.first)
   end
 
   # GET /documents/1
