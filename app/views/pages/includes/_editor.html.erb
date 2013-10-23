@@ -1,15 +1,13 @@
-<% cache [@website, "editor", "nav", "v1"] do %>
-	<%= button_tag "Save Changes", class: "publish", data: { url: save_path(format: :js) } %>
-	<%= button_tag "Clear History", class: "clear_timetravel" %>
+<%= button_tag "Save Changes", class: "publish", data: { url: save_path(format: :js) } %>
+<%= button_tag "Clear History", class: "clear_timetravel" %>
 
-	<%= render "pages/includes/editor/media" %>
-	<%= render "pages/includes/editor/menu" %>
-	<%= render "pages/includes/editor/widget_editors" %>
+<%= render "pages/includes/editor/media" %>
+<%= render "pages/includes/editor/menu" %>
+<%= render "pages/includes/editor/widget_editors" %>
 
-	<div id="templates">
-		<% %w[p h3 h4 events img social media].each do |genre| %>
-			<%= render @website.blocks.build(id: Random.rand(10000000000..1000000000000000), genre: genre) %>
-		<% end %>
-	</div>
-	<div id="snapshots"></div>
-<% end %>
+<div id="templates">
+	<% %w[p h3 h4 events img social media].each do |genre| %>
+		<%= render @website.blocks.build(id: Random.rand(10000000000..1000000000000000), genre: genre) %>
+	<% end %>
+</div>
+<div id="snapshots"></div>
