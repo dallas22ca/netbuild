@@ -4,6 +4,8 @@ class Membership < ActiveRecord::Base
   belongs_to :user
   belongs_to :website
   
+  accepts_nested_attributes_for :user
+  
   scope :admin, -> { where(security: "admin") }
   scope :with_email_account, -> { where(has_email_account: true) }
   

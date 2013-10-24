@@ -14,7 +14,7 @@ class PagesController < ApplicationController
     @path = request.path
     
     if params[:permalink]
-      if params[:permalink] == "webmail"
+      if params[:permalink] == "mail"
         redirect_to "https://porsche.websitewelcome.com:2096"
       else
         @page = @website.pages.where(permalink: params[:permalink]).first

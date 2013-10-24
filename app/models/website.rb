@@ -20,6 +20,7 @@ class Website < ActiveRecord::Base
   before_validation :permalink_is_not_safe, if: Proc.new { |p| %w[app secure www help manage support].include? p.permalink }
   before_validation :theme_does_not_have_default_document, if: Proc.new { theme_id_changed? && theme.default_document_id.blank? }
   before_validation :create_permalink, if: Proc.new { permalink.blank? }
+  before_validation :set_defaults
   
   validates_associated :addonships
   validates_presence_of :title, :permalink, :theme_id
@@ -28,7 +29,6 @@ class Website < ActiveRecord::Base
   validates_uniqueness_of :domain, allow_blank: true
   
   before_save :update_email_addresses_count, if: :free_email_addresses_changed?
-  before_save :set_defaults
   before_save :billing_info_required, if: Proc.new { billing_info_required? && card_token.blank? && customer_token.blank? }
   before_save :stripify, if: Proc.new { billing_info_required? && !card_token.blank? }
   after_create :seed_content, if: :theme_id?
@@ -199,6 +199,15 @@ class Website < ActiveRecord::Base
   def email_addon
     addon = addons.where(permalink: "email").first
     addonships.where(addon_id: addon.id).first if addon
+  end
+  
+  def money_addon
+    addon = addons.where(permalink: "money").first
+    addonships.where(addon_id: addon.id).first if addon
+  end
+  
+  def can_accept_money?
+    money_addon && "STRIPE CREDENTIALS"
   end
   
   def stripped_domain(full)

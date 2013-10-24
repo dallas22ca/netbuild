@@ -2,17 +2,26 @@
 
 <h1>Members</h1>
 
-<p>
-	How do you check your email? Visit <%= link_to public_page_url("webmail"), public_page_path("webmail") %>.
-</p>
+<% if @website.email_addon %>
+	<p class="hint">
+		Members can check their email accounts at <%= link_to public_page_url("mail"), public_page_path("mail") %>.
+	</p>
+<% end %>
 
-<table>
+<table class="table">
   <thead>
     <tr>
       <th>Email</th>
-      <th>Security</th>
-      <th>Custom Email Account</th>
-      <th></th>
+      <th>Permissions</th>
+			<% if @website.email_addon %>
+	      <th>@<%= @website.stripped_domain(@website.domain) %></th>
+			<% end %>
+			<% if @website.can_accept_money? %>
+				<th>Has Card</th>
+			<% end %>
+			<% if @website.adminable_by(current_user) %>
+	      <th></th>
+			<% end %>
     </tr>
   </thead>
 
@@ -20,9 +29,25 @@
     <% @memberships.each do |membership| %>
       <tr>
         <td><%= link_to membership.user.email, edit_membership_path(membership) %></td>
-        <td><%= membership.security %></td>
-				<td><%= "#{membership.username}@#{membership.website.stripped_domain(membership.website.domain)} #{"forwarding to #{membership.forward_to}" unless membership.forward_to.blank?}" if membership.has_email_account %></td>
-        <td><%= link_to 'Destroy', membership, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to membership.security.capitalize, edit_membership_path(membership) %></td>
+				
+				<% if @website.email_addon %>
+					<td><%= link_to("#{membership.username}@#{membership.website.stripped_domain(membership.website.domain)} #{"forwarding to #{membership.forward_to}" unless membership.forward_to.blank?}", edit_membership_path(membership)) if membership.has_email_account %></td>
+				<% end %>
+				
+				<% if @website.can_accept_money? %>
+					<td>
+						<% if 1 == 1 %>
+							<%= link_to "<i class=\"icon-ok\"></i>".html_safe, edit_membership_path(membership) %>
+						<% else %>
+							<%= link_to "<i class=\"icon-remove\"></i>".html_safe, edit_membership_path(membership) %>
+						<% end %>
+					</td>
+				<% end %>
+				
+				<% if @website.adminable_by(current_user) %>
+	        <td><%= link_to "<i class=\"icon-trash\"></i>".html_safe, membership, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+				<% end %>
       </tr>
     <% end %>
   </tbody>

@@ -18,7 +18,7 @@ class WebsitesController < ApplicationController
 
   # GET /websites/1/edit
   def edit
-    params[:feature] ||= "account"
+    params[:feature] ||= "theme"
     render "websites/edit/#{params[:feature]}"
   end
 

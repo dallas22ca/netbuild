@@ -4,5 +4,5 @@
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @membership %> |
+<%= link_to "Remove", @membership, method: :delete, data: { confirm: 'Are you sure?' } %> |
 <%= link_to 'Back', memberships_path %>

@@ -1,7 +1,7 @@
 <%= render "manage_nav" %>
 
 <%= form_for @website, url: save_path, data: { customer_token: @website.has_payment_info? } do |f| %>
-	<%= hidden_field_tag :redirect, manage_path("account") %>
+	<%= hidden_field_tag :redirect, manage_path("addons") %>
 	
   <% if @website.errors.any? %>
     <div id="error_explanation">
@@ -17,15 +17,17 @@
 	
 	<% if @website.adminable_by(current_user) %>
 	
-		<div class="field">
+		<div class="field hint">
 	    <%= f.label :domain, "Domain ($40/month includes hosting, custom domain, and #{@website.free_email_addresses} email accounts)" %><br>
 	    http://<%= f.text_field :domain %>
 	  </div>
 	
-		Addons are only available when you have chosen a domain.<br>
-		Email addresses will be removed if you change your domain.
+		<p class="hint">
+			Addons are only available when you have chosen a domain.<br>
+			Email addresses will be removed if you change your domain.
+		</p>
 		
-		<table style="margin: 20px 0; ">
+		<table class="table">
 			<thead>
 				<tr>
 					<th></th>
@@ -39,7 +41,7 @@
 				<% Addon.available.each do |addon| %>
 					<tr class="addon" data-permalink="<%= addon.permalink %>" data-price="<%= addon.price %>">
 						<td><%= check_box_tag "website[addon_ids][]", addon.id, @website.addon_ids.include?(addon.id), id: dom_id(addon) %></td>
-						<td><%= label_tag dom_id(addon), "#{addon.name} #{"(#{@website.free_email_addresses} free)" if addon.permalink.include? "email"} (#{number_to_currency addon.price / 100} /#{" additional address /" if addon.permalink.include? "email"} month)" %></td>
+						<td><%= label_tag dom_id(addon), "#{addon.name} (#{number_to_currency addon.price / 100} /#{" address /" if addon.permalink.include? "email"} month)" %></td>
 					</tr>
 				<% end %>
 				
@@ -52,21 +54,26 @@
 			</tbody>
 		</table>
 	
-		Your current package, including addons, is <b><%= number_to_currency @website.price / 100 %> / month</b>.<br>
+		<p class="hint">
+			Your current package, including addons, is <b><%= number_to_currency @website.price / 100 %> / month</b>.<br>
 		
-		<% if @website.customer_token.blank? %>
-			There is no credit card associated with your account.
-			<%= link_to "Add my billing information", "#", class: "toggle_billing" %><br><br>
-		<% else %>
-			Your current credit card ends with <b><%= @website.last_4 %></b>.
-			<%= link_to "Update my credit card", "#", class: "toggle_billing" %><br>
-			To cancel your subscription: remove all addons and make the domain blank.<br><br>
-		<% end %>
+			<% if @website.customer_token.blank? %>
+				There is no credit card associated with your account.
+				<%= link_to "Add my billing information", "#", class: "toggle_billing" %>
+			<% else %>
+				Your current credit card ends with <b><%= @website.last_4 %></b>.
+				<%= link_to "Update my credit card", "#", class: "toggle_billing" %><br>
+				
+				<% if @website.price > 0 %>
+					To cancel your subscription: <%= link_to "click here", "#", class: "cancel_subscription" %>.
+				<% end %>
+			<% end %>
+
+		</p>
 	
 	<% end %>
 
-	<div class="billing <%= "hide" if !@website.customer_token.blank? || @website.customer_token.blank? %>">
-		<hr />
+	<div class="hint billing <%= "hide" if !@website.customer_token.blank? || @website.customer_token.blank? %>">
 	  <div class="field">
 	    <%= label_tag "Number" %><br>
 	    <%= text_field_tag nil, "", data: { stripe: "number", name: nil, id: nil } %>
@@ -84,7 +91,6 @@
 			<%= select_year nil, { start_year: Date.today.year, end_year: Date.today.year + 15 }, { data: { stripe: "exp-year" }, name: nil, id: nil } %>
 	  </div>
 		<%= f.hidden_field :card_token %>
-		<hr />
 	</div>
 	
 	<% if super_admin? %>

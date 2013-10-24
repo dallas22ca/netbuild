@@ -14,7 +14,7 @@
 	<% if @website.adminable_by(current_user) %>
 	  <div class="field">
 	    <%= f.label :security %><br>
-	    <%= f.select :security, options_for_select([["Admin", "admin"], ["User", "user"]], f.object.try(:security)) %>
+	    <%= f.select :security, options_for_select([["Admin", "admin"], ["Member", "member"], ["Bookkeeper", "Bookkeeper"], ["Author", "author"], ["Editor", "editor"]], f.object.try(:security)) %>
 	  </div>
 	<% end %>
 	
@@ -22,11 +22,11 @@
 	  <div class="field">
 			<%= f.check_box :has_email_account %>
 	    <%= f.label :has_email_account %><br>
-			Username: 
+			<%= f.label :username %> 
 			<% if !@membership.has_email_account? %>
-				<%= f.text_field :username %>
+				<%= f.text_field :username %>@<%= @website.stripped_domain(@website.domain) %>
 			<% else %>
-				<%= @membership.username %>
+				<%= @membership.username %>@<%= @website.stripped_domain(@website.domain) %>
 			<% end %>
 			<br>
 			Password: <%= f.password_field :password %><br>

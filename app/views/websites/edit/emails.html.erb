@@ -20,7 +20,7 @@
 		<% if @website.has_payment_info? %>
 			<% if @website.email_addresses.size > @website.allowed_email_addresses %>
 				<b>You have downgraded your account. Which <%= @website.allowed_email_addresses %> email addresses would you like to keep?</b><br>
-				If this was a mistake, visit the <%= link_to "account", manage_path("account") %> page to purchase more email addresses.
+				If this was a mistake, visit the <%= link_to "addons", manage_path("addons") %> page to purchase more email addresses.
 				
 				<table id="email_addresses">
 					<% n = 0 %>
@@ -56,7 +56,7 @@
 							<td><%= hidden_field_tag "email_addresses[][pass]" %></td>
 							<td><%= text_field_tag "email_addresses[][forward_to]" %></td>
 							<td><%= hidden_field_tag "email_addresses[][delete]" %></td>
-							<td><%= link_to "Webmail", public_page_path("webmail") %></td>
+							<td><%= link_to "mail", public_page_path("mail") %></td>
 						</tr>
 					<% end %>
 					

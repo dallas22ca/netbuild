@@ -33,11 +33,11 @@ Netbuild::Application.routes.draw do
         end
         
         patch "/save" => "websites#update", as: :save
-        get "/save", to: redirect { "/manage/account" }
+        get "/save", to: redirect { "/manage/theme" }
         get "/:feature" => "websites#edit", as: :manage
       end
       
-      get "/manage", to: redirect { "/manage/account" }
+      get "/manage", to: redirect { "/manage/theme" }
     end
     
     resources :themes, only: :show

@@ -14,6 +14,12 @@ $(document).on "submit", ".edit_website", ->
     Stripe.createToken $(this), stripeResponse
     false
 
+$(document).on "click", ".cancel_subscription", ->
+  if confirm "Your website will no longer have any addons and will not be shown at yourdomain.com. Are you sure you want to continue?"
+    $(".addon input[type='checkbox']").removeAttr "checked"
+    $("#website_domain").val ""
+    $(this).closest("form").submit()
+
 @hideBilling = ->
   if $(".billing").length
     if $("#website_domain").val() == ""
