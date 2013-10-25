@@ -14,7 +14,7 @@
 	<% if @website.adminable_by(current_user) %>
 	  <div class="field">
 	    <%= f.label :security %><br>
-	    <%= f.select :security, options_for_select([["Admin", "admin"], ["Member", "member"], ["Bookkeeper", "Bookkeeper"], ["Author", "author"], ["Editor", "editor"]], f.object.try(:security)) %>
+	    <%= f.select :security, options_for_select([["Admin", "admin"], ["Member", "member"]], f.object.try(:security)) %>
 	  </div>
 	<% end %>
 	

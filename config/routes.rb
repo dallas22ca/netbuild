@@ -22,19 +22,21 @@ Netbuild::Application.routes.draw do
   constraints subdomain: /.*?/ do
     authenticated do
       resources :block, only: :show
-      resources :media
       
-      scope "/manage" do
-        resources :memberships, path: :members
-        resources :invoices
-        resources :pages
-        resources :themes do
-          resources :documents
-        end
+      constraints "1" == "2" do
+        scope "/manage" do
+          resources :memberships, path: :members
+          resources :invoices
+          resources :pages
+          resources :media
+          resources :themes do
+            resources :documents
+          end
         
-        patch "/save" => "websites#update", as: :save
-        get "/save", to: redirect { "/manage/theme" }
-        get "/:feature" => "websites#edit", as: :manage
+          patch "/save" => "websites#update", as: :save
+          get "/save", to: redirect { "/manage/theme" }
+          get "/:feature" => "websites#edit", as: :manage
+        end
       end
       
       get "/manage", to: redirect { "/manage/theme" }
