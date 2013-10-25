@@ -1,9 +1,12 @@
 <ol class="nav social">
-	<li><%= link_to "<i class=\"icon-facebook\"></i>".html_safe, "#" %></li>
-	<li><%= link_to "<i class=\"icon-twitter\"></i>".html_safe, "#" %></li>
-	<li><%= link_to "<i class=\"icon-instagram\"></i>".html_safe, "#" %></li>
+	<!--
+		<li><%= link_to "<i class=\"icon-facebook\"></i>".html_safe, "#" %></li>
+		<li><%= link_to "<i class=\"icon-twitter\"></i>".html_safe, "#" %></li>
+		<li><%= link_to "<i class=\"icon-instagram\"></i>".html_safe, "#" %></li>
+	-->
 	<li><%= link_to "<i class=\"icon-rss\"></i>".html_safe, "#" %></li>
 	<li><%= link_to "<i class=\"icon-search\"></i>".html_safe, public_page_path("search") %></li>
+	<li><%= link_to "<i class=\"icon-sitemap\"></i>".html_safe, public_page_path("sitemap") %></li>
 	
 	<% if adminable? %>
 		<li><%= link_to "<i class=\"icon-envelope\"></i>".html_safe, public_page_path("mail"), target: :blank %></li>
