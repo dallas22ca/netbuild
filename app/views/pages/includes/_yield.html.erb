@@ -33,7 +33,7 @@
 		"q" => params[:q],
 		"yield" => @yield
 	}
-	
-	Liquid::Template.parse( find_renders(@page.layout.body) ).render(@details.merge(@blocks), filters: [LiquidFilters]).html_safe
+
+	Liquid::Template.parse( @page.body_with_partials ).render(@details, filters: [LiquidFilters]).html_safe
 
 %>

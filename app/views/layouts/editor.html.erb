@@ -12,7 +12,7 @@
 	<%= @website.header.to_s.html_safe %>
 </head>
 <body data-primary_colour="<%= @website.primary_colour %>" data-secondary_colour="<%= @website.secondary_colour %>" data-page_id="<%= @page.id if @page %>">
-	
+
 <%= render "pages/includes/editor" %>
 
 <div id="timetravel">

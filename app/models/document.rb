@@ -4,6 +4,8 @@ class Document < ActiveRecord::Base
   belongs_to :theme, touch: true
   
   validates_uniqueness_of :name, scope: :theme_id
+    
+  default_scope -> { order(:name) }
   
   scope :partials, -> { where(extension: "partial") }
   scope :html, -> { where(extension: "html") }

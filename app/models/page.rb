@@ -27,4 +27,16 @@ class Page < ActiveRecord::Base
   def root?
     parent_id == nil
   end
+  
+  def body_with_partials
+    @body_with_partials ||= layout.body.to_s
+    
+    while @body_with_partials =~ /\{\{(.*?)render(.*?)\}\}/
+      website.theme.documents.partials.each do |d|
+        @body_with_partials = @body_with_partials.gsub(/\{\{\s*render\s*"#{d.name}"\s*\}\}/, d.body.html_safe.gsub(/\{\{\s*render\s*"#{d.name}"\s*\}\}/, ""))
+      end
+    end
+    
+    @body_with_partials.html_safe
+  end
 end
