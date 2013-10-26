@@ -24,15 +24,17 @@ class BlocksController < ApplicationController
   # POST /blocks
   # POST /blocks.json
   def create
-    @block = Block.new(block_params)
+    @block = @website.blocks.new(block_params)
 
     respond_to do |format|
       if @block.save
         format.html { redirect_to @block, notice: 'Block was successfully created.' }
         format.json { render action: 'show', status: :created, location: @block }
+        format.js
       else
         format.html { render action: 'new' }
         format.json { render json: @block.errors, status: :unprocessable_entity }
+        format.js
       end
     end
   end
@@ -69,6 +71,6 @@ class BlocksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def block_params
-      params.require(:block).permit(:website_id, :parent, :genre, :details)
+      params.require(:block).permit(:wrapper_id, :parent, :genre, :details)
     end
 end

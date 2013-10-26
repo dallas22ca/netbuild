@@ -1,0 +1,12 @@
+#sitemap {
+  list-style: disc;
+  
+  li {
+    margin-left: 25px;
+    margin-bottom: 7px;
+    
+    ol {
+      list-style: disc;
+    }
+  }
+}

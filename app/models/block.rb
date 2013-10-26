@@ -6,6 +6,12 @@ class Block < ActiveRecord::Base
   
   default_scope -> { order(:ordinal) }
   
+  before_validation :set_defaults
+  
+  def set_defaults
+    self.details = { "style" => "p", "content" => "This is a placeholder." } if self.details.blank? && self.genre == "text"
+  end
+  
   def data
     @data = details || {}
   end

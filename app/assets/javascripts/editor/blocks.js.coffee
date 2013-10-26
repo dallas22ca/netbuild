@@ -7,7 +7,7 @@ $(document).on "submit", ".widget_editor", ->
     value = $(this).val()
     
     if typeof name != "undefined" && name != "utf8" && name != "block_id" && name != "commit"
-      if $(this).is("select") && typeof value == "string"
+      if $(this).is("[multiple]")
         value = [value]
       block[name.replace("[]", "")] = value
   
@@ -15,7 +15,7 @@ $(document).on "submit", ".widget_editor", ->
   $(this).fadeOut()
   
   if $("#timetravel #block_#{block_id}").attr("data-details", JSON.stringify(block))
-    $.getScript $("#timetravel #block_#{block_id}").data("url")
+    # $.getScript $("#timetravel #block_#{block_id}").data("url")
     window.midedit = true
     createSnapshot()
   false
@@ -51,8 +51,7 @@ $(document).on
       handle.prependTo $(this)
       trash.prependTo $(this)
 
-      unless genre == "h3" || genre == "h4" || genre == "p"
-        edit.prependTo $(this)
+      edit.prependTo $(this)
   mouseleave: ->
     if !$(".placeholder").length && !$(".widget_editor:visible").length
       $(".handle, .delete, .edit").remove()
@@ -108,8 +107,12 @@ $(document).on
 @loadBlocks = ->
   showNoWrappers()
   
-  $(".widget_editor").draggable
-    handle: "h3"
+  $(".block_dragger").draggable
+    connectToSortable: "#timetravel .wrapper"
+    revert: "invalid"
+    helper: ->
+      genre = $(this).data("genre")
+      clone_with_new_id genre
   
   $(".nav:not(.social)").sortable
     placeholder: "drop_placeholder"
@@ -122,7 +125,7 @@ $(document).on
         if nav != $(this) && $(this).hasClass("roots")
           $(this).html nav.html()
       createSnapshot()
-    
+  
   $("#timetravel .wrapper").sortable
     items: ".block"
     connectWith: ".wrapper"
@@ -148,3 +151,12 @@ $(document).on
     update: (e, ui) ->
       if this == ui.item.parent()[0]
         createSnapshot()
+    receive: (e, ui) ->
+      genre = $(ui.item).data("genre")
+      $(".wrapper a.block_dragger").replaceWith clone_with_new_id(genre)
+
+@clone_with_new_id = (genre) ->
+  new_id = Math.floor(Math.random()*2951479051793528).toString(16) + Math.floor(Math.random()*2951479051793528).toString(16)
+  template = $("#templates .block[data-genre='#{genre}']")
+  template.attr("data-initial-id", new_id)
+  template.clone()

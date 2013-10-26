@@ -1,15 +1,7 @@
 <% cache block do %>
 	<%= content_tag_for :div, block, data: { genre: block.genre, id: block.id, details: block.details, url: block_path(block) } do %>
-		<% if block.genre == "p" %>
-			<p class="contenteditable"><%= block.data["content"].to_s.html_safe %></p>
-		<% elsif block.genre == "h3" %>
-			<h3 class="contenteditable"><%= block.data["content"].to_s.html_safe %></h3>
-		<% elsif block.genre == "h4" %>
-			<h4 class="contenteditable"><%= block.data["content"].to_s.html_safe %></h4>
-		<% elsif block.genre == "button" %>
-			<button class="contenteditable"><%= block.data["content"].to_s.html_safe %></button>
-		<% elsif block.genre == "blockquote" %>
-			<blockquote class="contenteditable"><%= block.data["content"].to_s.html_safe %></blockquote>
+		<% if block.genre == "text" %>
+			<<%= block.data["style"] %> class="contenteditable"><%= block.data["content"].to_s.html_safe %></<%= block.data["style"] %>>
 		<% elsif block.genre == "events" %>
 			<ol>
 				<li>
@@ -106,7 +98,7 @@
 					</tr>
 					<tr>
 						<td><i class="icon-group"></i></td>
-						<td class="contenteditable 	title">
+						<td class="contenteditable title">
 							<b>Business Management Tools.</b>
 						</td>
 						<td class="contenteditable price">Included</td>
@@ -119,7 +111,7 @@
 					</tr>
 					<tr>
 						<td><i class="icon-code"></i></td>
-						<td class="contenteditable 	title">
+						<td class="contenteditable title">
 							<b>Full Access to Your Site's Source Code.</b>
 						</td>
 						<td class="contenteditable price">Included</td>

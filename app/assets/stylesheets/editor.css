@@ -12,5 +12,6 @@
  *= require reset
  *= require font-awesome
  *= require chosen
+ *= require_tree ./shared
  *= require_tree ./editor
  */

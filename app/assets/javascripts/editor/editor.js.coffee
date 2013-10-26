@@ -34,6 +34,7 @@ $(document).on "blur", "[contenteditable]", ->
   
   if $(this).closest(".block").length
     details = {}
+    details.style = $(this).get(0).tagName.toLowerCase()
     details.content = $(this).html()
     $(this).closest(".block").attr("data-details", JSON.stringify(details))
 
@@ -94,8 +95,8 @@ load = ->
   selectedNav()
   # timeTravel.init() if window && window["localStorage"] != null
   createSnapshot() unless timeTravel.active
+  $("#s3-uploader").S3Uploader() if $("#s3-uploader").length
   $("#loading").fadeOut()
-  $("#s3-uploader").S3Uploader()
 
 $ ->
   load()

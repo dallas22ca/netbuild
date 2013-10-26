@@ -1,5 +1,21 @@
 <div id="widget_editor_overlay"></div>
 
+<div class="widget_editor" data-genre="text">
+	<%= form_tag "#", authenticity_token: false do %>
+		<%= hidden_field_tag :block_id, "", class: "block_id", id: nil %>
+		<%= hidden_field_tag :content, "", class: "content", id: nil %>
+		<h3>Text</h3>
+		<div class="field">
+			<%= label_tag :style %><br>
+			<%= select_tag :style, options_for_select(["h3", "h4", "p", "button", "blockquote"]), class: "style", id: nil %>
+		</div>
+		<div class="actions">
+			<%= submit_tag "Save" %>
+			<%= link_to "Cancel", "#", class: "cancel" %>
+		</div>
+	<% end %>
+</div>
+
 <div class="widget_editor" data-genre="money">
 	<%= form_tag "#", authenticity_token: false do %>
 		<%= hidden_field_tag :block_id, "", class: "block_id", id: nil %>

@@ -21,7 +21,7 @@ Netbuild::Application.routes.draw do
   
   constraints subdomain: /.*?/ do
     authenticated do
-      resources :block, only: :show
+      resources :blocks, only: [:show, :create]
       
       constraints "1" == "2" do
         scope "/manage" do

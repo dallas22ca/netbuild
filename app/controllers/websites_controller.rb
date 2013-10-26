@@ -65,12 +65,12 @@ class WebsitesController < ApplicationController
             )
           end
         elsif block[:delete] != "true"
-          b = @website.blocks.create(
+          b = Block.create(
             wrapper_id: block[:wrapper_id],
             genre: block[:genre],
             ordinal: block[:ordinal],
             details: block[:details],
-            initial_id: block[:id]
+            initial_id: block[:initial_id]
           )
           @new.push b
         end
@@ -120,11 +120,11 @@ class WebsitesController < ApplicationController
     
     def website_params
       if super_admin?
-        params.require(:website).permit(:title, :domain, :theme_id, :duplicate_theme, :home_id, :primary_colour, :secondary_colour, :header, :card_token, :customer_token, addon_ids: [])
+        params.permit(:website).permit(:title, :domain, :theme_id, :duplicate_theme, :home_id, :primary_colour, :secondary_colour, :header, :card_token, :customer_token, addon_ids: [])
       elsif @website.adminable_by(current_user)
-        params.require(:website).permit(:title, :domain, :theme_id, :duplicate_theme, :home_id, :primary_colour, :secondary_colour, :header, :card_token, addon_ids: [])
+        params.permit(:website).permit(:title, :domain, :theme_id, :duplicate_theme, :home_id, :primary_colour, :secondary_colour, :header, :card_token, addon_ids: [])
       else
-        params.require(:website).permit(:title, :domain, :theme_id, :duplicate_theme, :home_id, :primary_colour, :secondary_colour, :header)
+        params.permit(:website).permit(:title, :domain, :theme_id, :duplicate_theme, :home_id, :primary_colour, :secondary_colour, :header)
       end
     end
 end
