@@ -32,6 +32,7 @@ end
 
 group :development do
   gem 'capistrano'
+  gem 'capistrano-unicorn', :require => false
   gem 'thin'
   gem 'foreman'
 end

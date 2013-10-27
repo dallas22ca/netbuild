@@ -3,6 +3,7 @@ load 'deploy/assets'
 require "bundler/capistrano"
 require 'sidekiq/capistrano'
 require "whenever/capistrano"
+require 'capistrano-unicorn'
 
 Dir.glob("config/recipes/*.rb").each do |file|
   load file
