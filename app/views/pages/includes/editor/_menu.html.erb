@@ -21,12 +21,21 @@
 			</p>
 		</li>
 		
-		<li>
-			<%= link_to "<i class=\"icon-code\"></i>".html_safe, edit_theme_document_path(@website.theme, @page.layout) %>
-			<p class="hint">
-				Edit your theme's code
-			</p>
-		</li>
+		<% if @website.theme.pristine? %>
+			<li>
+				<%= link_to "<i class=\"icon-copy\"></i>".html_safe, save_path("website[duplicate_theme]" => @website.theme_id, redirect: manage_path("themes")), method: :patch %>
+				<p class="hint">
+					Clone and edit this theme
+				</p>
+			</li>
+		<% else %>
+			<li>
+				<%= link_to "<i class=\"icon-code\"></i>".html_safe, edit_theme_document_path(@website.theme, @page.layout) %>
+				<p class="hint">
+					Edit your theme's code
+				</p>
+			</li>
+		<% end %>
 		
 		<li class="separator"></li>
 		

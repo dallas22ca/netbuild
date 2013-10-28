@@ -32,7 +32,7 @@
 		"adminable?" => adminable?,
 		"q" => params[:q],
 		"yield" => @yield
-	}
+	}.merge(@blocks)
 
 	Liquid::Template.parse( @page.body_with_partials ).render(@details, filters: [LiquidFilters]).html_safe
 
