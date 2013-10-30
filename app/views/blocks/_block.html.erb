@@ -23,9 +23,9 @@
 		<% elsif block.genre == "img" %>
 			<div class="img_wrapper">
 				<% if block.data["href"].blank? %>
-					<%= link_to image_tag(block.data["src"]), block.data["href"] %>
+					<%= link_to image_tag(block.data["src"], width: block.data["width"]), block.data["href"] %>
 				<% else %>
-					<%= image_tag block.data["src"] %>
+					<%= image_tag block.data["src"], width: block.data["width"] %>
 				<% end %>
 			</div>
 		<% elsif block.genre == "social" %>

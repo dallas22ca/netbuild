@@ -144,6 +144,14 @@
 			<%= label_tag :src %>
 			<%= text_field_tag :src, "", class: "full_width src", id: nil %>
 		</div>
+		<div class="field">
+			<%= label_tag :href %>
+			<%= text_field_tag :href, "", class: "full_width href", id: nil %>
+		</div>
+		<div class="field">
+			<%= label_tag :width %>
+			<%= text_field_tag :width, "", class: "full_width width", id: nil %>
+		</div>
 		<div class="actions">
 			<%= submit_tag "Save" %>
 			<%= link_to "Cancel", "#", class: "cancel" %>
