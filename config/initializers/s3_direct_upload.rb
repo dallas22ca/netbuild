@@ -1,5 +1,5 @@
 S3DirectUpload.config do |c|
-  c.access_key_id = "AKIAIAG4BLB5CUCNAWZQ"
-  c.secret_access_key = "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"
-  c.bucket = "assets-dev.website.com"
+  c.access_key_id = CONFIG["s3_id"]
+  c.secret_access_key = CONFIG["s3_secret"]
+  c.bucket = CONFIG["s3_bucket"]
 end
