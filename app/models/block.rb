@@ -3,7 +3,6 @@ class Block < ActiveRecord::Base
   
   belongs_to :wrapper, touch: true
   belongs_to :website
-  has_many :wrappers
   
   default_scope -> { order(:ordinal) }
   
