@@ -11,18 +11,9 @@
 <% end %>
 
 <div id="templates">
-	<%
-		cols_block = @website.blocks.build(genre: "cols")
-    2.times.map {
-      w = cols_block.wrappers.build(width: 50)
-      w.blocks.build(genre: "text", details: { "style" => "p", "content" => "This is a placeholder." })
-    }
-	%>
-	
 	<%= render @website.blocks.build(initial_id: SecureRandom.hex, genre: "text", details: { "style" => "p", "content" => "This is a placeholder" }) %>
 	<%= render @website.blocks.build(initial_id: SecureRandom.hex, genre: "events") %>
 	<%= render @website.blocks.build(initial_id: SecureRandom.hex, genre: "img", details: { "src" => "http://www.netbuild.co/themes/shared/white_logo.png" }) %>
 	<%= render @website.blocks.build(initial_id: SecureRandom.hex, genre: "social", details: { "content" => "This is a placeholder" }) %>
-	<%= render cols_block %>
 </div>
 <div id="snapshots"></div>
