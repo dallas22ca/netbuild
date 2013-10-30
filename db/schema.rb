@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131023205548) do
+ActiveRecord::Schema.define(version: 20131030133953) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,9 +46,13 @@ ActiveRecord::Schema.define(version: 20131023205548) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "ordinal",    default: 1000
+    t.boolean  "columnizes", default: false
+    t.integer  "parent_id"
+    t.float    "width"
   end
 
   add_index "blocks", ["details"], name: "index_blocks_on_details", using: :gist
+  add_index "blocks", ["parent_id"], name: "index_blocks_on_parent_id", using: :btree
   add_index "blocks", ["website_id"], name: "index_blocks_on_website_id", using: :btree
   add_index "blocks", ["wrapper_id"], name: "index_blocks_on_wrapper_id", using: :btree
 
@@ -217,8 +221,12 @@ ActiveRecord::Schema.define(version: 20131023205548) do
     t.integer  "website_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "columnizes", default: false
+    t.integer  "block_id"
+    t.float    "width"
   end
 
+  add_index "wrappers", ["block_id"], name: "index_wrappers_on_block_id", using: :btree
   add_index "wrappers", ["page_id"], name: "index_wrappers_on_page_id", using: :btree
   add_index "wrappers", ["website_id"], name: "index_wrappers_on_website_id", using: :btree
 

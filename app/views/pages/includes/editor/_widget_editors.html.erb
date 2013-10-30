@@ -113,30 +113,36 @@
 	<%= form_tag "#", authenticity_token: false do %>
 		<%= hidden_field_tag :block_id, "", class: "block_id", id: nil %>
 		<h3>Images</h3>
+		<!--
 		<div class="field">
-			<%= label_tag :style %><br>
-			<%= select_tag :style, options_for_select(["Gallery", "One"]), class: "style", id: nil %>
-		</div>
+					<%= label_tag :style %><br>
+					<%= select_tag :style, options_for_select(["Gallery", "One"]), class: "style", id: nil %>
+				</div>
+				<div class="field">
+					<%= label_tag :tags %><br>
+					<%= select_tag :tags, options_for_select(["Awesome", "Cool", "Nice"]), multiple: true, class: "tags", id: nil %><br>
+					<%= link_to "Manage Media", media_path, class: "show_media" %>
+				</div>
+				<div class="field">
+					<%= label_tag :gallery_width %><br>
+					<%= select_tag :gallery_width, options_for_select(["1x1", "2x2", "3x3"]), class: "gallery_width", id: nil %>
+				</div>
+				<div class="field">
+					<%= check_box_tag :sharing, true, true, class: "sharing", id: nil %>
+					<%= label_tag :sharing %>
+				</div>
+				<div class="field">
+					<%= text_field_tag :map_location, "", class: "map_location", id: nil %>
+					<%= label_tag :map_location %>
+				</div>
+				<div class="field">
+					<%= check_box_tag :full_width, true, true, class: "full_width", id: nil %>
+					<%= label_tag :full_width %>
+				</div>-->
+		
 		<div class="field">
-			<%= label_tag :tags %><br>
-			<%= select_tag :tags, options_for_select(["Awesome", "Cool", "Nice"]), multiple: true, class: "tags", id: nil %><br>
-			<%= link_to "Manage Media", media_path, class: "show_media" %>
-		</div>
-		<div class="field">
-			<%= label_tag :gallery_width %><br>
-			<%= select_tag :gallery_width, options_for_select(["1x1", "2x2", "3x3"]), class: "gallery_width", id: nil %>
-		</div>
-		<div class="field">
-			<%= check_box_tag :sharing, true, true, class: "sharing", id: nil %>
-			<%= label_tag :sharing %>
-		</div>
-		<div class="field">
-			<%= text_field_tag :map_location, "", class: "map_location", id: nil %>
-			<%= label_tag :map_location %>
-		</div>
-		<div class="field">
-			<%= check_box_tag :full_width, true, true, class: "full_width", id: nil %>
-			<%= label_tag :full_width %>
+			<%= label_tag :src %>
+			<%= text_field_tag :src, "", class: "full_width src", id: nil %>
 		</div>
 		<div class="actions">
 			<%= submit_tag "Save" %>

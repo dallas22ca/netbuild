@@ -5,13 +5,13 @@ class Website < ActiveRecord::Base
   belongs_to :home, class_name: "Page", foreign_key: "home_id"
   
   has_many :wrappers, dependent: :destroy
-  has_many :blocks, through: :wrappers, dependent: :destroy
+  has_many :blocks, dependent: :destroy
   has_many :pages, dependent: :destroy
   has_many :themes, dependent: :destroy
   has_many :memberships, dependent: :destroy
   has_many :media, dependent: :destroy
   has_many :members, through: :memberships, source: :user
-  has_many :addonships
+  has_many :addonships, dependent: :destroy
   has_many :addons, through: :addonships
   has_many :invoices
   

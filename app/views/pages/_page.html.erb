@@ -1,6 +1,6 @@
 <% cache page do %>
 	<% path = @website.home_id == page.id ? root_path : public_page_path(page.permalink) %>
-	<%= content_tag_for :li, page do %>
+	<%= content_tag_for :li, page, id: nil, data: { id: page.id } do %>
 		<%= link_to page.title, path %>
 		<% if page.children.visible.any?  %>
 			<ol class="subnav">

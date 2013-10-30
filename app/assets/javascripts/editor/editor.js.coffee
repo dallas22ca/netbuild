@@ -13,6 +13,10 @@ $(document).on
     $(this).removeClass "hover"
 , ".contenteditable"
 
+$(document).on "keyup", "[data-title]", ->
+  page_id = $("[data-page_id]").data("page_id")
+  $(".page[data-id='#{page_id}'] a").text $(this).text()
+
 $(document).on "keydown", "[contenteditable]", (e) ->
   window.midedit = true
   
@@ -64,28 +68,34 @@ $(document).on "click", ".publish", ->
   window.midedit = false
   timeTravel.saved_id = timeTravel.current
   localStorage.setItem "page_#{timeTravel.page_id}_saved_id", timeTravel.saved_id
+  pages = if $(".nav.roots").length then $(".nav.roots:first").sortable("toArray") else []
   
   $("#timetravel").find(".wrapper").each ->
     wrapper_id = $(this).data("id")
     n = 0
     
     $(this).find(".block").each ->
-      block = {}
-      block.id = $(this).data("id")
-      block.wrapper_id = wrapper_id
-      block.genre = $(this).data("genre")
-      block.delete = $(this).hasClass("pending_delete")
-      block.ordinal = n
-      block.details = $.parseJSON($(this).attr("data-details"))
-      blocks.push block
-      n += 1
-
+      if $(this).parents(".block").length
+        wrapper_id = $(this).closest(".wrapper").data("id")
+      
+      unless $(this).parents(".block").length
+        block = {}
+        block.id = $(this).data("id")
+        block.wrapper_id = wrapper_id
+        block.genre = $(this).data("genre")
+        block.delete = $(this).hasClass("pending_delete")
+        block.ordinal = n
+        block.details = $.parseJSON($(this).attr("data-details"))
+        blocks.push block
+        n += 1
+  
+  console.log blocks
   $.post url,
-    _method: "patch"
-    page_id: $("body").data("page_id")
-    blocks: blocks
-    pages: $(".nav.roots:first").sortable("toArray")
-    title: $("#timetravel [data-title]").text()
+    "_method": "patch"
+    "page_id": $("body").data("page_id")
+    "blocks": blocks
+    "title": $("#timetravel [data-title]").text()
+    "pages": pages
 
 unload = ->
   window.midedit = false

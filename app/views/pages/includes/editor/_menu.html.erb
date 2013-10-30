@@ -105,17 +105,19 @@
 		</li>
 		
 		<li>
-			<%= link_to "<i class=\"icon-comments\"></i>".html_safe, "#" %>
+			<%= link_to "<i class=\"icon-comments\"></i>".html_safe, "#", class: "block_dragger", data: { genre: "comments" } %>
 			<p class="hint">
 				Add a comments section
 			</p>
 		</li>
 		
+		<!--
 		<li>
-			<%= link_to "<i class=\"icon-columns\"></i>".html_safe, "#" %>
-			<p class="hint">
-				Add columns
-			</p>
-		</li>
+					<%= link_to "<i class=\"icon-columns\"></i>".html_safe, "#", class: "block_dragger", data: { genre: "cols" } %>
+					<p class="hint">
+						Add columns
+					</p>
+				</li>-->
+		
 	</ul>
 </div>

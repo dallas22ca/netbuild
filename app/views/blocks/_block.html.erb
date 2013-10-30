@@ -22,7 +22,11 @@
 			</ol>
 		<% elsif block.genre == "img" %>
 			<div class="img_wrapper">
-				<img src="/themes/shared/map.png">
+				<% if block.data["href"].blank? %>
+					<%= link_to image_tag(block.data["src"]), block.data["href"] %>
+				<% else %>
+					<%= image_tag block.data["src"] %>
+				<% end %>
 			</div>
 		<% elsif block.genre == "social" %>
 			<div class="img_wrapper">
@@ -213,6 +217,11 @@
 					</ul>
 					<div class="clear"></div>
 				</div>
+			</div>
+		<% elsif block.genre == "cols" %>
+			<div style="width: 100%; min-height: 50px; background: blue; ">
+				<%= render block.wrappers %>
+				<div class="clear"></div>
 			</div>
 		<% end %>
 	<% end %>

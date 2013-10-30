@@ -1,5 +1,5 @@
 <% cache wrapper do %>
-	<%= content_tag :div, id: dom_id(wrapper), class: "wrapper", data: { id: wrapper.id, identifier: wrapper.identifier } do %>
+	<%= content_tag :div, id: dom_id(wrapper), style: wrapper.width.blank? ? "" : "width: #{wrapper.width}%; float: left; ", class: "wrapper", data: { id: wrapper.id, identifier: wrapper.identifier } do %>
 		<%= render wrapper.blocks %>
 	<% end %>
 <% end %>

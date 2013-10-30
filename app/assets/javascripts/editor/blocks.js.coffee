@@ -74,7 +74,7 @@ $(document).on
   
   top = block.position().top - 35
   left = block.position().left + block.outerWidth() + 20
-  left = block.position().left - block.outerWidth() - 70 if left + editor.width() > $(window).width()
+  left = block.position().left + block.outerWidth() - editor.outerWidth() if left + editor.width() > $(window).width()
 
   for field,value of $.parseJSON(block.attr("data-details"))
     if editor.find(".#{field}").is("select")
@@ -107,12 +107,15 @@ $(document).on
 @loadBlocks = ->
   showNoWrappers()
   
+  $(".widget_editor").draggable
+    handle: "h3"
+  
   $(".block_dragger").draggable
     connectToSortable: "#timetravel .wrapper"
     revert: "invalid"
-    helper: ->
-      genre = $(this).data("genre")
-      clone_with_new_id genre
+    helper: "clone"
+    # genre = $(this).data("genre")
+    # clone_with_new_id genre
   
   $(".nav:not(.social)").sortable
     placeholder: "drop_placeholder"
@@ -151,12 +154,15 @@ $(document).on
     update: (e, ui) ->
       if this == ui.item.parent()[0]
         createSnapshot()
+      loadBlocks()
     receive: (e, ui) ->
       genre = $(ui.item).data("genre")
-      $(".wrapper a.block_dragger").replaceWith clone_with_new_id(genre)
+      clone = clone_with_new_id(genre)
+      console.log clone
+      $(".wrapper a.block_dragger:last").replaceWith clone
 
 @clone_with_new_id = (genre) ->
   new_id = Math.floor(Math.random()*2951479051793528).toString(16) + Math.floor(Math.random()*2951479051793528).toString(16)
-  template = $("#templates .block[data-genre='#{genre}']")
+  template = $("#templates .block[data-genre='#{genre}']:first")
   template.attr("data-initial-id", new_id)
   template.clone()
