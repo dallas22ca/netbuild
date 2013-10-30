@@ -10,3 +10,43 @@
     }
   }
 }
+
+.clear {
+  clear: both;
+}
+
+img {
+  max-width: 100%;
+}
+
+b, strong {
+  font-weight: bold;
+}
+
+i, em {
+  font-style: oblique;
+}
+
+a {
+  color: inherit;
+}
+
+.right {
+  float: right;
+}
+
+.left {
+  float: left;
+}
+
+.center {
+  text-align: center;
+}
+
+.clear {
+  clear: both;
+}
+
+.contenteditable.hover {
+  outline: 3px dotted rgba(0, 0, 0, 0.15);
+}
