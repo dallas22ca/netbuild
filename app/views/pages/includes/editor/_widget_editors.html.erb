@@ -141,6 +141,10 @@
 				</div>-->
 		
 		<div class="field">
+			<%= label_tag :align %><br>
+			<%= select_tag :align, options_for_select([["Center", "center"], ["Left", "left"], ["Right", "right"]]), class: "align", id: nil %>
+		</div>
+		<div class="field">
 			<%= label_tag :src %>
 			<%= text_field_tag :src, "", class: "full_width src", id: nil %>
 		</div>

@@ -21,7 +21,7 @@
 				</li>
 			</ol>
 		<% elsif block.genre == "img" %>
-			<div class="img_wrapper">
+			<div class="img_wrapper" style="text-align: <%= block.data["align"].blank? ? "center" : block.data["align"] %>">
 				<% if block.data["href"].blank? %>
 					<%= image_tag block.data["src"], width: block.data["width"] %>
 				<% else %>
