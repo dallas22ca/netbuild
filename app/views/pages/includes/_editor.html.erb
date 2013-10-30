@@ -5,15 +5,10 @@
 <%= render "pages/includes/editor/menu" %>
 <%= render "pages/includes/editor/widget_editors" %>
 
-<%= form_for Block.new, remote: true do |f| %>
-	<%= f.hidden_field :wrapper_id %>
-	<%= f.hidden_field :genre %>
-<% end %>
-
 <div id="templates">
-	<%= render @website.blocks.build(initial_id: SecureRandom.hex, genre: "text", details: { "style" => "p", "content" => "This is a placeholder" }) %>
-	<%= render @website.blocks.build(initial_id: SecureRandom.hex, genre: "events") %>
-	<%= render @website.blocks.build(initial_id: SecureRandom.hex, genre: "img", details: { "src" => "http://www.netbuild.co/themes/shared/white_logo.png" }) %>
-	<%= render @website.blocks.build(initial_id: SecureRandom.hex, genre: "social", details: { "content" => "This is a placeholder" }) %>
+	<%= render @website.blocks.build(genre: "text", details: { "style" => "p", "content" => "This is a placeholder" }) %>
+	<%= render @website.blocks.build(genre: "events") %>
+	<%= render @website.blocks.build(genre: "img", details: { "src" => "http://www.netbuild.co/themes/shared/white_logo.png" }) %>
+	<%= render @website.blocks.build(genre: "social", details: { "content" => "This is social." }) %>
 </div>
 <div id="snapshots"></div>
