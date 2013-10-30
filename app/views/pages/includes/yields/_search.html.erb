@@ -11,7 +11,7 @@
 		<% Block.where("details->'content' ilike ?", "%#{params[:q]}%").each do |result| %>
 			<% if result.wrapper.page %>
 				<li style="margin: 15px; ">
-					<b><%= link_to result.wrapper.page.title, public_page_path(result.wrapper.page.permalink) %></b><br>
+					<b><%= link_to result.wrapper.page.title, public_page_path(result.wrapper.page.permalink, q: params[:q]) %></b><br>
 					<%= result.data["content"].truncate 64 %>
 				</li>
 			<% end %>
