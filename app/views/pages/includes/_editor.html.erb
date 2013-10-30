@@ -6,9 +6,9 @@
 <%= render "pages/includes/editor/widget_editors" %>
 
 <div id="templates">
-	<%= render partial: "blocks/block", locals: {block: Block.new(genre: "text", details: { "style" => "p", "content" => "This is a placeholder" }) } %>
-	<%= render partial: "blocks/block", locals: {block: Block.new(genre: "events") } %>
-	<%= render partial: "blocks/block", locals: {block: Block.new(genre: "img", details: { "src" => "http://www.netbuild.co/themes/shared/white_logo.png" }) } %>
-	<%= render partial: "blocks/block", locals: {block: Block.new(genre: "social") } %>
+	<%= render Block.new(genre: "text", details: { "style" => "p", "content" => "This is a placeholder" }) %>
+	<%= render Block.new(genre: "events") %>
+	<%= render Block.new(genre: "img", details: { "src" => "http://www.netbuild.co/themes/shared/white_logo.png" }) %>
+	<%= render Block.new(genre: "social") %>
 </div>
 <div id="snapshots"></div>
