@@ -15,6 +15,6 @@ class Medium < ActiveRecord::Base
   end
   
   def amazon_url
-    "http://s3.amazonaws.com/#{CONFIG["s3_bucket"]}#{path}"
+    "http://assets.netbuild.co#{path}"
   end
 end
