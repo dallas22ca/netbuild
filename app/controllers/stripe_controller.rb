@@ -16,6 +16,7 @@ class StripeController < ApplicationController
   
   def webhook
     begin
+      json = JSON.parse request.body.read
       object = json["data"]["object"]
 
       if json["type"].include? "invoice"
