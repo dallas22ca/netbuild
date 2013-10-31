@@ -5,8 +5,8 @@ upstream unicorn {
 server {
 	listen 80;
 	listen 443 ssl;
-	ssl_certificate /etc/ssl/ssl.crt;
-	ssl_certificate_key /etc/ssl/domain.key;
+	ssl_certificate /etc/ssl/certs/www.netbuild.co/ssl.crt;
+	ssl_certificate_key /etc/ssl/certs/www.netbuild.co/domain.key;
 	server_name *.netbuild.co;
 	
   root <%= current_path %>/public;
