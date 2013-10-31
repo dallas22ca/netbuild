@@ -1,5 +1,5 @@
 class Page < ActiveRecord::Base
-  belongs_to :website
+  belongs_to :website, touch: true
   belongs_to :layout, class_name: "Document", foreign_key: "document_id"
   
   belongs_to :parent, class_name: "Page", primary_key: "parent_id"
