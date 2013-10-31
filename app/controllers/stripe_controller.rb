@@ -16,11 +16,12 @@ class StripeController < ApplicationController
   
   def webhook
     begin
-      json = JSON.parse request.body.read
+      # json = JSON.parse request.body.read
       object = json["data"]["object"]
 
       if json["type"].include? "invoice"
         website = Website.where(stripe_user_id: json["user_id"]).first
+        p "----------- #{json["user_id"]} -----------"
         
         if website
           membership = website.memberships.where(customer_token: object["customer"]).first
@@ -68,72 +69,6 @@ class StripeController < ApplicationController
   end
   
   def json
-    {
-      "created" => 1326853478,
-      "livemode" => false,
-      "id" => "evt_00000000000000",
-      "type" => "invoice.created",
-      "object" => "event",
-      "user_id" => "acct_00000000000000",
-      "data" => {
-        "object" => {
-          "date" => 1381754481,
-          "id" => "in_10000000000000",
-          "period_start" => 1381754481,
-          "period_end" => 1381754481,
-          "lines" => {
-            "data" => [
-              {
-                "id" => "su_102r2r24WTG8yf9AVjXHMHWa",
-                "object" => "line_item",
-                "type" => "subscription",
-                "livemode" => true,
-                "amount" => 4000,
-                "currency" => "cad",
-                "proration" => false,
-                "period" => {
-                  "start" => 1384432881,
-                  "end" => 1387024881
-                },
-                "quantity" => 1,
-                "plan" => {
-                  "interval" => "month",
-                  "name" => "Web & Email Hosting",
-                  "amount" => 4000,
-                  "currency" => "cad",
-                  "id" => "WEH",
-                  "object" => "plan",
-                  "livemode" => false,
-                  "interval_count" => 1,
-                  "trial_period_days" => nil
-                },
-                "description" => nil,
-                "metadata" => nil
-              }
-            ],
-            "count" => 1,
-            "object" => "list",
-            "url" => "/v1/invoices/in_102kg124WTG8yf9AId1fGqUP/lines"
-          },
-          "subtotal" => 6000,
-          "total" => 6000,
-          "customer" => "cus_2jiMJg39dcvgzz",
-          "object" => "invoice",
-          "attempted" => false,
-          "closed" => true,
-          "paid" => false,
-          "livemode" => false,
-          "attempt_count" => 0,
-          "amount_due" => 4000,
-          "currency" => "cad",
-          "starting_balance" => 0,
-          "ending_balance" => 0,
-          "next_payment_attempt" => nil,
-          "charge" => "ch_00000000000000",
-          "discount" => nil,
-          "application_fee" => nil
-        }
-      }
-    }
+    {"id"=>"evt_102r9V24WTG8yf9A8lnhd1Go", "created"=>1383248012, "livemode"=>true, "type"=>"invoice.updated", "data"=>{"object"=>{"date"=>1383240537, "id"=>"in_102r7U24WTG8yf9AKiZgk2K4", "period_start"=>1383240537, "period_end"=>1383240537, "lines"=>{"object"=>"list", "count"=>1, "url"=>"/v1/invoices/in_102r7U24WTG8yf9AKiZgk2K4/lines", "data"=>[{"id"=>"ii_102r7U24WTG8yf9AtniOgOuD", "object"=>"line_item", "type"=>"invoiceitem", "livemode"=>true, "amount"=>20000, "currency"=>"cad", "proration"=>false, "period"=>{"start"=>1383240514, "end"=>1383240514}, "quantity"=>nil, "plan"=>nil, "description"=>"4 Hours of Work on OntarioUPC.com", "metadata"=>{}}]}, "subtotal"=>20000, "total"=>20000, "customer"=>"cus_2r1bXf3dZ6DnMV", "object"=>"invoice", "attempted"=>false, "closed"=>false, "paid"=>false, "livemode"=>true, "attempt_count"=>0, "amount_due"=>20000, "currency"=>"cad", "starting_balance"=>0, "ending_balance"=>nil, "next_payment_attempt"=>1383244137, "charge"=>nil, "discount"=>nil, "application_fee"=>nil}, "previous_attributes"=>{"closed"=>true, "next_payment_attempt"=>nil}}, "object"=>"event", "pending_webhooks"=>2, "request"=>"iar_2r9VvYWKDABl9H", "user_id"=>"acct_102in424WTG8yf9A", "subdomain"=>"www", "stripe"=>{"id"=>"evt_102r9V24WTG8yf9A8lnhd1Go", "created"=>1383248012, "livemode"=>true, "type"=>"invoice.updated", "data"=>{"object"=>{"date"=>1383240537, "id"=>"in_102r7U24WTG8yf9AKiZgk2K4", "period_start"=>1383240537, "period_end"=>1383240537, "lines"=>{"object"=>"list", "count"=>1, "url"=>"/v1/invoices/in_102r7U24WTG8yf9AKiZgk2K4/lines", "data"=>[{"id"=>"ii_102r7U24WTG8yf9AtniOgOuD", "object"=>"line_item", "type"=>"invoiceitem", "livemode"=>true, "amount"=>20000, "currency"=>"cad", "proration"=>false, "period"=>{"start"=>1383240514, "end"=>1383240514}, "quantity"=>nil, "plan"=>nil, "description"=>"4 Hours of Work on OntarioUPC.com", "metadata"=>{}}]}, "subtotal"=>20000, "total"=>20000, "customer"=>"cus_2r1bXf3dZ6DnMV", "object"=>"invoice", "attempted"=>false, "closed"=>false, "paid"=>false, "livemode"=>true, "attempt_count"=>0, "amount_due"=>20000, "currency"=>"cad", "starting_balance"=>0, "ending_balance"=>nil, "next_payment_attempt"=>1383244137, "charge"=>nil, "discount"=>nil, "application_fee"=>nil}, "previous_attributes"=>{"closed"=>true, "next_payment_attempt"=>nil}}, "object"=>"event", "pending_webhooks"=>2, "request"=>"iar_2r9VvYWKDABl9H", "user_id"=>"acct_102in424WTG8yf9A"}}
   end
 end

@@ -32,9 +32,11 @@ class PagesController < ApplicationController
 			  @blocks["wrapper_#{wrapper[:identifier]}"] = render_to_string(@website.wrappers.where(wrapper).first_or_create)
       end
       
-    	@current_user_details = {
-    		"current_user_email" => current_user.email
-    	}
+      if user_signed_in?
+      	@current_user_details = {
+      		"current_user_email" => current_user.email
+      	}
+      end
     end
     
     if @path != root_path && @page == @website.home
