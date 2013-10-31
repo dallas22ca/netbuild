@@ -95,6 +95,7 @@ $(document).on "click", ".publish", ->
     "page_id": $("body").data("page_id")
     "blocks": blocks
     "title": $("#timetravel [data-title]").text()
+    "website[warnings]": ""
     "pages": pages
 
 unload = ->
