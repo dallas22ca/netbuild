@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  before_filter :secure_www, if: Proc.new { request.subdomain == "www" && request.protocol == "http://" && Rails.env.production? }
+  before_filter :secure_www, if: Proc.new { request.subdomain == "www" && request.protocol == "http://" && request.domain == CONFIG["domain"] && Rails.env.production? }
   protect_from_forgery with: :exception
   before_filter :set_website
 
