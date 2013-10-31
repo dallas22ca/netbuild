@@ -1,4 +1,5 @@
 class PagesController < ApplicationController
+  before_action :authenticate_adminable?, except: [:show]
   layout :choose_layout
   before_action :set_page, only: [:edit, :update, :destroy]
 
@@ -30,6 +31,10 @@ class PagesController < ApplicationController
         wrapper[:page_id] = @page.id if wrapper[:identifier] =~ /\?/
 			  @blocks["wrapper_#{wrapper[:identifier]}"] = render_to_string(@website.wrappers.where(wrapper).first_or_create)
       end
+      
+    	@current_user_details = {
+    		"current_user_email" => current_user.email
+    	}
     end
     
     if @path != root_path && @page == @website.home

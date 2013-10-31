@@ -2,17 +2,20 @@ require "sidekiq/web"
 
 Netbuild::Application.routes.draw do
 
-  devise_for :users, controllers: {
-    sessions: "sessions",
-    registrations: "registrations"
-  }
+  devise_for :users,
+    path: "accounts", 
+    controllers: {
+      sessions: "sessions",
+      registrations: "registrations"
+    }
 
   constraints subdomain: "www" do
     resources :websites
     resources :themes, only: [:index, :show]
     resources :addons
-    post "/stripe" => "stripe#webhook", as: :stripe
-    get "/stripe" => "stripe#webhook" # TESTING
+    post "/webhooks/stripe" => "stripe#webhook", as: :stripe
+    get "/webhooks/stripe" => "stripe#webhook" # TESTING
+    get "/oauth/callback/stripe" => "stripe#callback"
     
     authenticated :user, lambda { |u| u.super_admin? } do
       mount Sidekiq::Web => "/sidekiq"
@@ -26,13 +29,14 @@ Netbuild::Application.routes.draw do
       constraints "1" == "2" do
         scope "/manage" do
           resources :memberships, path: :members
-          resources :invoices
+          resources :invoices, path: :payments
           resources :pages
           resources :media
           resources :themes do
             resources :documents
           end
-        
+          
+          get "/billing" => "invoices#index", as: :billing
           patch "/save" => "websites#update", as: :save
           get "/save", to: redirect { "/manage/theme" }
           get "/:feature" => "websites#edit", as: :manage

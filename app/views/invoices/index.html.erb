@@ -1,11 +1,12 @@
 <%= render "manage_nav" %>
 
-<h1>Listing invoices</h1>
+<h1>Invoices</h1>
 
 <table class="table">
   <thead>
     <tr>
       <th>Date</th>
+      <th>Customer</th>
       <th>Amount</th>
     </tr>
   </thead>
@@ -14,7 +15,8 @@
     <% @invoices.each do |invoice| %>
       <tr>
         <td><%= link_to invoice.date, invoice %></td>
-        <td><%= number_to_currency invoice.total / 100 %></td>
+				<td><%= link_to invoice.membership.user.email, invoice %></td>
+        <td><%= link_to number_to_currency(invoice.total / 100), invoice %></td>
       </tr>
     <% end %>
   </tbody>

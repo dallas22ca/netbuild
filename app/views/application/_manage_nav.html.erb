@@ -20,8 +20,16 @@
 			<li><%= link_to "My Site", root_path %></li>
 			<li><%= link_to "Theme", manage_path("theme") %></li>
 			<li><%= link_to "Addons", manage_path("addons") %></li>
-			<li><%= link_to "Invoices", manage_path("invoices") %></li>
-			<li><%= link_to "Members", manage_path("members") %></li>
+			
+			<% if adminable? %>
+				<% if @website.can_accept_money? || @website.invoices.any? %>
+					<li><%= link_to "Payments", manage_path("payments") %></li>
+				<% end %>
+
+				<li><%= link_to "Members", manage_path("members") %></li>
+			<% end %>
+			
+			<li><%= link_to "My Account", edit_user_registration_path %>
 			<li>
 				<%= link_to "Sign Out", destroy_user_session_path if user_signed_in? %>
 				<%= link_to "Sign In", new_user_session_path unless signed_in? %>

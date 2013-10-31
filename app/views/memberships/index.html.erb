@@ -19,9 +19,9 @@
 			<% if @website.can_accept_money? %>
 				<th>Has Card</th>
 			<% end %>
-			<% if @website.adminable_by(current_user) %>
+			<!--<% if @website.adminable_by(current_user) %>
 	      <th></th>
-			<% end %>
+			<% end %>-->
     </tr>
   </thead>
 
@@ -37,17 +37,17 @@
 				
 				<% if @website.can_accept_money? %>
 					<td>
-						<% if 1 == 1 %>
-							<%= link_to "<i class=\"icon-ok\"></i>".html_safe, edit_membership_path(membership) %>
-						<% else %>
+						<% if membership.card_token.blank? %>
 							<%= link_to "<i class=\"icon-remove\"></i>".html_safe, edit_membership_path(membership) %>
+						<% else %>
+							<%= link_to "<i class=\"icon-ok\"></i>".html_safe, edit_membership_path(membership) %>
 						<% end %>
 					</td>
 				<% end %>
 				
-				<% if @website.adminable_by(current_user) %>
-	        <td><%= link_to "<i class=\"icon-trash\"></i>".html_safe, membership, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-				<% end %>
+				<!--<% if @website.adminable_by(current_user) %>
+	        <td><%= link_to "<i class=\"icon-trash\"></i>".html_safe, membership, method: :delete, data: { confirm: 'Are you sure?' } if membership.user != current_user %></td>
+				<% end %>-->
       </tr>
     <% end %>
   </tbody>

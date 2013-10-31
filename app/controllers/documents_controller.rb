@@ -1,4 +1,5 @@
 class DocumentsController < ApplicationController
+  before_action :authenticate_adminable?
   before_action :set_theme
   before_action :set_document, only: [:show, :edit, :update, :destroy]
 

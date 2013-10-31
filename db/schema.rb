@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131030133953) do
+ActiveRecord::Schema.define(version: 20131031114737) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -93,8 +93,16 @@ ActiveRecord::Schema.define(version: 20131030133953) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "attempt_count"
+    t.string   "visible_id"
+    t.integer  "membership_id"
+    t.string   "customer_token"
+    t.integer  "netbuild_website_id"
   end
 
+  add_index "invoices", ["customer_token"], name: "index_invoices_on_customer_token", using: :btree
+  add_index "invoices", ["membership_id"], name: "index_invoices_on_membership_id", using: :btree
+  add_index "invoices", ["netbuild_website_id"], name: "index_invoices_on_netbuild_website_id", using: :btree
+  add_index "invoices", ["visible_id"], name: "index_invoices_on_visible_id", using: :btree
   add_index "invoices", ["website_id"], name: "index_invoices_on_website_id", using: :btree
 
   create_table "media", force: true do |t|
@@ -125,6 +133,9 @@ ActiveRecord::Schema.define(version: 20131030133953) do
     t.string   "forward_to"
     t.string   "encrpyted_password"
     t.string   "encrypted_password"
+    t.string   "customer_token"
+    t.string   "card_token"
+    t.integer  "last_4"
   end
 
   add_index "memberships", ["user_id"], name: "index_memberships_on_user_id", using: :btree
@@ -209,6 +220,8 @@ ActiveRecord::Schema.define(version: 20131030133953) do
     t.integer  "free_email_addresses",  default: 2
     t.integer  "email_addresses_count", default: 0
     t.text     "header"
+    t.string   "stripe_access_token"
+    t.string   "stripe_user_id"
   end
 
   add_index "websites", ["domain"], name: "index_websites_on_domain", using: :btree

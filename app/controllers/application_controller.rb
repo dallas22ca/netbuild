@@ -1,8 +1,13 @@
 class ApplicationController < ActionController::Base
+  before_filter :secure_www, if: Proc.new { request.subdomain == "www" && Rails.env.production? }
   protect_from_forgery with: :exception
   before_filter :set_website
 
   private
+  
+  def secure_www
+    redirect_to :protocol => 'https://', :status => :moved_permanently
+  end
   
   def set_website
     if request.domain == CONFIG["domain"]
@@ -25,6 +30,11 @@ class ApplicationController < ActionController::Base
     end
   end
   helper_method :signed_in?
+  
+  def current_membership
+    current_user.memberships.where(website_id: @website.id).first
+  end
+  helper_method :current_membership
   
   def authenticate_adminable?
     if !user_signed_in? || !@website.adminable_by(current_user)

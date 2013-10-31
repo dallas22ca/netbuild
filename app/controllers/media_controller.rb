@@ -1,4 +1,5 @@
 class MediaController < ApplicationController
+  before_action :authenticate_adminable?
   before_action :set_medium, only: [:show, :edit, :update, :destroy]
 
   # GET /media

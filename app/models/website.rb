@@ -1,4 +1,6 @@
 class Website < ActiveRecord::Base
+  has_paper_trail
+  
   attr_accessor :duplicate_theme, :card_token, :warnings
   
   belongs_to :theme, touch: true
@@ -13,7 +15,7 @@ class Website < ActiveRecord::Base
   has_many :members, through: :memberships, source: :user
   has_many :addonships, dependent: :destroy
   has_many :addons, through: :addonships
-  has_many :invoices
+  has_many :invoices, through: :memberships, dependent: :destroy
   
   accepts_nested_attributes_for :members
   
@@ -121,6 +123,16 @@ class Website < ActiveRecord::Base
       document_id: theme.default_document.id
     )
     
+    sign_up = pages.create(
+      title: "Sign Up",
+      permalink: "sign_up",
+      description: "Sign up for our website",
+      visible: false,
+      deleteable: false,
+      ordinal: 993,
+      document_id: theme.default_document.id
+    )
+    
     sitemap = pages.create(
       title: "Sitemap",
       permalink: "sitemap",
@@ -138,6 +150,16 @@ class Website < ActiveRecord::Base
       visible: false,
       deleteable: false,
       ordinal: 997,
+      document_id: theme.default_document.id
+    )
+    
+    invoices = pages.create(
+      title: "Invoices",
+      permalink: "invoices",
+      description: "Invoices",
+      visible: false,
+      deleteable: false,
+      ordinal: 999,
       document_id: theme.default_document.id
     )
   end
@@ -207,7 +229,7 @@ class Website < ActiveRecord::Base
   end
   
   def can_accept_money?
-    money_addon && "STRIPE CREDENTIALS"
+    money_addon && !stripe_user_id.blank?
   end
   
   def stripped_domain(full)

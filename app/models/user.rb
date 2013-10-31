@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
   
-  attr_accessor :subdomain
+  attr_accessor :subdomain, :no_password
 
   has_many :memberships
   has_many :websites, through: :memberships
@@ -24,4 +24,16 @@ class User < ActiveRecord::Base
   def super_admin?
     admin
   end
+  
+  def has_password?
+    !encrypted_password.blank?
+  end
+  
+  def password_required?
+    if no_password == true
+      false
+    else
+      super
+    end
+  end 
 end

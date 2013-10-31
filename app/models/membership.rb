@@ -3,6 +3,7 @@ class Membership < ActiveRecord::Base
   
   belongs_to :user
   belongs_to :website
+  has_many :invoices
   
   accepts_nested_attributes_for :user
   
@@ -10,7 +11,7 @@ class Membership < ActiveRecord::Base
   scope :with_email_account, -> { where(has_email_account: true) }
   
   before_create :set_security
-  validates_uniqueness_of :username, scope: :website_id
+  validates_uniqueness_of :username, scope: :website_id, allow_blank: true
   after_validation :manage_cpanel, if: Proc.new { website && website.has_payment_info? && website.email_addon }
   after_save :update_website_email_addresses_count, if: :has_email_account_changed?
   

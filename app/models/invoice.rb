@@ -1,6 +1,13 @@
 class Invoice < ActiveRecord::Base
   serialize :lines, Array
-  belongs_to :website
+  belongs_to :membership
+  has_one :website, through: :membership
+  
+  before_save :set_visible_id
+  
+  def set_visible_id
+    self.visible_id = self.stripe_id.gsub("in_", "").to_i.to_s(36).upcase
+  end
   
   def self.add_addons_to_invoices(website = false)
     if website
@@ -33,11 +40,11 @@ class Invoice < ActiveRecord::Base
     end
   end
   
-  def visible_id
-    stripe_id.to_s[-10, 8].upcase
-  end
-  
   def self.helpers
     ActionController::Base.helpers
+  end
+  
+  def to_param
+    visible_id
   end
 end

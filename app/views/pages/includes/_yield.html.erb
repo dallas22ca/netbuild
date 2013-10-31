@@ -1,18 +1,7 @@
 <%=
 
-	case @page.permalink
-	when "sign_in"
-		@yield = render("pages/includes/yields/sessions")
-	when "sign_up"
-		@yield = render("pages/includes/yields/registrations")
-	when "sitemap"
-		@yield = render("pages/includes/yields/sitemap")
-	when "members"
-		@yield = render("pages/includes/yields/members")
-	when "search"
-		@yield = render("pages/includes/yields/search")
-	else
-		@yield = ""
+	if %w[sign_in sign_up sitemap members search invoices invoice].include? @page.permalink
+		@yield = render("pages/includes/yields/#{@page.permalink}")
 	end
 	
 	@details = {
@@ -32,7 +21,7 @@
 		"adminable?" => adminable?,
 		"q" => params[:q],
 		"yield" => @yield
-	}.merge(@blocks)
+	}.merge(@blocks).merge(@current_user_details)
 
 	Liquid::Template.parse( @page.body_with_partials ).render(@details, filters: [LiquidFilters]).html_safe
 

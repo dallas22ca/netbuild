@@ -41,7 +41,16 @@
 				<% Addon.available.each do |addon| %>
 					<tr class="addon" data-permalink="<%= addon.permalink %>" data-price="<%= addon.price %>">
 						<td><%= check_box_tag "website[addon_ids][]", addon.id, @website.addon_ids.include?(addon.id), id: dom_id(addon) %></td>
-						<td><%= label_tag dom_id(addon), "#{addon.name} (#{number_to_currency addon.price / 100} /#{" address /" if addon.permalink.include? "email"} month)" %></td>
+						<td>
+							<%= label_tag dom_id(addon), "#{addon.name} (#{number_to_currency addon.price / 100} /#{" address /" if addon.permalink.include? "email"} month)" %>
+							<% if addon.permalink == "money" %>
+								<% if @website.can_accept_money? %>
+									<span style="color: green; font-weight: bold; ">- Merchant Account is ready to go.</span> <%= link_to "(disconnect)", save_path(website: { stripe_access_token: "", stripe_user_id: "" }, redirect: manage_path("addons")), method: :patch %>
+								<% else %>
+									<span style="color: red; font-weight: bold; ">- <%= link_to "Set Up Your Merchant Account", "https://connect.stripe.com/oauth/authorize?response_type=code&client_id=#{CONFIG["stripe_client_id"]}&scope=read_write&stripe_landing=register&stripe_user[url]=#{@website.permalink}" %></span>
+								<% end %>
+							<% end %>
+						</td>
 					</tr>
 				<% end %>
 				
@@ -56,6 +65,7 @@
 	
 		<p class="hint">
 			Your current package, including addons, is <b><%= number_to_currency @website.price / 100 %> / month</b>.<br>
+			Looking for your NetBuild.co invoices? <%= link_to "Click Here", manage_path("billing") %>.<br>
 		
 			<% if @website.customer_token.blank? %>
 				There is no credit card associated with your account.

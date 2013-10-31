@@ -1,4 +1,6 @@
 class WebsitesController < ApplicationController
+  before_action :authenticate_adminable?
+  
   # GET /websites
   # GET /websites.json
   def index
@@ -121,9 +123,9 @@ class WebsitesController < ApplicationController
     
     def website_params
       if super_admin?
-        params.require(:website).permit(:title, :domain, :theme_id, :duplicate_theme, :home_id, :primary_colour, :secondary_colour, :header, :card_token, :customer_token, addon_ids: [])
+        params.require(:website).permit(:title, :domain, :theme_id, :duplicate_theme, :home_id, :primary_colour, :secondary_colour, :header, :card_token, :customer_token, :stripe_access_token, :stripe_user_id, addon_ids: [])
       elsif @website.adminable_by(current_user)
-        params.require(:website).permit(:title, :domain, :theme_id, :duplicate_theme, :home_id, :primary_colour, :secondary_colour, :header, :card_token, addon_ids: [])
+        params.require(:website).permit(:title, :domain, :theme_id, :duplicate_theme, :home_id, :primary_colour, :secondary_colour, :header, :card_token, :stripe_access_token, :stripe_user_id, addon_ids: [])
       else
         params.require(:website).permit(:title, :domain, :theme_id, :duplicate_theme, :home_id, :primary_colour, :secondary_colour, :header)
       end

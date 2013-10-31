@@ -8,7 +8,7 @@
 	<li><%= link_to "<i class=\"icon-search\"></i>".html_safe, public_page_path("search") %></li>
 	<li><%= link_to "<i class=\"icon-sitemap\"></i>".html_safe, public_page_path("sitemap") %></li>
 	
-	<% if adminable? %>
+	<% if adminable? && @website.email_addon %>
 		<li><%= link_to "<i class=\"icon-envelope\"></i>".html_safe, public_page_path("mail"), target: :blank %></li>
 	<% end %>
 	

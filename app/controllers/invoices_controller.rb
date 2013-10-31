@@ -1,10 +1,16 @@
 class InvoicesController < ApplicationController
+  before_action :authenticate_adminable?
   before_action :set_invoice, only: [:show]
 
   # GET /invoices
   # GET /invoices.json
   def index
-    @invoices = @website.invoices
+    if request.path.include? "billing"
+      netbuild = Website.where(permalink: "nb-www").first
+      @invoices = netbuild.invoices.where(netbuild_website_id: current_user.website_ids)
+    else
+      @invoices = @website.invoices
+    end
   end
 
   # GET /invoices/1
@@ -15,6 +21,6 @@ class InvoicesController < ApplicationController
   private
 
     def set_invoice
-      @invoice = @website.invoices.find(params[:id])
+      @invoice = @website.invoices.where(visible_id: params[:id]).first
     end
 end

@@ -1,10 +1,10 @@
 <div class="section">
   
-  <h3>Sign Up</h2>
-	
+  <h3>Sign In</h2>
+		
 	<%= flash[:notice] %>
 
-  <%= form_for(User.new, :as => "user", :url => registration_path("user")) do |f| %>
+  <%= form_for(User.new, :as => "user", :url => public_page_path("accounts/sign_in")) do |f| %>
 		<%= f.hidden_field :subdomain, value: @website.permalink %>
 	
     <div class="field">
@@ -16,15 +16,17 @@
       <%= f.label :password %><br />
       <%= f.password_field :password, class: "full_width" %>
     </div>
-		
+
     <div class="field">
-      <%= f.label :password_confirmation %><br />
-      <%= f.password_field :password_confirmation, class: "full_width" %>
+      <%= f.check_box :remember_me, checked: true %> 
+			<%= f.label :remember_me %>
     </div>
 
     <div class="actions">
       <%= f.submit "Sign in", class: "big green button full_width" %>
     </div>
   <% end %>
+	
+	<%= link_to "Sign Up", public_page_path("sign_up") %>
 
 </div>
