@@ -1,5 +1,3 @@
-<% cache wrapper do %>
-	<%= content_tag :div, id: dom_id(wrapper), class: "wrapper", data: { id: wrapper.id, identifier: wrapper.identifier } do %>
-		<%= render wrapper.blocks %>
-	<% end %>
+<%= content_tag :div, id: dom_id(wrapper), class: "wrapper", data: { id: wrapper.id, identifier: wrapper.identifier } do %>
+	<%= render wrapper.blocks %>
 <% end %>
