@@ -10,9 +10,9 @@ namespace :backup do
     end
     
     run "mkdir -p backups"
-    run "mkdir -p apps/touchbase/current/public/backups"
-    run "#{sudo} -u postgres pg_dump touchbase_#{rails_env} > backups/#{filename}"
-    run "yes | cp backups/#{filename} apps/touchbase/current/public/backups"
+    run "mkdir -p apps/#{application}/current/public/backups"
+    run "#{sudo} -u postgres pg_dump #{application}_#{rails_env} > backups/#{filename}"
+    run "yes | cp backups/#{filename} apps/#{application}/current/public/backups"
     puts "Accessible to be downloaded at #{root_url}/backups/#{filename}"
   end
   
@@ -20,10 +20,10 @@ namespace :backup do
     time = Time.now
     ext = ".tar.gz"
     filename = "backup-files-#{rails_env}-#{time.to_i}-#{time.strftime("%m-%d-%y")}#{ext}"
-    dir = "apps/touchbase/shared/public"
+    dir = "apps/#{application}/shared/public"
     run "mkdir -p backups"
     run "tar -zcvf backups/#{filename} #{dir}"
-    run "yes | cp backups/#{filename} apps/touchbase/current/public/backups"
+    run "yes | cp backups/#{filename} apps/#{application}/current/public/backups"
     puts "Accessible to be downloaded at #{root_url}/backups/#{filename}"
   end
 end
@@ -45,7 +45,7 @@ namespace :restore do
       postgresql.drop_database
       run %Q{#{sudo} -u postgres psql -c "create database #{postgresql_database} owner #{postgresql_user};"}
       
-      run "#{sudo} -u postgres psql touchbase_#{rails_env} < restore/#{newfile}"
+      run "#{sudo} -u postgres psql #{application}_#{rails_env} < restore/#{newfile}"
       unicorn.start
     else
       puts "Houston, we have a problem.\n Please provide a url that exists."
@@ -57,7 +57,7 @@ namespace :restore do
     if ENV.has_key?("url")
       url = ENV["url"]
       ext = ".tar.gz"
-      dir = "apps/touchbase/shared/public"
+      dir = "apps/#{application}/shared/public"
       time = Time.now
       newfile = "restore-files-#{rails_env}-#{time.to_i}-#{time.strftime("%m-%d-%y")}#{ext}"
       run "mkdir -p #{dir}"
