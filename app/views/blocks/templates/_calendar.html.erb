@@ -10,14 +10,17 @@
 <div class="calendar">
 	<%= select_tag :calendar_tags, options_for_select(["Youth", "Men", "Women", "Family", "Kids", "All"]), id: nil, class: "calendar_tags" %>
 	<div class="clear"></div>
-	<%= link_to "&larr; <span class=\"month_name\">#{prev_month.strftime("%B")}</span><span class=\"month_letter\">#{prev_month.strftime("%B")[0]}</span>".html_safe, request.path + "?calendar[month]=#{prev_month.month}&calendar[year]=#{prev_month.year}", class: "prev_month" %>
-	<%= link_to "<span class=\"month_name\">#{next_month.strftime("%B")}</span><span class=\"month_letter\">#{next_month.strftime("%B")[0]}</span> &rarr;".html_safe, request.path + "?calendar[month]=#{next_month.month}&calendar[year]=#{next_month.year}", class: "next_month" %>
-	<h3 class="title"><%= month.strftime("%B %Y") %></h3>
+	<%= link_to "&larr; <span class=\"month_long\">#{prev_month.strftime("%B")}</span><span class=\"month_short\">#{prev_month.strftime("%b")}</span>".html_safe, request.path + "?calendar[month]=#{prev_month.month}&calendar[year]=#{prev_month.year}", class: "prev_month" %>
+	<%= link_to "<span class=\"month_long\">#{next_month.strftime("%B")}</span><span class=\"month_short\">#{next_month.strftime("%b")}</span> &rarr;".html_safe, request.path + "?calendar[month]=#{next_month.month}&calendar[year]=#{next_month.year}", class: "next_month" %>
+	<h3 class="title">
+		<span class="title_long"><%= month.strftime("%B %Y") %></span>
+		<span class="title_short"><%= month.strftime("%b %Y") %></span>
+	</h3>
 	<table class="calendar" data-details="<%= params[:calendar].to_json %>" data-path="<%= request.path %>">
 		<thead>
 			<tr>
 				<% %w[Sunday Monday Tuesday Wednesday Thursday Friday Saturday].each do |d| %>
-					<th><span class="day_name"><%= d %></span><span class="day_letter"><%= d[0] %></span></th>
+					<th><span class="day_long"><%= d %></span><span class="day_short"><%= d[0] %></span></th>
 				<% end %>
 		</thead>
 		<tbody>
