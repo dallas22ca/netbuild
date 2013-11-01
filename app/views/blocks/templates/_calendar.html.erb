@@ -21,7 +21,7 @@
 				<tr>
 					<% %w[S M T W T F S].each do |d| %>
 						<td data-day="<%= @date.day %>" data-month="<%= @date.month %>" data-year="<%= @date.year %>">
-							<%= @date.day %>
+							<span class="number"><%= @date.day %></span>
 						</td>
 						<% @date = @date + 1.day %>
 					<% end %>
