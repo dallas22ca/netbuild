@@ -1,231 +1,229 @@
-<% cache_unless ["events", "media"].include?(block.genre), block do %>
-	<%= content_tag_for :div, block, data: { genre: block.genre, id: block.id, details: block.details, url: block_path(block) } do %>
-		<% if block.genre == "text" %>
-			<<%= block.data["style"] %> class="contenteditable"><%= block.data["content"].to_s.html_safe %></<%= block.data["style"] %>>
-		<% elsif block.genre == "events" %>
-			<% if block.data["style"] == "list" %>
-				<ol>
-					<li>
-						<h5>Mon, Sept 18</h5>
-						<ol>
-							<li>7:00 AM - AWANA - Children</li>
-							<li>7:00 AM - Wednesday Equipping Classes</li>
-						</ol>
-					</li>
-					<li>
-						<h5>Wed, Sept 22</h5>
-						<ol>
-							<li>7:00 AM - Online Worship</li>
-							<li>7:00 AM - Adult Connect Groups</li>
-							<li>7:00 AM - Children Connect Groups</li>
-						</ol>
-					</li>
-				</ol>
-			<% elsif block.data["style"] == "calendar" %>
-				<%= render "blocks/templates/calendar" %>
+<%= content_tag_for :div, block, data: { genre: block.genre, id: block.id, details: block.details, url: block_path(block) } do %>
+	<% if block.genre == "text" %>
+		<<%= block.data["style"] %> class="contenteditable"><%= block.data["content"].to_s.html_safe %></<%= block.data["style"] %>>
+	<% elsif block.genre == "events" %>
+		<% if block.data["style"] == "list" %>
+			<ol>
+				<li>
+					<h5>Mon, Sept 18</h5>
+					<ol>
+						<li>7:00 AM - AWANA - Children</li>
+						<li>7:00 AM - Wednesday Equipping Classes</li>
+					</ol>
+				</li>
+				<li>
+					<h5>Wed, Sept 22</h5>
+					<ol>
+						<li>7:00 AM - Online Worship</li>
+						<li>7:00 AM - Adult Connect Groups</li>
+						<li>7:00 AM - Children Connect Groups</li>
+					</ol>
+				</li>
+			</ol>
+		<% elsif block.data["style"] == "calendar" %>
+			<%= render "blocks/templates/calendar" %>
+		<% end %>
+	<% elsif block.genre == "img" %>
+		<div class="img_wrapper" style="text-align: <%= block.data["align"].blank? ? "center" : block.data["align"] %>">
+			<% if block.data["href"].blank? %>
+				<%= image_tag block.data["src"], width: block.data["width"] %>
+			<% else %>
+				<%= link_to image_tag(block.data["src"], width: block.data["width"]), block.data["href"] %>
 			<% end %>
-		<% elsif block.genre == "img" %>
-			<div class="img_wrapper" style="text-align: <%= block.data["align"].blank? ? "center" : block.data["align"] %>">
-				<% if block.data["href"].blank? %>
-					<%= image_tag block.data["src"], width: block.data["width"] %>
-				<% else %>
-					<%= link_to image_tag(block.data["src"], width: block.data["width"]), block.data["href"] %>
-				<% end %>
-			</div>
-		<% elsif block.genre == "social" %>
-			<div class="img_wrapper">
-				<img src="/themes/shared/social.png">
-			</div>
-		<% elsif block.genre == "money" %>
-			<div class="img_wrapper">
-				<% if block.data["amount"].downcase == "fluctuating" %>
-					<div class="field">
-						<%= label_tag :how_much, block.data["description"] %><br>
-						<%= text_field_tag :how_much %>
-					</div>
-				<% else %>
-					<p><%= block.data["description"] %></p>
-					<h1><%= number_to_currency(block.data["amount"].to_i / 100.00) %></h1>
-				<% end %>
-				<button>Pay</button>
-			</div>
-		<% elsif block.genre == "table" %>
-			<table class="table">
-				<tbody>
-					<tr>
-						<td><i class="icon-globe"></i></td>
-						<td class="contenteditable 	title">
-							<b>YourOrganization.com</b>
-						</td>
-						<td class="contenteditable price">$40 / month</td>
-					</tr>
-					<tr>
-						<td></td>
-						<td colspan="2" class="contenteditable description">
-							Your NetBuild package starts with reclaiming your organization's online identity with a custom domain name. We'll help you purchase it, set up your website with a beautiful theme, and create 2 email accounts.
-						</td>
-					</tr>
-					<tr>
-						<td><i class="icon-wrench"></i></td>
-						<td class="contenteditable title">
-							<b>2 Hours / Month of Website Maintenance.</b>
-						</td>
-						<td class="contenteditable price">Included</td>
-					</tr>
-					<tr>
-						<td></td>
-						<td colspan="2" class="contenteditable description">
-							Too busy to update your site? Can't be bothered to learn how (even though its really easy)? No problem! Simply send us an email with what you want changed. Does it get any easier?
-						</td>
-					</tr>
-					<tr>
-						<td><i class="icon-sitemap"></i></td>
-						<td class="contenteditable 	title">
-							<b>Unlimited Pages with Simple Content Editing.</b>
-						</td>
-						<td class="contenteditable price">Included</td>
-					</tr>
-					<tr>
-						<td></td>
-						<td colspan="2" class="contenteditable description">
-							Using our advanced Content Management System, you'll never again have to rely on others to update your website... after a quick tutorial, you'll be off to the races.
-						</td>
-					</tr>
-					<tr>
-						<td><i class="icon-music"></i></td>
-						<td class="contenteditable title">
-							<b>Unlimited Media Storage Space &amp; Bandwidth.</b>
-						</td>
-						<td class="contenteditable price">Included</td>
-					</tr>
-					<tr>
-						<td></td>
-						<td colspan="2" class="contenteditable description">
-							Store unlimited documents, audio, and video in the cloud and access it through your own website - from anywhere in the world. Use our powerful media servers to keep your community and clients engaged with your organization.
-						</td>
-					</tr>
-					<tr>
-						<td><i class="icon-group"></i></td>
-						<td class="contenteditable title">
-							<b>Business Management Tools.</b>
-						</td>
-						<td class="contenteditable price">Included</td>
-					</tr>
-					<tr>
-						<td></td>
-						<td colspan="2" class="contenteditable description">
-							Manage your contacts with ease - send them messages and stay in touch via social media. Our manager allows you to add custom fields, so that you can perfectly dissect your organization's relationships. Protect pages or sections of your website so that they're only viewable to authorized eyes.
-						</td>
-					</tr>
-					<tr>
-						<td><i class="icon-code"></i></td>
-						<td class="contenteditable title">
-							<b>Full Access to Your Site's Source Code.</b>
-						</td>
-						<td class="contenteditable price">Included</td>
-					</tr>
-					<tr>
-						<td></td>
-						<td colspan="2" class="contenteditable description">
-							We don't lock you into a rigid theme or template - your site's source code is fully accessible and editable so that you can fully maximize the power of the web. Your web developer will love our simple &amp; robust theme editor.
-						</td>
-					</tr>
-					<tr>
-						<td><i class="icon-envelope"></i></td>
-						<td class="contenteditable title">
-							<b>Extra Email Accounts.</b>
-						</td>
-						<td class="contenteditable price">Starting at $2 / account / month</td>
-					</tr>
-					<tr>
-						<td></td>
-						<td colspan="2" class="contenteditable description">
-							Our intuitive email address management interface makes it easy to add and remove addresses to your domain. Your first two addresses are free!
-						</td>
-					</tr>
-					<tr>
-						<td><i class="icon-credit-card"></i></td>
-						<td class="contenteditable 	title">
-							<b>Web Store &amp; E-commerce.</b>
-						</td>
-						<td class="contenteditable price">$25 / month</td>
-					</tr>
-					<tr>
-						<td></td>
-						<td colspan="2" class="contenteditable description">
-							Sell your products or services right through your website, with payments being tranferred to you every 7 days. How much do we charge? 3.0% + 30 cents per transaction. Also a great to accept donations for your organization!
-						</td>
-					</tr>
-					<tr>
-						<td><i class="icon-youtube-play"></i></td>
-						<td class="contenteditable title">
-							<b>Live Streaming.</b>
-						</td>
-						<td class="contenteditable price">Starting at $25 / month</td>
-					</tr>
-					<tr>
-						<td></td>
-						<td colspan="2" class="contenteditable description">
-							Looking for an online streaming solution? Use NetBuild.co to broadcast directly from your own website.
-						</td>
-					</tr>
-					<tr>
-						<td></td>
-						<td colspan="2" class="contenteditable title">
-							<b>Ready to get started? Email beta @ netbuild.co!</b>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		<% elsif block.genre == "media" %>
-			<div class="media_wrapper">
-				<div class="block_content">
-					<div class="video"></div>
-					<ul class="playlist">
-						<li>
-							<a href="#">
-								<span class="title">Exceeding God</span>
-								<span class="date">Wed, Sept 5, 2013</span>
-							</a>
-	          </li>
-						<li>
-							<a href="#" class="playing">
-								<span class="title">Back to School</span>
-								<span class="date">Wed, Sept 5, 2013</span>
-							</a>
-	          </li>
-						<li>
-							<a href="#">
-								<span class="title">Decisions, Decisions, Decisions.</span>
-								<span class="date">Wed, Sept 5, 2013</span>
-							</a>
-	          </li>
-						<li>
-							<a href="#">
-								<span class="title">Heaven</span>
-								<span class="date">Wed, Sept 5, 2013</span>
-							</a>
-	          </li>
-						<li>
-							<a href="#">
-								<span class="title">The Field</span>
-								<span class="date">Wed, Sept 5, 2013</span>
-							</a>
-	          </li>
-						<li>
-							<a href="#">
-								<span class="title">Eternity 101</span>
-								<span class="date">Wed, Sept 5, 2013</span>
-							</a>
-	          </li>
-					</ul>
-					<div class="clear"></div>
+		</div>
+	<% elsif block.genre == "social" %>
+		<div class="img_wrapper">
+			<img src="/themes/shared/social.png">
+		</div>
+	<% elsif block.genre == "money" %>
+		<div class="img_wrapper">
+			<% if block.data["amount"].downcase == "fluctuating" %>
+				<div class="field">
+					<%= label_tag :how_much, block.data["description"] %><br>
+					<%= text_field_tag :how_much %>
 				</div>
-			</div>
-		<% elsif block.genre == "cols" %>
-			<div style="width: 100%; min-height: 50px; background: blue; ">
+			<% else %>
+				<p><%= block.data["description"] %></p>
+				<h1><%= number_to_currency(block.data["amount"].to_i / 100.00) %></h1>
+			<% end %>
+			<button>Pay</button>
+		</div>
+	<% elsif block.genre == "table" %>
+		<table class="table">
+			<tbody>
+				<tr>
+					<td><i class="icon-globe"></i></td>
+					<td class="contenteditable 	title">
+						<b>YourOrganization.com</b>
+					</td>
+					<td class="contenteditable price">$40 / month</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td colspan="2" class="contenteditable description">
+						Your NetBuild package starts with reclaiming your organization's online identity with a custom domain name. We'll help you purchase it, set up your website with a beautiful theme, and create 2 email accounts.
+					</td>
+				</tr>
+				<tr>
+					<td><i class="icon-wrench"></i></td>
+					<td class="contenteditable title">
+						<b>2 Hours / Month of Website Maintenance.</b>
+					</td>
+					<td class="contenteditable price">Included</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td colspan="2" class="contenteditable description">
+						Too busy to update your site? Can't be bothered to learn how (even though its really easy)? No problem! Simply send us an email with what you want changed. Does it get any easier?
+					</td>
+				</tr>
+				<tr>
+					<td><i class="icon-sitemap"></i></td>
+					<td class="contenteditable 	title">
+						<b>Unlimited Pages with Simple Content Editing.</b>
+					</td>
+					<td class="contenteditable price">Included</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td colspan="2" class="contenteditable description">
+						Using our advanced Content Management System, you'll never again have to rely on others to update your website... after a quick tutorial, you'll be off to the races.
+					</td>
+				</tr>
+				<tr>
+					<td><i class="icon-music"></i></td>
+					<td class="contenteditable title">
+						<b>Unlimited Media Storage Space &amp; Bandwidth.</b>
+					</td>
+					<td class="contenteditable price">Included</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td colspan="2" class="contenteditable description">
+						Store unlimited documents, audio, and video in the cloud and access it through your own website - from anywhere in the world. Use our powerful media servers to keep your community and clients engaged with your organization.
+					</td>
+				</tr>
+				<tr>
+					<td><i class="icon-group"></i></td>
+					<td class="contenteditable title">
+						<b>Business Management Tools.</b>
+					</td>
+					<td class="contenteditable price">Included</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td colspan="2" class="contenteditable description">
+						Manage your contacts with ease - send them messages and stay in touch via social media. Our manager allows you to add custom fields, so that you can perfectly dissect your organization's relationships. Protect pages or sections of your website so that they're only viewable to authorized eyes.
+					</td>
+				</tr>
+				<tr>
+					<td><i class="icon-code"></i></td>
+					<td class="contenteditable title">
+						<b>Full Access to Your Site's Source Code.</b>
+					</td>
+					<td class="contenteditable price">Included</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td colspan="2" class="contenteditable description">
+						We don't lock you into a rigid theme or template - your site's source code is fully accessible and editable so that you can fully maximize the power of the web. Your web developer will love our simple &amp; robust theme editor.
+					</td>
+				</tr>
+				<tr>
+					<td><i class="icon-envelope"></i></td>
+					<td class="contenteditable title">
+						<b>Extra Email Accounts.</b>
+					</td>
+					<td class="contenteditable price">Starting at $2 / account / month</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td colspan="2" class="contenteditable description">
+						Our intuitive email address management interface makes it easy to add and remove addresses to your domain. Your first two addresses are free!
+					</td>
+				</tr>
+				<tr>
+					<td><i class="icon-credit-card"></i></td>
+					<td class="contenteditable 	title">
+						<b>Web Store &amp; E-commerce.</b>
+					</td>
+					<td class="contenteditable price">$25 / month</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td colspan="2" class="contenteditable description">
+						Sell your products or services right through your website, with payments being tranferred to you every 7 days. How much do we charge? 3.0% + 30 cents per transaction. Also a great to accept donations for your organization!
+					</td>
+				</tr>
+				<tr>
+					<td><i class="icon-youtube-play"></i></td>
+					<td class="contenteditable title">
+						<b>Live Streaming.</b>
+					</td>
+					<td class="contenteditable price">Starting at $25 / month</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td colspan="2" class="contenteditable description">
+						Looking for an online streaming solution? Use NetBuild.co to broadcast directly from your own website.
+					</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td colspan="2" class="contenteditable title">
+						<b>Ready to get started? Email beta @ netbuild.co!</b>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	<% elsif block.genre == "media" %>
+		<div class="media_wrapper">
+			<div class="block_content">
+				<div class="video"></div>
+				<ul class="playlist">
+					<li>
+						<a href="#">
+							<span class="title">Exceeding God</span>
+							<span class="date">Wed, Sept 5, 2013</span>
+						</a>
+          </li>
+					<li>
+						<a href="#" class="playing">
+							<span class="title">Back to School</span>
+							<span class="date">Wed, Sept 5, 2013</span>
+						</a>
+          </li>
+					<li>
+						<a href="#">
+							<span class="title">Decisions, Decisions, Decisions.</span>
+							<span class="date">Wed, Sept 5, 2013</span>
+						</a>
+          </li>
+					<li>
+						<a href="#">
+							<span class="title">Heaven</span>
+							<span class="date">Wed, Sept 5, 2013</span>
+						</a>
+          </li>
+					<li>
+						<a href="#">
+							<span class="title">The Field</span>
+							<span class="date">Wed, Sept 5, 2013</span>
+						</a>
+          </li>
+					<li>
+						<a href="#">
+							<span class="title">Eternity 101</span>
+							<span class="date">Wed, Sept 5, 2013</span>
+						</a>
+          </li>
+				</ul>
 				<div class="clear"></div>
 			</div>
-		<% end %>
+		</div>
+	<% elsif block.genre == "cols" %>
+		<div style="width: 100%; min-height: 50px; background: blue; ">
+			<div class="clear"></div>
+		</div>
 	<% end %>
 <% end %>
