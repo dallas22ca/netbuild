@@ -16,14 +16,14 @@
 				<% end %>
 		</thead>
 		<tbody>
-			<% @date = month - (month.beginning_of_month.wday % 7).days %>
+			<% date = month - (month.beginning_of_month.wday % 7).days %>
 			<% 6.times do %>
 				<tr>
 					<% %w[S M T W T F S].each do |d| %>
-						<td data-day="<%= @date.day %>" data-month="<%= @date.month %>" data-year="<%= @date.year %>">
-							<span class="number"><%= @date.day %></span>
+						<td data-day="<%= date.day %>" data-month="<%= date.month %>" data-year="<%= date.year %>">
+							<span class="number<%= " not_in_current_month" if month.beginning_of_month < date || month.end_of_month < date %>"><%= date.day %></span>
 						</td>
-						<% @date = @date + 1.day %>
+						<% date = date + 1.day %>
 					<% end %>
 				</tr>
 			<% end %>
