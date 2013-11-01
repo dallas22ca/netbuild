@@ -11,8 +11,8 @@
 	<table class="calendar" data-path="<%= request.path %>">
 		<thead>
 			<tr>
-				<% %w[S M T W T F S].each do |d| %>
-					<th><%= d %></th>
+				<% %w[Sunday Monday Tuesday Wednesday Thursday Friday Saturday].each do |d| %>
+					<th><span class="first_letter"><%= d[0] %></span><%= d[1..-1] %></th>
 				<% end %>
 		</thead>
 		<tbody>
