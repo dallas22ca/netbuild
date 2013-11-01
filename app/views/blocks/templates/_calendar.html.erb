@@ -17,7 +17,7 @@
 		</thead>
 		<tbody>
 			<% @date = month - (month.beginning_of_month.wday % 7).days %>
-			<% (month.end_of_month.day / 7.0).ceil.times do %>
+			<% 6.times do %>
 				<tr>
 					<% %w[S M T W T F S].each do |d| %>
 						<td data-day="<%= @date.day %>" data-month="<%= @date.month %>" data-year="<%= @date.year %>">
