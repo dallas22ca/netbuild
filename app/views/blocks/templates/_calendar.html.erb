@@ -1,5 +1,8 @@
 <%
-	month = Time.parse("#{params[:calendar][:month]}/#{params[:calendar][:year]}") if params[:calendar][:month] && params[:calendar][:year]
+	if params[:calendar]
+		month = Time.parse("#{params[:calendar][:month]}/#{params[:calendar][:year]}") if params[:calendar][:month] && params[:calendar][:year]
+	end
+	
 	month ||= Time.now
 	prev_month = month - 1.month
 	next_month = month + 1.month
