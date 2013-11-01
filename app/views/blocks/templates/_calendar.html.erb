@@ -21,7 +21,7 @@
 				<tr>
 					<% %w[S M T W T F S].each do |d| %>
 						<td data-day="<%= date.day %>" data-month="<%= date.month %>" data-year="<%= date.year %>">
-							<span class="number<%= " not_in_current_month" if month.beginning_of_month < date || month.end_of_month < date %>"><%= date.day %></span>
+							<span class="number<%= " not_in_current_month" if date < month.beginning_of_month || date > month.end_of_month %>"><%= date.day %></span>
 						</td>
 						<% date = date + 1.day %>
 					<% end %>
