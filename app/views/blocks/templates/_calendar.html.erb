@@ -8,7 +8,7 @@
 	next_month = month + 1.month
 %>
 <div class="calendar">
-	<%= select_tag :calendar_tags, options_for_select(["Youth", "Men", "Women", "Family", "Kids", "All"]) %>
+	<%= select_tag :calendar_tags, options_for_select(["Youth", "Men", "Women", "Family", "Kids", "All"]), id: nil, class: "calendar_tags" %>
 	<div class="clear"></div>
 	<%= link_to "&larr; <span class=\"month_name\">#{prev_month.strftime("%B")}</span>".html_safe, request.path + "?calendar[month]=#{prev_month.month}&calendar[year]=#{prev_month.year}", class: "prev_month" %>
 	<%= link_to "<span class=\"month_name\">#{next_month.strftime("%B")}</span> &rarr;".html_safe, request.path + "?calendar[month]=#{next_month.month}&calendar[year]=#{next_month.year}", class: "next_month" %>
