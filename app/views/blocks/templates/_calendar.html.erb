@@ -12,7 +12,7 @@
 		<thead>
 			<tr>
 				<% %w[Sunday Monday Tuesday Wednesday Thursday Friday Saturday].each do |d| %>
-					<th><span class="first_letter"><%= d[0] %></span><%= d[1..-1] %></th>
+					<th><span class="first_letter"><%= d[0] %></span><span class="remaining_letters"><%= d[1..-1] %></span></th>
 				<% end %>
 		</thead>
 		<tbody>
