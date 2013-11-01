@@ -3,23 +3,27 @@
 		<% if block.genre == "text" %>
 			<<%= block.data["style"] %> class="contenteditable"><%= block.data["content"].to_s.html_safe %></<%= block.data["style"] %>>
 		<% elsif block.genre == "events" %>
-			<ol>
-				<li>
-					<h5>Mon, Sept 18</h5>
-					<ol>
-						<li>7:00 AM - AWANA - Children</li>
-						<li>7:00 AM - Wednesday Equipping Classes</li>
-					</ol>
-				</li>
-				<li>
-					<h5>Wed, Sept 22</h5>
-					<ol>
-						<li>7:00 AM - Online Worship</li>
-						<li>7:00 AM - Adult Connect Groups</li>
-						<li>7:00 AM - Children Connect Groups</li>
-					</ol>
-				</li>
-			</ol>
+			<% if block.data["style"] == "list" %>
+				<ol>
+					<li>
+						<h5>Mon, Sept 18</h5>
+						<ol>
+							<li>7:00 AM - AWANA - Children</li>
+							<li>7:00 AM - Wednesday Equipping Classes</li>
+						</ol>
+					</li>
+					<li>
+						<h5>Wed, Sept 22</h5>
+						<ol>
+							<li>7:00 AM - Online Worship</li>
+							<li>7:00 AM - Adult Connect Groups</li>
+							<li>7:00 AM - Children Connect Groups</li>
+						</ol>
+					</li>
+				</ol>
+			<% elsif block.data["style"] == "calendar" %>
+				<%= render "blocks/templates/calendar" %>
+			<% end %>
 		<% elsif block.genre == "img" %>
 			<div class="img_wrapper" style="text-align: <%= block.data["align"].blank? ? "center" : block.data["align"] %>">
 				<% if block.data["href"].blank? %>

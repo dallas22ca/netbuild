@@ -1,0 +1,28 @@
+<%
+	month = Time.parse("#{params[:month]}/#{params[:year]}") if params[:month] && params[:year]
+	month ||= Time.now
+	prev_month = month - 1.month
+	next_month = month + 1.month
+%>
+<div class="calendar">
+	<%= link_to "&larr; <span class=\"month_name\">#{prev_month.strftime("%B")}</span>".html_safe, request.path + "?month=#{prev_month.month}&year=#{prev_month.year}", class: "prev_month" %>
+	<%= link_to "<span class=\"month_name\">#{next_month.strftime("%B")}</span> &rarr;".html_safe, request.path + "?month=#{next_month.month}&year=#{next_month.year}", class: "next_month" %>
+	<h3 class="title"><%= month.strftime("%B %Y") %></h3>
+	<table class="calendar" data-path="<%= request.path %>">
+		<% %w[S M T W T F S].each do |d| %>
+			<td><%= d %></td>
+		<% end %>
+	
+		<% @date = month - (month.beginning_of_month.wday % 7).days %>
+		<% (month.end_of_month.day / 7.0).ceil.times do %>
+			<tr>
+				<% %w[S M T W T F S].each do |d| %>
+					<td data-day="<%= @date.day %>" data-month="<%= @date.month %>" data-year="<%= @date.year %>">
+						<%= @date.day %>
+					</td>
+					<% @date = @date + 1.day %>
+				<% end %>
+			</tr>
+		<% end %>
+	</table>
+</div>

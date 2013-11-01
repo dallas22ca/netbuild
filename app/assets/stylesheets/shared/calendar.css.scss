@@ -1,0 +1,17 @@
+.calendar {
+  table {
+    width: 100%;
+  }
+  
+  .title {
+    text-align: center;
+  }
+  
+  .prev_month {
+    float: left;
+  }
+  
+  .next_month {
+    float: right;
+  }
+}
