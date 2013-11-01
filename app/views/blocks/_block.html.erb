@@ -1,4 +1,4 @@
-<% cache_unless %w[events media].include?(block.genre), block do %>
+<% cache_unless ["events", "media"].include?(block.genre), block do %>
 	<%= content_tag_for :div, block, data: { genre: block.genre, id: block.id, details: block.details, url: block_path(block) } do %>
 		<% if block.genre == "text" %>
 			<<%= block.data["style"] %> class="contenteditable"><%= block.data["content"].to_s.html_safe %></<%= block.data["style"] %>>
