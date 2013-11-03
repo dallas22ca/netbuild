@@ -167,6 +167,7 @@ class Website < ActiveRecord::Base
       title: "Mail",
       permalink: "mail",
       description: "Check your email.",
+      redirect_to: "https://websitewelcome.com:2096",
       visible: false,
       deleteable: false,
       ordinal: 999,
