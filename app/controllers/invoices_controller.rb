@@ -88,6 +88,7 @@ class InvoicesController < ApplicationController
     def invoice_params
       params[:invoice][:lines].each do |line|
         line[:amount] = line[:amount].to_f * 100
+        line[:unit_price] = line[:unit_price].to_f * 100
       end
       
       if current_user.try(:admin?)

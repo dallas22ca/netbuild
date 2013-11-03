@@ -27,7 +27,7 @@
 			<tr>
 				<td><%= line["quantity"] %></td>
 				<td><%= line["plan"] ? line["plan"]["name"] : line["description"] %></td>
-				<td><%= line["unit_price"] %></td>
+				<td><%= number_to_currency line["unit_price"].to_i / 100.0 %></td>
 				<td><%= number_to_currency line["amount"].to_i / 100.0 %></td>
 			</tr>
 		<% end %>
