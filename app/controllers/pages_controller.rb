@@ -40,8 +40,8 @@ class PagesController < ApplicationController
     
     respond_to do |format|
       format.html do
-        if !@page.redirect.blank?
-          redirect_to @page.redirect
+        if !@page.redirect_to.blank?
+          redirect_to @page.redirect_to
         elsif @path != root_path && @page == @website.home
           redirect_to root_path
         elsif !@website
