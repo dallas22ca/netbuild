@@ -40,8 +40,8 @@ class PagesController < ApplicationController
     
     respond_to do |format|
       format.html do
-        if 1 == 0 # PAGE HAS REDIRECT
-          # REDIRECT
+        unless @page.redirect.blank?
+          redirect_to @page.redirect
         elsif @path != root_path && @page == @website.home
           redirect_to root_path
         elsif !@website
@@ -109,7 +109,7 @@ class PagesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def page_params
-      params.require(:page).permit(:title, :description, :visible, :ordinal, :document_id, :parent_id, :permalink)
+      params.require(:page).permit(:title, :description, :visible, :ordinal, :document_id, :parent_id, :permalink, :redirect)
     end
     
     def choose_layout
