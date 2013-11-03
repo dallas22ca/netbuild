@@ -109,7 +109,7 @@ class PagesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def page_params
-      params.require(:page).permit(:title, :description, :visible, :ordinal, :document_id, :parent_id, :permalink, :redirect)
+      params.require(:page).permit(:title, :description, :visible, :ordinal, :document_id, :parent_id, :permalink, :redirect_to)
     end
     
     def choose_layout
