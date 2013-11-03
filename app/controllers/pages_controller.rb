@@ -15,11 +15,7 @@ class PagesController < ApplicationController
     @path = request.path
     
     if params[:permalink]
-      if params[:permalink] == "mail"
-        redirect_to "https://porsche.websitewelcome.com:2096"
-      else
-        @page = @website.pages.where(permalink: params[:permalink]).first
-      end
+      @page = @website.pages.where(permalink: params[:permalink]).first
     elsif @website
       @page = @website.home
     end
@@ -38,18 +34,20 @@ class PagesController < ApplicationController
       end
     end
     
-    if @path != root_path && @page == @website.home
-      redirect_to root_path
-    elsif !@website
-      render text: "This website does not exist."
-    end
-    
     if params[:permalink] == "invoices" && params[:id]
       @invoice = @website.invoices.where(visible_id: params[:id], membership_id: current_membership.id).first
     end
     
     respond_to do |format|
-      format.html
+      format.html do
+        if 1 == 0 # PAGE HAS REDIRECT
+          # REDIRECT
+        elsif @path != root_path && @page == @website.home
+          redirect_to root_path
+        elsif !@website
+          render text: "This website does not exist."
+        end
+      end
       format.pdf { render pdf: "#{@website.title} #{@invoice.date.strftime("%m-%d-%Y") if @invoice.date}" } if @invoice
     end
   end

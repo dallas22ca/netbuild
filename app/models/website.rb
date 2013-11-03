@@ -162,6 +162,16 @@ class Website < ActiveRecord::Base
       ordinal: 999,
       document_id: theme.default_document.id
     )
+    
+    mail = pages.create(
+      title: "Mail",
+      permalink: "mail",
+      description: "Check your email.",
+      visible: false,
+      deleteable: false,
+      ordinal: 999,
+      document_id: theme.default_document.id
+    )
   end
   
   def clone_theme
