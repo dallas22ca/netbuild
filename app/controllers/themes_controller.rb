@@ -1,5 +1,5 @@
 class ThemesController < ApplicationController
-  before_action :authenticate_adminable?, except: [:show]
+  before_action :authenticate_website_admin?, except: [:show]
   before_action :set_theme, only: [:edit, :update, :destroy]
 
   # GET /themes

@@ -7,5 +7,7 @@ class CreateWebsites < ActiveRecord::Migration
 
       t.timestamps
     end
+    
+    add_index :websites, :permalink
   end
 end

@@ -36,12 +36,12 @@ class ApplicationController < ActionController::Base
   end
   helper_method :current_membership
   
-  def authenticate_adminable?
+  def authenticate_website_admin?
     if !user_signed_in? || !@website.adminable_by(current_user)
       redirect_to root_path
     end
   end
-  helper_method :authenticate_adminable?
+  helper_method :authenticate_website_admin?
   
   def authenticate_super_admin?
     unless user_signed_in? && current_user.admin?
@@ -55,14 +55,14 @@ class ApplicationController < ActionController::Base
   end
   helper_method :super_admin?
   
-  def adminable?
+  def website_admin?
     if user_signed_in?
       @adminable ||= @website && @website.memberships.admin.where(user_id: current_user.id).any?
     else
       @adminable ||= false
     end
   end
-  helper_method :adminable?
+  helper_method :website_admin?
   
   def configure_permitted_parameters
     devise_parameter_sanitizer.for(:sign_in) { |u| u.permit(:email, :password, :subdomain) }

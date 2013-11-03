@@ -29,7 +29,7 @@ Netbuild::Application.routes.draw do
       constraints "1" == "2" do
         scope "/manage" do
           resources :memberships, path: :members
-          resources :invoices, path: :payments
+          resources :invoices
           resources :pages
           resources :media
           resources :themes do

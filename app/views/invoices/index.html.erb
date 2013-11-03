@@ -2,12 +2,15 @@
 
 <h1>Invoices</h1>
 
+<%= link_to "Create New Invoice", new_invoice_path %><br><br>
+
 <table class="table">
   <thead>
     <tr>
       <th>Date</th>
       <th>Customer</th>
       <th>Amount</th>
+      <th>Paid</th>
     </tr>
   </thead>
 
@@ -17,6 +20,13 @@
         <td><%= link_to invoice.date, invoice %></td>
 				<td><%= link_to invoice.membership.user.email, invoice %></td>
         <td><%= link_to number_to_currency(invoice.total / 100), invoice %></td>
+				<td>
+					<% if invoice.paid? %>
+						<i class="icon-ok"></i>
+					<% else %>
+						<i class="icon-remove"></i>
+					<% end %>
+				</td>
       </tr>
     <% end %>
   </tbody>

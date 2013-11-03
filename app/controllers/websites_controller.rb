@@ -1,5 +1,5 @@
 class WebsitesController < ApplicationController
-  before_action :authenticate_adminable?
+  before_action :authenticate_website_admin?
   
   # GET /websites
   # GET /websites.json

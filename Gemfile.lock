@@ -212,6 +212,8 @@ GEM
     whenever (0.8.4)
       activesupport (>= 2.3.4)
       chronic (>= 0.6.3)
+    wicked_pdf (0.9.7)
+      rails
 
 PLATFORMS
   ruby
@@ -245,3 +247,4 @@ DEPENDENCIES
   uglifier (>= 1.3.0)
   unicorn
   whenever
+  wicked_pdf

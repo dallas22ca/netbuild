@@ -7,7 +7,7 @@ class Page < ActiveRecord::Base
   has_many :wrappers
   
   before_validation :permalink_is_not_safe, if: Proc.new { |p| %w[mail manage auth sign_out].include? p.permalink }
-  validates_uniqueness_of :permalink, scope: :website_id
+  validates_uniqueness_of :permalink, scope: :website_id, case_sensitive: false
   validates_presence_of :document_id
   validates_presence_of :title, allow_blank: false
   

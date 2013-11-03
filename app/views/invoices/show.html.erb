@@ -1,59 +1,6 @@
 <%= render "manage_nav" %>
-
 <p id="notice"><%= notice %></p>
-
-<p>
-  <strong><%= @invoice.website.title %></strong>
-</p>
-
-<p>
-  <strong>Date:</strong>
-  <%= @invoice.date.strftime("%B %d, %Y") %>
-</p>
-
-<p>
-  <strong>ID:</strong>
-  <%= @invoice.visible_id %>
-</p>
-
-<p>
-  <strong>Period start:</strong>
-  <%= @invoice.period_start.strftime("%B %d, %Y") %>
-</p>
-
-<p>
-  <strong>Period end:</strong>
-  <%= @invoice.period_end.strftime("%B %d, %Y") %>
-</p>
-
-<table>
-	<thead>
-		<tr>
-			<th>Description</th>
-			<th>Amount</th>
-		</tr>
-	</thead>
-	
-	<tbody>
-		<% @invoice.lines.each do |line| %>
-			<tr>
-				<td><%= line["plan"] ? line["plan"]["name"] : line["description"] %></td>
-				<td><%= number_to_currency line["amount"] / 100 %></td>
-			</tr>
-		<% end %>
-	</tbody>
-</table>
-
-<p>
-  <strong>Subtotal:</strong>
-  <%= number_to_currency @invoice.subtotal / 100 %>
-</p>
-
-<p>
-  <strong>Total:</strong>
-  <%= number_to_currency @invoice.total / 100 %>
-</p>
-
-<p>
-	<strong><%= "PAID" if @invoice.paid %></strong>
-</p>
+<%= link_to "PDF", invoice_path(@invoice, format: :pdf) %>
+<%= link_to "Edit", edit_invoice_path(@invoice) %>
+<br><br>
+<%= render @invoice %>

@@ -21,9 +21,9 @@
 			<li><%= link_to "Theme", manage_path("theme") %></li>
 			<li><%= link_to "Addons", manage_path("addons") %></li>
 			
-			<% if adminable? %>
+			<% if website_admin? %>
 				<% if @website.can_accept_money? || @website.invoices.any? %>
-					<li><%= link_to "Payments", manage_path("payments") %></li>
+					<li><%= link_to "Invoices", manage_path("invoices") %></li>
 				<% end %>
 
 				<li><%= link_to "Members", manage_path("members") %></li>

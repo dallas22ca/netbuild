@@ -16,7 +16,8 @@
 		"home_path" => root_path,
 		"manage_path" => public_page_path("members"),
 		"search_path" => public_page_path("search"),
-		"adminable?" => adminable?,
+		"website_admin?" => website_admin?,
+		"signed_in?" => signed_in?,
 		"q" => params[:q],
 		"yield" => @yield
 	}.merge(@blocks).merge(@current_user_details)

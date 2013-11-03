@@ -131,4 +131,8 @@ class Membership < ActiveRecord::Base
       WHMWorker.perform_async id, "delete_email_account", { forward_to_was: forward_to_was }
     end
   end
+  
+  def name
+    user.email
+  end
 end

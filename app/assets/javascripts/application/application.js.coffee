@@ -10,6 +10,7 @@ load = ->
   setCodeMirror()
   setColours()
   selectedNav()
+  Invoices.init()
 
 $ ->
   load()

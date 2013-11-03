@@ -1,0 +1,54 @@
+<p>
+  <strong><%= @invoice.website.title %></strong>
+</p>
+
+<p>
+  <strong>Date:</strong>
+  <%= @invoice.date.strftime("%B %d, %Y") %>
+</p>
+
+<p>
+  <strong>ID:</strong>
+  <%= @invoice.visible_id %>
+</p>
+
+<table>
+	<thead>
+		<tr>
+			<th>Quantity</th>
+			<th>Description</th>
+			<th>Unit Price</th>
+			<th>Amount</th>
+		</tr>
+	</thead>
+	
+	<tbody>
+		<% @invoice.lines.each do |line| %>
+			<tr>
+				<td><%= line["quantity"] %></td>
+				<td><%= line["plan"] ? line["plan"]["name"] : line["description"] %></td>
+				<td><%= line["unit_price"] %></td>
+				<td><%= number_to_currency line["amount"].to_i / 100.0 %></td>
+			</tr>
+		<% end %>
+	</tbody>
+</table>
+
+<p>
+  <strong>Subtotal:</strong>
+  <%= number_to_currency @invoice.subtotal_in_dollars %>
+</p>
+
+<p>
+  <strong>Tax (<%= @invoice.tax_rate %>%):</strong>
+  <%= number_to_currency @invoice.tax_in_dollars %>
+</p>
+
+<p>
+  <strong>Total:</strong>
+  <%= number_to_currency @invoice.total_in_dollars %>
+</p>
+
+<p>
+	<strong><%= "PAID" if @invoice.paid %></strong>
+</p>

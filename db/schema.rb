@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131031114739) do
+ActiveRecord::Schema.define(version: 20131103182211) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -97,6 +97,7 @@ ActiveRecord::Schema.define(version: 20131031114739) do
     t.integer  "membership_id"
     t.string   "customer_token"
     t.integer  "netbuild_website_id"
+    t.float    "tax_rate"
   end
 
   add_index "invoices", ["customer_token"], name: "index_invoices_on_customer_token", using: :btree
@@ -157,7 +158,6 @@ ActiveRecord::Schema.define(version: 20131031114739) do
 
   add_index "pages", ["document_id"], name: "index_pages_on_document_id", using: :btree
   add_index "pages", ["parent_id"], name: "index_pages_on_parent_id", using: :btree
-  add_index "pages", ["permalink"], name: "index_pages_on_permalink", using: :btree
   add_index "pages", ["website_id"], name: "index_pages_on_website_id", using: :btree
 
   create_table "themes", force: true do |t|

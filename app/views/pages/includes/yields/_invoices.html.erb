@@ -1,71 +1,19 @@
-<h1>Invoices</h1>
+<% if @invoice %>
 
-<% if params[:id] %>
-	<% @invoice = @website.invoices.where(membership_id: current_membership, visible_id: params[:id]).first %>
-
-	<p>
-	  <strong><%= @invoice.website.title %></strong>
-	</p>
-
-	<p>
-	  <strong>Date:</strong>
-	  <%= @invoice.date.strftime("%B %d, %Y") %>
-	</p>
-
-	<p>
-	  <strong>ID:</strong>
-	  <%= @invoice.visible_id %>
-	</p>
-
-	<p>
-	  <strong>Period start:</strong>
-	  <%= @invoice.period_start.strftime("%B %d, %Y") %>
-	</p>
-
-	<p>
-	  <strong>Period end:</strong>
-	  <%= @invoice.period_end.strftime("%B %d, %Y") %>
-	</p>
-
-	<table>
-		<thead>
-			<tr>
-				<th>Description</th>
-				<th>Amount</th>
-			</tr>
-		</thead>
-	
-		<tbody>
-			<% @invoice.lines.each do |line| %>
-				<tr>
-					<td><%= line["plan"] ? line["plan"]["name"] : line["description"] %></td>
-					<td><%= number_to_currency line["amount"] / 100 %></td>
-				</tr>
-			<% end %>
-		</tbody>
-	</table>
-
-	<p>
-	  <strong>Subtotal:</strong>
-	  <%= number_to_currency @invoice.subtotal / 100 %>
-	</p>
-
-	<p>
-	  <strong>Total:</strong>
-	  <%= number_to_currency @invoice.total / 100 %>
-	</p>
-
-	<p>
-		<strong><%= "PAID" if @invoice.paid %></strong>
-	</p>
+	<%= link_to "Invoices", public_page_path("invoices") %><br>
+	<%= link_to "PDF", public_page_path("invoices", id: @invoice.visible_id, format: :pdf) %><br><br>
+	<%= render @invoice %>
 
 <% else %>
-
+	
+	<h1>Invoices</h1>
+	
 	<table class="table">
 	  <thead>
 	    <tr>
 	      <th>Date</th>
 	      <th>Amount</th>
+	      <th>Paid</th>
 	    </tr>
 	  </thead>
 
@@ -74,6 +22,7 @@
 	      <tr>
 	        <td><%= link_to invoice.date, public_page_path("invoices?id=#{invoice.visible_id}") %></td>
 	        <td><%= link_to number_to_currency(invoice.total / 100), invoice %></td>
+					<td><%= link_to (invoice.paid? ? "<i class=\"icon-ok\"></i>" : "<i class=\"icon-remove\"></i>").html_safe, public_page_path("invoices?id=#{invoice.visible_id}") %></td>
 	      </tr>
 	    <% end %>
 	  </tbody>

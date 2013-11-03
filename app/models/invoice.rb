@@ -3,10 +3,15 @@ class Invoice < ActiveRecord::Base
   belongs_to :membership
   has_one :website, through: :membership
   
-  before_save :set_visible_id
+  before_validation :set_visible_id
+  validates_presence_of :visible_id
   
   def set_visible_id
-    self.visible_id = self.stripe_id.gsub("in_", "").to_i.to_s(36).upcase
+    if stripe_id.blank?
+      self.visible_id = SecureRandom.hex(4).upcase
+    else
+      self.visible_id = self.stripe_id.to_s.gsub("in_", "").to_i.to_s(36).upcase
+    end
   end
   
   def self.add_addons_to_invoices(website = false)
@@ -46,5 +51,30 @@ class Invoice < ActiveRecord::Base
   
   def to_param
     visible_id
+  end
+  
+  def tax
+    total - subtotal
+  end
+  
+  def tax_in_dollars
+    tax_in_dollars = '%.2f' % (tax / 100.00)
+    tax_in_dollars = '%.2f' % 0 unless tax_in_dollars 
+  end
+  
+  def total_in_dollars
+    '%.2f' % (total / 100.00) if total
+  end
+
+  def total_in_dollars=(dollars)
+    self.total = dollars.to_f * 100 if dollars.present?
+  end
+  
+  def subtotal_in_dollars
+    '%.2f' % (subtotal / 100.00) if subtotal
+  end
+
+  def subtotal_in_dollars=(dollars)
+    self.subtotal = dollars.to_f * 100 if dollars.present?
   end
 end

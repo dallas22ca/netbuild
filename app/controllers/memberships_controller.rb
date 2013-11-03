@@ -1,5 +1,5 @@
 class MembershipsController < ApplicationController
-  before_action :authenticate_adminable?
+  before_action :authenticate_website_admin?
   before_action :set_membership, only: [:show, :edit, :update, :destroy]
 
   # GET /memberships

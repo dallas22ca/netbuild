@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  before_action :authenticate_adminable?, except: [:show]
+  before_action :authenticate_website_admin?, except: [:show]
   layout :choose_layout
   before_action :set_page, only: [:edit, :update, :destroy]
 
@@ -42,6 +42,15 @@ class PagesController < ApplicationController
       redirect_to root_path
     elsif !@website
       render text: "This website does not exist."
+    end
+    
+    if params[:permalink] == "invoices" && params[:id]
+      @invoice = @website.invoices.where(visible_id: params[:id], membership_id: current_membership.id).first
+    end
+    
+    respond_to do |format|
+      format.html
+      format.pdf { render pdf: "#{@website.title} #{@invoice.date.strftime("%m-%d-%Y") if @invoice.date}" } if @invoice
     end
   end
 
@@ -107,7 +116,7 @@ class PagesController < ApplicationController
     
     def choose_layout
       if action_name == "show"
-        if adminable?
+        if website_admin?
           "editor"
         else
           "public"
