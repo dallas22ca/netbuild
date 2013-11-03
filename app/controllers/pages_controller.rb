@@ -40,10 +40,10 @@ class PagesController < ApplicationController
     
     respond_to do |format|
       format.html do
-        if !@page.redirect_to.blank?
-          redirect_to @page.redirect_to
-        elsif @path != root_path && @page == @website.home
+        if @path != root_path && @page == @website.home
           redirect_to root_path
+        elsif !@page.redirect_to.blank?
+          redirect_to @page.redirect_to
         elsif !@website
           render text: "This website does not exist."
         end
