@@ -92,9 +92,9 @@ class InvoicesController < ApplicationController
       end
       
       if current_user.try(:admin?)
-        params.require(:invoice).permit(:total_in_dollars, :subtotal_in_dollars, :paid, :membership_id, :date, :tax_rate, :public_access, lines: [:amount, :description, :quantity, :unit_price])
+        params.require(:invoice).permit(:total_in_dollars, :subtotal_in_dollars, :paid, :membership_id, :date, :tax_rate, :public_access, :note, lines: [:amount, :description, :quantity, :unit_price])
       else
-        params.require(:invoice).permit(:total_in_dollars, :subtotal_in_dollars, :paid, :membership_id, :date, :tax_rate, :public_access, lines: [:amount, :description, :quantity, :unit_price])
+        params.require(:invoice).permit(:total_in_dollars, :subtotal_in_dollars, :paid, :membership_id, :date, :tax_rate, :public_access, :note, lines: [:amount, :description, :quantity, :unit_price])
       end
     end
 end

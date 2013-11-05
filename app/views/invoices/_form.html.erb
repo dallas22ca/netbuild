@@ -27,7 +27,9 @@
 	<%= f.text_field :total_in_dollars, readonly: true %><br>
 	<%= f.check_box :paid %>
 	<%= f.label :paid %><br>
-	<%= f.label :public_access %>
-	<%= f.check_box :public_access %><br>
+	<%= f.check_box :public_access %>
+	<%= f.label :public_access %><br>
+	<%= f.label :note %><br>
+	<%= f.text_area :note, value: @invoice.new_record? ? @website.invoice_blurb : @invoice.note %><br>
 	<%= f.submit %>
 <% end %>

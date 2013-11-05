@@ -1,6 +1,11 @@
 <%= render "manage_nav" %>
 <p id="notice"><%= notice %></p>
-<%= link_to "PDF", invoice_path(@invoice, format: :pdf) %>
+<%= link_to "PDF", invoice_path(@invoice, format: :pdf) %><br>
+
+<% if @invoice.public_access? %>
+	<%= link_to "Share", public_page_path("invoices", id: @invoice.id) %>
+<% end %>
+
 <%= link_to "Edit", edit_invoice_path(@invoice) %>
 <br><br>
 <%= render @invoice %>

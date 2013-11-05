@@ -130,7 +130,7 @@
 		</tfoot>
 	</table>
 	
-	<p class="invoice_blurb"><%= @website.invoice_blurb.to_s.html_safe %></p>
+	<p class="invoice_blurb"><%= @invoice.note.to_s.html_safe %></p>
 	
 	<% if @invoice.paid? %>
 		<p class="paid">PAID</p>
