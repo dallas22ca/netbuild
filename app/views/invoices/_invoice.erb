@@ -81,7 +81,7 @@
 		Invoice #<%= @invoice.visible_id %><br><br>
 		<strong>
 			Att: <%= @invoice.membership.name %><br>
-			Email Opened Inc.
+			<%= @invoice.membership.data["company"] %>
 		</strong>
 	</p>
 	

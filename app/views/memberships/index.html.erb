@@ -12,6 +12,8 @@
   <thead>
     <tr>
       <th>Email</th>
+      <th>Name</th>
+      <th>Phone</th>
       <th>Permissions</th>
 			<% if @website.email_addon %>
 	      <th>@<%= @website.stripped_domain(@website.domain) %></th>
@@ -29,7 +31,9 @@
     <% @memberships.each do |membership| %>
       <tr>
         <td><%= link_to membership.user.email, edit_membership_path(membership) %></td>
-        <td><%= link_to membership.security.capitalize, edit_membership_path(membership) %></td>
+				<td><%= link_to membership.data["name"].to_s, edit_membership_path(membership) %></td>
+				<td><%= link_to membership.data["phone"].to_s, edit_membership_path(membership) %></td>
+				<td><%= link_to membership.security.capitalize, edit_membership_path(membership) %></td>
 				
 				<% if @website.email_addon %>
 					<td><%= link_to("#{membership.username}@#{membership.website.stripped_domain(membership.website.domain)} #{"forwarding to #{membership.forward_to}" unless membership.forward_to.blank?}", edit_membership_path(membership)) if membership.has_email_account %></td>

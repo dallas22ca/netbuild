@@ -18,6 +18,13 @@
 	  </div>
 	<% end %>
 	
+	<% %w[company name phone].each do |field| %>
+		<div class="field">
+			<%= label_tag field.to_sym %><br>
+			<%= text_field_tag field.to_sym, @membership.data[field], name: "membership[data][#{field}]" %>
+		</div>
+	<% end %>
+	
 	<% if @website.email_addon && @website.has_payment_info? %>
 	  <div class="field">
 			<%= f.check_box :has_email_account %>

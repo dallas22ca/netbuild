@@ -5,8 +5,9 @@ $(document).on "blur", ".unit_price", ->
 
 $(document).on "change", "#invoice_membership_id", ->
   split = $(this).find(":selected").text().split(" - ")
-  $("#invoice .attn").text split[0]
-  $("#invoice .company").text split[1]
+  company = if split.length == 2 then split[1] else ""
+  $("#invoice .attn").text "Att: #{split[0]}"
+  $("#invoice .company").text company
 
 $(document).on "keyup", ".unit_price, .quantity, #invoice_tax_rate", ->
   Invoices.calcTotals()

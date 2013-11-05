@@ -21,7 +21,7 @@
 	    <% @website.invoices.where(membership_id: current_membership).each do |invoice| %>
 	      <tr>
 	        <td><%= link_to invoice.date, public_page_path("invoices?id=#{invoice.visible_id}") %></td>
-	        <td><%= link_to number_to_currency(invoice.total / 100), invoice %></td>
+	        <td><%= link_to number_to_currency(invoice.total / 100), public_page_path("invoices?id=#{invoice.visible_id}") %></td>
 					<td><%= link_to (invoice.paid? ? "<i class=\"icon-ok\"></i>" : "<i class=\"icon-remove\"></i>").html_safe, public_page_path("invoices?id=#{invoice.visible_id}") %></td>
 	      </tr>
 	    <% end %>

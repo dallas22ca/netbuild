@@ -133,10 +133,10 @@ class Membership < ActiveRecord::Base
   end
   
   def name
-    user.email
+    @name ||= data["name"].blank? ? user.email : data["name"]
   end
   
   def invoice_name
-    "Att: #{name} - Company Inc."
+    "#{name}#{" - #{data["company"]}" unless data["company"].blank?}"
   end
 end
