@@ -3,7 +3,7 @@
 <%= link_to "PDF", invoice_path(@invoice, format: :pdf) %><br>
 
 <% if @invoice.public_access? %>
-	<%= link_to "Share", public_page_path("invoices", id: @invoice.id) %>
+	<%= link_to "Share", public_page_path("invoices", id: @invoice.visible_id) %><br>
 <% end %>
 
 <%= link_to "Edit", edit_invoice_path(@invoice) %>
