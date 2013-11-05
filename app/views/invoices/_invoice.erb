@@ -70,7 +70,7 @@
 <div id="invoice">
 	<p class="my_company">
 	  <strong class="strong"><%= @invoice.website.title %></strong><br>
-		<%= @website.address.gsub(/\r\n/, "<br>").html_safe %>
+		<%= @website.address.to_s.gsub(/\r\n/, "<br>").html_safe %>
 	</p>
 
 	<p class="invoice_meta">
@@ -130,7 +130,7 @@
 		</tfoot>
 	</table>
 	
-	<p class="invoice_blurb"><%= @website.invoice_blurb %></p>
+	<p class="invoice_blurb"><%= @website.invoice_blurb.html_safe %></p>
 	
 	<% if @invoice.paid? %>
 		<p class="paid">PAID</p>
