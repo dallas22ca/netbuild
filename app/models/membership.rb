@@ -135,4 +135,8 @@ class Membership < ActiveRecord::Base
   def name
     user.email
   end
+  
+  def invoice_name
+    "Att: #{name} - Company Inc."
+  end
 end

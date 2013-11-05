@@ -68,8 +68,7 @@ class InvoicesController < ApplicationController
   # DELETE /invoices/1.json
   def destroy
     respond_to do |format|
-      if @invoice.websites.empty?
-        @invoice.destroy
+      if @invoice.destroy
         format.html { redirect_to invoices_url }
         format.json { head :no_content }
       else

@@ -8,7 +8,7 @@ class Invoice < ActiveRecord::Base
   
   def set_visible_id
     if stripe_id.blank?
-      self.visible_id = SecureRandom.hex(4).upcase
+      self.visible_id = SecureRandom.urlsafe_base64(4).gsub(/-|_/, "").upcase
     else
       self.visible_id = self.stripe_id.to_s.gsub("in_", "").to_i.to_s(36).upcase
     end

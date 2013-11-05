@@ -1,35 +1,75 @@
 <%= form_for @invoice do |f| %>
-	<%= f.collection_select :membership_id, @website.memberships, :id, :name %><br>
-	<%= f.label :date %>
-	<%= f.text_field :date %><br>
+	<p class="my_company">
+	  <strong class="strong"><%= @website.title %></strong><br>
+		<%= @website.address.to_s.gsub(/\r\n/, "<br>").html_safe %>
+	</p>
 	
-	<table id="lines" data-lines="<%= @invoice.lines.to_json %>" class="table">
+	<p class="invoice_meta">
+		<strong class="strong">INVOICE</strong><br>
+	  <%= f.text_field :date, value: @invoice.date.strftime("%B %-d, %Y"), style: "text-align: right; " %><br>
+		Invoice #<%= @invoice.visible_id %><br><br>
+		<strong>
+			<%= f.collection_select :membership_id, @website.memberships, :id, :invoice_name %><br>
+			<span class="attn"></span><br>
+			<span class="company"></span>
+		</strong>
+	</p>
+	
+	<div style="clear: both; "></div>
+	
+	
+	<table id="lines" data-lines="<%= @invoice.lines.to_json %>">
 		<thead>
 			<tr>
-				<th>Quantity</th>
-				<th>Description</th>
-				<th>Unit Price</th>
-				<th>Amount</th>
-				<th></th>
+				<th style="width: 16%; ">Quantity</th>
+				<th style="width: 44%; ">Description</th>
+				<th class="invoice_number" style="width: 18%; ">Unit Price</th>
+				<th class="invoice_number" style="width: 18%; ">Total</th>
+				<th style="width: 4%; "></th>
 			</tr>
 		</thead>
-		<tbody>
-		</tbody>
+		
+		<tbody></tbody>
+		
+		<tfoot>
+			<tr>
+				<td><%= link_to "Add Item", "#", class: "add_line" %></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td class="invoice_number"><strong>Subtotal</strong></td>
+				<td class="invoice_number"><%= f.text_field :subtotal_in_dollars, { style: "text-align: right; ", readonly: true } %></td>
+				<td></td>
+			</tr>		
+			<tr>
+				<td></td>
+				<td></td>
+				<td class="invoice_number"><strong>Tax (<%= f.text_field :tax_rate, style: "width: 2em; text-align: center; " %>%)</strong></td>
+				<td class="invoice_number"><%= text_field_tag :tax_in_dollars, "", { style: "text-align: right; ", readonly: true } %></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td class="invoice_number"><strong>Total</strong></td>
+				<td class="invoice_number"><%= f.text_field :total_in_dollars, { style: "text-align: right; ", readonly: true } %></td>
+				<td></td>
+			</tr>
+		</tfoot>
 	</table>
 	
-	<%= link_to "Add Line", "#", class: "add_line" %><br><br>
+	<p class="invoice_blurb"><%= f.text_area :note, value: @invoice.new_record? ? @website.invoice_blurb : @invoice.note, placeholder: "Add a note here..." %></p>
 	
-	<%= f.label :tax_rate %>
-	<%= f.text_field :tax_rate %><br>
-	<%= f.label :subtotal_in_dollars %>
-	<%= f.text_field :subtotal_in_dollars, readonly: true %><br>
-	<%= f.label :total_in_dollars %>
-	<%= f.text_field :total_in_dollars, readonly: true %><br>
 	<%= f.check_box :paid %>
 	<%= f.label :paid %><br>
 	<%= f.check_box :public_access %>
 	<%= f.label :public_access %><br>
-	<%= f.label :note %><br>
-	<%= f.text_area :note, value: @invoice.new_record? ? @website.invoice_blurb : @invoice.note %><br>
+
 	<%= f.submit %>
+	<%= link_to "Delete", @invoice, method: :delete, data: { confirm: "Are you sure you want to delete this invoice?" } %>
 <% end %>

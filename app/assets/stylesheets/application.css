@@ -11,8 +11,10 @@
  *= require_self
  *= require reset
  *= require font-awesome
+ *= require jquery-ui-1.10.3.custom
  *= require codemirror
  *= require codemirror/themes/solarized
  *= require colorpicker
+ *= require_tree ./shared
  *= require_tree ./application
  */
