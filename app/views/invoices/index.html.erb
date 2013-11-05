@@ -11,6 +11,7 @@
       <th>Customer</th>
       <th>Amount</th>
       <th>Paid</th>
+      <th>Public</th>
     </tr>
   </thead>
 
@@ -22,6 +23,13 @@
         <td><%= link_to number_to_currency(invoice.total / 100), invoice %></td>
 				<td>
 					<% if invoice.paid? %>
+						<i class="icon-ok"></i>
+					<% else %>
+						<i class="icon-remove"></i>
+					<% end %>
+				</td>
+				<td>
+					<% if invoice.public_access? %>
 						<i class="icon-ok"></i>
 					<% else %>
 						<i class="icon-remove"></i>

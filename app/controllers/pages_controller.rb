@@ -35,7 +35,13 @@ class PagesController < ApplicationController
     end
     
     if params[:permalink] == "invoices" && params[:id]
-      @invoice = @website.invoices.where(visible_id: params[:id], membership_id: current_membership.id).first
+      @invoice = @website.invoices.where(visible_id: params[:id]).first
+      
+      unless @invoice.public_access?
+        if @invoice.membership_id != current_membership.id
+          @invoice = nil
+        end
+      end
     end
     
     respond_to do |format|
@@ -48,7 +54,7 @@ class PagesController < ApplicationController
           render text: "This website does not exist."
         end
       end
-      format.pdf { render pdf: "#{@website.title} #{@invoice.date.strftime("%m-%d-%Y") if @invoice.date}" } if @invoice
+      format.pdf { render pdf: "#{@website.title} #{@invoice.date.strftime("%m-%d-%Y")}" } if @invoice
     end
   end
 

@@ -1,54 +1,138 @@
-<p>
-  <strong><%= @invoice.website.title %></strong>
-</p>
-
-<p>
-  <strong>Date:</strong>
-  <%= @invoice.date.strftime("%B %d, %Y") %>
-</p>
-
-<p>
-  <strong>ID:</strong>
-  <%= @invoice.visible_id %>
-</p>
-
-<table>
-	<thead>
-		<tr>
-			<th>Quantity</th>
-			<th>Description</th>
-			<th>Unit Price</th>
-			<th>Amount</th>
-		</tr>
-	</thead>
+<style type="text/css">
+	#invoice {
+		font-family: Helvetica, Sans Serif;
+		font-size: 14px;
+		line-height: 22px;
+	}
 	
-	<tbody>
-		<% @invoice.lines.each do |line| %>
+	#invoice table {
+		width: 100%;
+		margin: 30px 0 0 0;
+		border-collapse: collapse;
+		font-size: 14px;
+	}
+	
+	#invoice table th {
+		font-weight: bold;
+		text-align: left;
+		background: #ddd;
+		padding: 5px 10px;
+	}
+	
+	#invoice table td {
+		text-align: left;
+		padding: 5px 10px;
+	}
+	
+	.my_company {
+		float: left;		
+	}
+	
+	.my_company .strong {
+		font-weight: bold;
+		font-size: 28px;
+		padding-bottom: 10px;
+		display: inline-block;
+	}
+	
+	.invoice_meta {
+		float: right;
+		text-align: right;
+	}
+	
+	.invoice_meta .strong {
+		font-weight: bold;
+		font-size: 28px;
+		padding-bottom: 10px;
+		display: inline-block;
+	}
+	
+	.invoice_number {
+		text-align: right !important;
+	}
+	
+	.invoice_blurb {
+		margin-bottom: 40px;
+	}
+	
+	.paid {
+		display: inline-block;
+		color: red;
+		font-weight: bold;
+		font-size: 48px;
+		padding: 30px;
+		border: 3px solid red;
+		border-radius: 7px;
+		display: inline-block;
+	}
+</style>
+
+<div id="invoice">
+	<p class="my_company">
+	  <strong class="strong"><%= @invoice.website.title %></strong><br>
+		<%= @website.address.gsub(/\r\n/, "<br>").html_safe %>
+	</p>
+
+	<p class="invoice_meta">
+		<strong class="strong">INVOICE</strong><br>
+		#<%= @invoice.visible_id %><br><br>
+	  <%= @invoice.date.strftime("%B %d, %Y") %>
+	</p>
+	
+	<div style="clear: both; "></div>
+
+	<table>
+		<thead>
 			<tr>
-				<td><%= line["quantity"] %></td>
-				<td><%= line["plan"] ? line["plan"]["name"] : line["description"] %></td>
-				<td><%= number_to_currency line["unit_price"].to_i / 100.0 %></td>
-				<td><%= number_to_currency line["amount"].to_i / 100.0 %></td>
+				<th style="width: 16%; ">Quantity</th>
+				<th style="width: 44%; ">Description</th>
+				<th style="width: 20%; " class="invoice_number">Unit Price</th>
+				<th style="width: 20%; " class="invoice_number">Total</th>
 			</tr>
-		<% end %>
-	</tbody>
-</table>
-
-<p>
-  <strong>Subtotal:</strong>
-  <%= number_to_currency @invoice.subtotal_in_dollars %>
-</p>
-
-<p>
-  <strong>Tax (<%= @invoice.tax_rate %>%):</strong>
-  <%= number_to_currency @invoice.tax_in_dollars %>
-</p>
-
-<p>
-  <strong>Total:</strong>
-  <%= number_to_currency @invoice.total_in_dollars %>
-</p>
-
-<p>
-	<strong><%= "PAID" if @invoice.paid %></strong>
-</p>
+		</thead>
+	
+		<tbody>
+			<% @invoice.lines.each do |line| %>
+				<tr>
+					<td><%= line["quantity"] %></td>
+					<td><%= line["plan"] ? line["plan"]["name"] : line["description"] %></td>
+					<td class="invoice_number"><%= number_to_currency line["unit_price"].to_i / 100.0 %></td>
+					<td class="invoice_number"><%= number_to_currency line["amount"].to_i / 100.0 %></td>
+				</tr>
+			<% end %>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+		</tbody>
+		
+		<tfoot>
+			<tr>
+				<td></td>
+				<td></td>
+				<td class="invoice_number"><strong>Subtotal</strong></td>
+				<td class="invoice_number"><%= number_to_currency @invoice.subtotal_in_dollars %></td>
+			</tr>		
+			<tr>
+				<td></td>
+				<td></td>
+				<td class="invoice_number"><strong>Tax (<%= @invoice.tax_rate %>%)</strong></td>
+				<td class="invoice_number"><%= number_to_currency @invoice.tax_in_dollars %></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td class="invoice_number"><strong>Total</strong></td>
+				<td class="invoice_number"><%= number_to_currency @invoice.total_in_dollars %></td>
+			</tr>
+		</tfoot>
+	</table>
+	
+	<p class="invoice_blurb"><%= @website.invoice_blurb %></p>
+	
+	<% if @invoice.paid? %>
+		<p class="paid">PAID</p>
+	<% end %>
+</div>

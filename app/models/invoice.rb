@@ -4,7 +4,7 @@ class Invoice < ActiveRecord::Base
   has_one :website, through: :membership
   
   before_validation :set_visible_id
-  validates_presence_of :visible_id
+  validates_presence_of :visible_id, :subtotal, :total
   
   def set_visible_id
     if stripe_id.blank?
@@ -59,7 +59,6 @@ class Invoice < ActiveRecord::Base
   
   def tax_in_dollars
     tax_in_dollars = '%.2f' % (tax / 100.00)
-    tax_in_dollars = '%.2f' % 0 unless tax_in_dollars 
   end
   
   def total_in_dollars

@@ -28,8 +28,8 @@ $(document).on "click", ".delete_line", ->
 
   addLine: (line) ->
     n = $(".line").length
-    amount = (parseFloat(line.amount) / 100).toFixed(2)
-    amount = "" if isNaN(amount)
+    unit_price = (parseFloat(line.unit_price) / 100).toFixed(2)
+    unit_price = "" if isNaN(unit_price)
     tr = $("<tr>").addClass("line")
     
     quantity_td = $("<td>")
@@ -41,11 +41,11 @@ $(document).on "click", ".delete_line", ->
     description_td.appendTo tr
     
     unit_price_td = $("<td>")
-    unit_price = $("<input>").attr("name", "invoice[lines][][unit_price]").addClass("unit_price").val(line.unit_price).appendTo unit_price_td
+    unit_price = $("<input>").attr("name", "invoice[lines][][unit_price]").addClass("unit_price").val(unit_price).appendTo unit_price_td
     unit_price_td.appendTo tr
     
     amount_td = $("<td>")
-    amount = $("<input>").attr("name", "invoice[lines][][amount]").attr("readonly", true).addClass("amount").val(amount).appendTo amount_td
+    amount = $("<input>").attr("name", "invoice[lines][][amount]").attr("readonly", true).addClass("amount").appendTo amount_td
     amount_td.appendTo tr
     
     del_td = $("<td>")

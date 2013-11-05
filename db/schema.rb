@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131103192537) do
+ActiveRecord::Schema.define(version: 20131104135356) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -98,6 +98,7 @@ ActiveRecord::Schema.define(version: 20131103192537) do
     t.string   "customer_token"
     t.integer  "netbuild_website_id"
     t.float    "tax_rate"
+    t.boolean  "public_access",       default: false
   end
 
   add_index "invoices", ["customer_token"], name: "index_invoices_on_customer_token", using: :btree
@@ -155,6 +156,7 @@ ActiveRecord::Schema.define(version: 20131103192537) do
     t.datetime "updated_at"
     t.boolean  "deleteable",  default: false
     t.string   "redirect"
+    t.string   "redirect_to"
   end
 
   add_index "pages", ["document_id"], name: "index_pages_on_document_id", using: :btree
@@ -223,6 +225,8 @@ ActiveRecord::Schema.define(version: 20131103192537) do
     t.text     "header"
     t.string   "stripe_access_token"
     t.string   "stripe_user_id"
+    t.text     "address"
+    t.text     "invoice_blurb"
   end
 
   add_index "websites", ["domain"], name: "index_websites_on_domain", using: :btree

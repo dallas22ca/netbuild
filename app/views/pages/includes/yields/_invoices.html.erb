@@ -1,13 +1,13 @@
 <% if @invoice %>
 
-	<%= link_to "Invoices", public_page_path("invoices") %><br>
-	<%= link_to "PDF", public_page_path("invoices", id: @invoice.visible_id, format: :pdf) %><br><br>
+	<%= link_to "Invoices", public_page_path("invoices") if signed_in? %><br>
+	<%= link_to "View As PDF", public_page_path("invoices", id: @invoice.visible_id, format: :pdf) %><br><br>
 	<%= render @invoice %>
 
-<% else %>
-	
+<% elsif signed_in? %>
+
 	<h1>Invoices</h1>
-	
+
 	<table class="table">
 	  <thead>
 	    <tr>
@@ -27,5 +27,7 @@
 	    <% end %>
 	  </tbody>
 	</table>
-
+	
+<% else %>
+	<p>You must be signed in for this function.</p>
 <% end %>
