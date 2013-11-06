@@ -25,10 +25,11 @@
 		</thead>
 		<tbody>
 			<% date = month - (month.beginning_of_month.wday % 7).days %>
+			<% now = Time.now %>
 			<% 6.times do %>
 				<tr>
 					<% %w[S M T W T F S].each do |d| %>
-						<td class="<%= " not_in_current_month" if date < month.beginning_of_month || date > month.end_of_month %>" data-day="<%= date.day %>" data-month="<%= date.month %>" data-year="<%= date.year %>">
+						<td class="<%= " today" if date < now.beginning_of_day || date > now.end_of_day %><%= " not_in_current_month" if date < month.beginning_of_month || date > month.end_of_month %>" data-day="<%= date.day %>" data-month="<%= date.month %>" data-year="<%= date.year %>">
 							<span class="number"><%= date.day %></span>
 						</td>
 						<% date = date + 1.day %>
