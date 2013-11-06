@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131105195418) do
+ActiveRecord::Schema.define(version: 20131106030052) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,6 +55,16 @@ ActiveRecord::Schema.define(version: 20131105195418) do
   add_index "blocks", ["parent_id"], name: "index_blocks_on_parent_id", using: :btree
   add_index "blocks", ["website_id"], name: "index_blocks_on_website_id", using: :btree
   add_index "blocks", ["wrapper_id"], name: "index_blocks_on_wrapper_id", using: :btree
+
+  create_table "deliveries", force: true do |t|
+    t.integer  "message_id"
+    t.integer  "membership_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "deliveries", ["membership_id"], name: "index_deliveries_on_membership_id", using: :btree
+  add_index "deliveries", ["message_id"], name: "index_deliveries_on_message_id", using: :btree
 
   create_table "documents", force: true do |t|
     t.integer  "theme_id"
@@ -144,6 +154,21 @@ ActiveRecord::Schema.define(version: 20131105195418) do
 
   add_index "memberships", ["user_id"], name: "index_memberships_on_user_id", using: :btree
   add_index "memberships", ["website_id"], name: "index_memberships_on_website_id", using: :btree
+
+  create_table "messages", force: true do |t|
+    t.integer  "website_id"
+    t.integer  "user_id"
+    t.text     "criteria"
+    t.text     "subject"
+    t.text     "plain"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.text     "membership_ids"
+    t.text     "to"
+  end
+
+  add_index "messages", ["user_id"], name: "index_messages_on_user_id", using: :btree
+  add_index "messages", ["website_id"], name: "index_messages_on_website_id", using: :btree
 
   create_table "pages", force: true do |t|
     t.string   "title"

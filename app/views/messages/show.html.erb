@@ -1,0 +1,22 @@
+<%= render "manage_nav" %>
+
+<div id="message">
+	<table>
+		<tr>
+			<td class="header_column">From:</td>
+			<td class="info_column"><%= @message.user.name_and_email %></td>
+		</tr>
+		<tr>
+			<td class="header_column">To:</td>
+			<td class="info_column"><%= pluralize @message.deliveries.count, "Recipient" %> - <%= @message.members.pluck(:email).join(", ") %></td>
+		</tr>
+		<tr>
+			<td class="header_column">Subject:</td>
+			<td class="info_column"><%= @message.subject %></td>
+		</tr>
+	</table>
+
+	<p class="body">
+	  <%= @message.plain.to_s.gsub(/\r\n/, "<br>").html_safe %>
+	</p>
+</div>

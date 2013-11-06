@@ -4,6 +4,8 @@ class Membership < ActiveRecord::Base
   belongs_to :user
   belongs_to :website
   has_many :invoices
+  has_many :deliveries
+  has_many :messages, through: :deliveries
   
   accepts_nested_attributes_for :user
   
@@ -134,6 +136,10 @@ class Membership < ActiveRecord::Base
   
   def name
     @name ||= data["name"].blank? ? user.email : data["name"]
+  end
+  
+  def name_and_email
+    @name_and_email ||= data["name"].blank? ? user.email : "#{data["name"]} <#{user.email}>"
   end
   
   def invoice_name

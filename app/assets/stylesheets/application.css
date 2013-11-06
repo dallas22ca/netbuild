@@ -15,6 +15,7 @@
  *= require codemirror
  *= require codemirror/themes/solarized
  *= require colorpicker
+ *= require chosen
  *= require_tree ./shared
  *= require_tree ./application
  */

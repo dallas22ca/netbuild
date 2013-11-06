@@ -1,0 +1,6 @@
+<% if @message.errors.any? %>
+  alert("<%= @message.errors.full_messages.join(". ") %>");
+<% else %>
+  $("#new_message")[0].reset();
+  Dialog.close();
+<% end %>

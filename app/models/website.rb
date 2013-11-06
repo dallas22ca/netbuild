@@ -6,6 +6,7 @@ class Website < ActiveRecord::Base
   belongs_to :theme, touch: true
   belongs_to :home, class_name: "Page", foreign_key: "home_id"
   
+  has_many :messages, dependent: :destroy
   has_many :wrappers, dependent: :destroy
   has_many :blocks, dependent: :destroy
   has_many :pages, dependent: :destroy

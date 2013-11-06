@@ -35,5 +35,9 @@ class User < ActiveRecord::Base
     else
       super
     end
-  end 
+  end
+  
+  def name_and_email
+    email
+  end
 end

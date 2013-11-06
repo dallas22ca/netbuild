@@ -45,6 +45,10 @@ class Invoice < ActiveRecord::Base
     end
   end
   
+  def quick_summary
+    "#{visible_id} (#{Invoice.helpers.number_to_currency total_in_dollars})"
+  end
+  
   def self.helpers
     ActionController::Base.helpers
   end

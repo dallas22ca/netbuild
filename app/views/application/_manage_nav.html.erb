@@ -1,5 +1,5 @@
 <style type="text/css">
-	#topbar {
+	#topbar, .primary-button {
 	  background: <%= @website.primary_colour %>;
 	  background: -moz-linear-gradient(top,  <%= LiquidFilters::rgb_alpha(@website.primary_colour, 0.85) %> 0%, <%= @website.primary_colour %> 100%); /* FF3.6+ */
 	  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, <%= LiquidFilters::rgb_alpha(@website.primary_colour, 0.85) %>), color-stop(100%, <%= @website.primary_colour %>)); /* Chrome,Safari4+ */
@@ -8,7 +8,25 @@
 	  background: -ms-linear-gradient(top,  <%= LiquidFilters::rgb_alpha(@website.primary_colour, 0.85) %> 0%, <%= @website.primary_colour %> 100%); /* IE10+ */
 	  background: linear-gradient(to bottom,  <%= LiquidFilters::rgb_alpha(@website.primary_colour, 0.85) %> 0%, <%= @website.primary_colour %> 100%); /* W3C */
 	  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='<%= LiquidFilters::rgb_alpha(@website.primary_colour, 0.85) %>', endColorstr='<%= @website.primary_colour %>',GradientType=0 ); /* IE6-9 */
+	}
+	
+	.secondary-button {
+	  background: <%= @website.secondary_colour %>;
+	  background: -moz-linear-gradient(top,  <%= LiquidFilters::rgb_alpha(@website.secondary_colour, 0.85) %> 0%, <%= @website.secondary_colour %> 100%); /* FF3.6+ */
+	  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, <%= LiquidFilters::rgb_alpha(@website.secondary_colour, 0.85) %>), color-stop(100%, <%= @website.secondary_colour %>)); /* Chrome,Safari4+ */
+	  background: -webkit-linear-gradient(top,  <%= LiquidFilters::rgb_alpha(@website.secondary_colour, 0.85) %> 0%, <%= @website.secondary_colour %> 100%); /* Chrome10+,Safari5.1+ */
+	  background: -o-linear-gradient(top,  <%= LiquidFilters::rgb_alpha(@website.secondary_colour, 0.85) %> 0%, <%= @website.secondary_colour %> 100%); /* Opera 11.10+ */
+	  background: -ms-linear-gradient(top,  <%= LiquidFilters::rgb_alpha(@website.secondary_colour, 0.85) %> 0%, <%= @website.secondary_colour %> 100%); /* IE10+ */
+	  background: linear-gradient(to bottom,  <%= LiquidFilters::rgb_alpha(@website.secondary_colour, 0.85) %> 0%, <%= @website.secondary_colour %> 100%); /* W3C */
+	  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='<%= LiquidFilters::rgb_alpha(@website.secondary_colour, 0.85) %>', endColorstr='<%= @website.secondary_colour %>',GradientType=0 ); /* IE6-9 */
+	}
+	
+	#topbar {
 		border-bottom: 5px solid <%= LiquidFilters::rgb_alpha(@website.secondary_colour, 0.85) %>;
+	}
+	
+	#topbar .subnav a {
+		background: <%= @website.primary_colour %> !important;
 	}
 </style>
 
@@ -16,23 +34,33 @@
 	<div class="container">
     <%= link_to image_tag("/imgs/white_logo.png"), root_path, id: "logo" %>
 		
+		<%= form_tag "search", method: :get do %>
+			<%= text_field_tag :q, params[:q], placeholder: "Search..." %>
+		<% end %>
+		
 		<ul class="nav">
-			<li><%= link_to "My Site", root_path %></li>
-			<li><%= link_to "Theme", manage_path("theme") %></li>
-			<li><%= link_to "Addons", manage_path("addons") %></li>
+			<li>
+				<%= link_to "Website", manage_path("theme") %>
+				<ul class="subnav">
+					<li><%= link_to "Theme", manage_path("theme") %></li>
+					<li><%= link_to "Addons", manage_path("addons") %></li>
+					<li><%= link_to "Visit My Site", root_path %></li>
+				</ul>
+			</li>
 			
 			<% if website_admin? %>
-				<% if @website.can_accept_money? || @website.invoices.any? %>
-					<li><%= link_to "Invoices", manage_path("invoices") %></li>
-				<% end %>
-
-				<li><%= link_to "Members", manage_path("members") %></li>
+				<li><%= link_to "People", manage_path("people") %></li>
 			<% end %>
-			
-			<li><%= link_to "My Account", edit_user_registration_path %>
+
 			<li>
-				<%= link_to "Sign Out", destroy_user_session_path if user_signed_in? %>
-				<%= link_to "Sign In", new_user_session_path unless signed_in? %>
+				<%= link_to "Me", edit_user_registration_path %>
+				<ul class="subnav">
+					<%= link_to "My Account", edit_user_registration_path %>
+					<li>
+						<%= link_to "Sign Out", destroy_user_session_path if user_signed_in? %>
+						<%= link_to "Sign In", new_user_session_path unless signed_in? %>
+					</li>
+				</ul>
 			</li>
 		</ul>
 		

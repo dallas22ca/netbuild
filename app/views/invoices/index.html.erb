@@ -2,7 +2,9 @@
 
 <h1>Invoices</h1>
 
-<%= link_to "Create New Invoice", new_invoice_path %><br><br>
+<% unless @netbuild %>
+	<%= link_to "Create New Invoice", new_invoice_path %><br><br>
+<% end %>
 
 <table class="table">
   <thead>

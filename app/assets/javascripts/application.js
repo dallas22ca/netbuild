@@ -18,5 +18,6 @@
 //= require codemirror
 //= require codemirror/modes/css
 //= require colorpicker
+//= require chosen.jquery
 //= require_tree ./application
 //= require_tree ./shared

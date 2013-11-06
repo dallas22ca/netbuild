@@ -27,6 +27,12 @@
 			Email addresses will be removed if you change your domain.
 		</p>
 		
+		<% if @website.email_addon %>
+			<p class="hint">
+				Members can check their email accounts at <%= link_to public_page_url("mail"), public_page_path("mail") %>.
+			</p>
+		<% end %>
+		
 		<table class="table">
 			<thead>
 				<tr>

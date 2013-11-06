@@ -1,0 +1,21 @@
+<%= form_for Message.new, url: manage_path("messages"), remote: true do |f| %>
+	<div class="field">
+		<%= f.label :to, "To (<span class=\"to_count\">0</span> people)".html_safe %><br>
+		<%= f.collection_select :to, @website.memberships, :id, :name, {}, multiple: true %>
+	</div>
+	<div class="field">
+		<%= label_tag :from %><br>
+		<%= select_tag :from, options_for_select([current_user.email]) %>
+	</div>
+  <div class="field">
+    <%= f.label :subject %><br>
+    <%= f.text_field :subject, class: "full_width" %>
+  </div>
+  <div class="field">
+    <%= f.label :plain %><br>
+    <%= f.text_area :plain, class: "full_width" %>
+  </div>
+  <div class="actions">
+    <%= f.submit "Send", class: "button primary-button" %>
+  </div>
+<% end %>

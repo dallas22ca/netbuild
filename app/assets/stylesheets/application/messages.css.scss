@@ -1,0 +1,25 @@
+#message {
+	background: url(/imgs/mail.png) repeat-x top center #fff;
+	border: 1px solid #ccc;
+	padding: 30px 10px;
+	font-family: Helvetica, Sans Serif;
+	font-size: 14px;
+	line-height: 22px;
+  
+  .header_column {
+    text-align: right;
+    width: 25%;
+    padding: 5px 3% 5px 0;
+  }
+  
+  .info_column {
+    font-weight: bold;
+    font-size: 16px;
+  }
+  
+  .body {
+    border-top: 1px solid #ccc;
+    margin: 20px -10px -20px -10px;
+    padding: 40px;
+  }
+}

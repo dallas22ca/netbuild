@@ -5,7 +5,6 @@ body {
 }
 
 #topbar {
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 	color: #fff;
   margin: -40px -40px 40px -40px;
   
@@ -17,6 +16,12 @@ body {
       height: 30px;
       margin-top: 10px;
     }
+  }
+  
+  #q {
+    position: absolute;
+    margin: 12px 0 0 50px;
+    width: 25%;
   }
   
   .nav {
@@ -111,4 +116,17 @@ body {
 
 a {
   color: inherit;
+}
+
+.hint {
+  background: #eee;
+  padding: 20px;
+  margin-bottom: 20px;
+  font-size: 15px;
+  line-height: 22px;
+  border-radius: 15px;
+  
+  a {
+    font-weight: bold;
+  }
 }

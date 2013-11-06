@@ -17,5 +17,20 @@
   <%= @membership.has_email_account %>
 </p>
 
-<%= link_to 'Edit', edit_membership_path(@membership) %> |
-<%= link_to 'Back', memberships_path %>
+<hr />
+
+<ul id="messages">
+	<% @membership.messages.each do |message| %>
+		<li><%= link_to message.subject, message %></li>
+	<% end %>
+</ul>
+
+<hr />
+
+<ul id="invoices">
+	<% @membership.invoices.each do |invoice| %>
+		<li><%= link_to invoice.quick_summary, invoice %></li>
+	<% end %>
+</ul>
+
+<%= link_to 'Edit', edit_membership_path(@membership) %>

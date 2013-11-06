@@ -6,8 +6,8 @@ class InvoicesController < ApplicationController
   # GET /invoices.json
   def index
     if request.path.include? "billing"
-      netbuild = Website.where(permalink: "nb-www").first
-      @invoices = netbuild.invoices.where(netbuild_website_id: current_user.website_ids)
+      @netbuild = Website.where(permalink: "nb-www").first
+      @invoices = @netbuild.invoices.where(netbuild_website_id: current_user.memberships.where(security: "admin").pluck(:website_id))
     else
       @invoices = @website.invoices
     end
