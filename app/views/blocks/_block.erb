@@ -48,6 +48,14 @@
 			<% end %>
 			<button>Pay</button>
 		</div>
+	<% elsif block.genre == "posts" %>
+		<% 15.times do %>
+			<div class="post">
+				<h3 class="title">John Doe</h3>
+				<%= image_tag "http://assets.netbuild.co/faithtab/1383766522373-oomuq2arjdo-01ab18fabd0c45f92e79ae57f0bbcc96/original/happy.jpg" %>
+				<p class="description">If a customer ever tells you how much they value your service or asks what they can do for you, ask them for a testimonial. In fact, even if they don’t, ask anyway! Testimonials are that valuable. If a customer ever tells you how much they value your service or asks what they can do for you, ask them for a testimonial.</p>
+			</div>
+		<% end %>
 	<% elsif block.genre == "table" %>
 		<table class="table">
 			<tbody>
