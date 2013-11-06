@@ -38,7 +38,7 @@ a {
 }
 
 body {
-	background-color: {{ secondary | rgb_alpha: 0.2 }};
+	background-color: {{ secondary | rgba: 0.2 }};
 	font-family: helvetica neue, helvetica, sans-serif;
 	font-size: 16px;
 }
@@ -271,9 +271,9 @@ body {
 }
 
 #main #yield .media_wrapper .block_content .playlist .playing {
-	background: {{ secondary | rgb_alpha: 0.8 }} !important;
+	background: {{ secondary | rgba: 0.8 }} !important;
 	box-shadow: inset 1px 1px 5px {{ secondary }};
-	text-shadow: 1px 1px 1px {{ secondary | rgb_alpha: 0.4 }};
+	text-shadow: 1px 1px 1px {{ secondary | rgba: 0.4 }};
 }
 
 #main #yield .media_wrapper .block_content .playlist .playing .title, #main #yield .media_wrapper .block_content .playlist .playing .date {
@@ -287,7 +287,7 @@ body {
 #main #sidebar h4 {
 	color: {{ primary }};
 	padding-bottom: 3px;
-	border-bottom: 1px solid {{ primary | rgb_alpha: 0.2 }};
+	border-bottom: 1px solid {{ primary | rgba: 0.2 }};
 }
 
 #main #sidebar h5 {
@@ -297,7 +297,7 @@ body {
 }
 
 #main #sidebar .block ol, #main #sidebar .block ul {
-	color: {{ secondary | rgb_alpha: 0.7 }};
+	color: {{ secondary | rgba: 0.7 }};
 }
 
 #main #sidebar blockquote {
@@ -318,7 +318,7 @@ body {
 #footer {
 	text-transform: uppercase;
 	font-size: 13px;
-	color: {{ secondary | rgb_alpha: 0.6 }};
+	color: {{ secondary | rgba: 0.6 }};
 }
 
 #footer a {
@@ -452,7 +452,7 @@ body {
 		padding: 4%;
 		width: 63%;
 		min-height: 500px;
-		border-right: 1px solid {{ secondary | rgb_alpha: 0.2 }};
+		border-right: 1px solid {{ secondary | rgba: 0.2 }};
 		border-bottom-left-radius: 4px;
 	}
 
@@ -636,7 +636,7 @@ body {
 	}
 	
 	#main #sidebar {
-		border-top: 1px solid {{ secondary | rgb_alpha: 0.2 }};
+		border-top: 1px solid {{ secondary | rgba: 0.2 }};
 		background: #fafafa; /* Old browsers */
 		background: -moz-linear-gradient(top,  #fafafa 0%, #f3f3f3 100%); /* FF3.6+ */
 		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fafafa), color-stop(100%,#f3f3f3)); /* Chrome,Safari4+ */

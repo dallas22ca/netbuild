@@ -1,6 +1,6 @@
 module LiquidFilters
   def rgba(rgb, alpha)
-    LiquidFilters.rgb_alpha(rgb, alpha)
+    LiquidFilters.rgba(rgb, alpha)
   end
   
   def LiquidFilters.rgba(rgb, alpha)
