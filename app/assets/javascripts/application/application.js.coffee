@@ -16,4 +16,4 @@ $ ->
   load()
   
 document.addEventListener "page:fetch", unload
-document.addEventListener "page:change", load
+document.addEventListener "page:receive", load
