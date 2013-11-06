@@ -1,5 +1,5 @@
 <ul id="documents">
-	<li><%= link_to "New Document", new_theme_document_path(@theme) %></li>
+	<li><%= link_to "New Document", new_theme_document_path(@theme), class: "button primary_button" %><br></li>
 	
 	<% %w[html css js partial].each do |ext| %>
 		<li class="extension">
