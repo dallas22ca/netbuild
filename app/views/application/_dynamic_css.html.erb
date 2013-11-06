@@ -21,7 +21,7 @@
 	  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='<%= LiquidFilters::rgb_alpha(@website.secondary_colour, 0.85) %>', endColorstr='<%= @website.secondary_colour %>',GradientType=0 ); /* IE6-9 */
 	}
 	
-	#topbar {
+	#yield #topbar {
 		border-bottom: 5px solid <%= LiquidFilters::rgb_alpha(@website.secondary_colour, 0.85) %>;
 	}
 	

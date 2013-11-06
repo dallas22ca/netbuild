@@ -89,7 +89,6 @@ $(document).on "click", ".publish", ->
         blocks.push block
         n += 1
   
-  console.log blocks
   $.post url,
     "_method": "patch"
     "page_id": $("body").data("page_id")
@@ -104,16 +103,13 @@ unload = ->
 
 load = ->
   selectedNav()
-  $("#loading").fadeOut()
-  
-change = ->
   # timeTravel.init() if window && window["localStorage"] != null
   createSnapshot() unless timeTravel.active
   $("#s3-uploader").S3Uploader() if $("#s3-uploader").length
+  $("#loading").fadeOut()
 
 $ ->
   load()
   
 document.addEventListener "page:fetch", unload
-document.addEventListener "page:change", change
-document.addEventListener "page:receive", load
+document.addEventListener "page:load", load
