@@ -1,9 +1,9 @@
 module LiquidFilters
-  def rgb_alpha(rgb, alpha)
+  def rgba(rgb, alpha)
     LiquidFilters.rgb_alpha(rgb, alpha)
   end
   
-  def LiquidFilters.rgb_alpha(rgb, alpha)
+  def LiquidFilters.rgba(rgb, alpha)
     rgb.to_s.gsub("rgb", "rgba").gsub(")", ", #{alpha})")
   end
   
