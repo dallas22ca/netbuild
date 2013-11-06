@@ -8,12 +8,13 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-
+	
+	<%= render "dynamic_css" %>
+	<%= render "dialogs" %>
+	
 	<div id="yield">
 		<%= yield %>
 	</div>
-
-	<%= render "dialogs" %>
 
 </body>
 </html>
