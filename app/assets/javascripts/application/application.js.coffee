@@ -1,6 +1,3 @@
-$(document).on "keyup", "#primary_colorpicker", ->
-	$(this).ColorPickerSetColor $(this).val()
-
 unload = ->
   $("#loading").show()
 

@@ -25,11 +25,11 @@
 		border-bottom: 5px solid <%= LiquidFilters::rgba(@website.secondary_colour, 0.85) %>;
 	}
 	
-	#topbar .subnav a {
+	#manage_nav .subnav a {
 		background: <%= @website.primary_colour %> !important;
 	}
 	
 	[contenteditable]:focus {
-		outline-color: {{ primary }};
+		outline-color: <%= @website.primary_colour %>;
 	}
 </style>

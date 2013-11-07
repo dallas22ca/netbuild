@@ -1,16 +1,19 @@
+$(document).on "keyup", "#primary_colorpicker", ->
+	$(this).ColorPickerSetColor $(this).val()
+
 @setColours = ->
   if $("#primary_colorpicker").length
     $("#primary_colorpicker").ColorPicker
       color: rgbToHex($("#primary_colorpicker").val())
       onChange: (hsb, hex, rgb) ->
-        $("#topbar").css "background", "##{hex}"
+        $("#manage_nav").css "background", "##{hex}"
         $("#primary_colorpicker").val "rgb(#{rgb.r}, #{rgb.g}, #{rgb.b})"
         $("#primary_colorpicker").css "background", "##{hex}"
     
     $("#secondary_colorpicker").ColorPicker
       color: rgbToHex($("#secondary_colorpicker").val())
       onChange: (hsb, hex, rgb) ->
-        $("#topbar").css "border-color", "##{hex}"
+        $("#manage_nav").css "border-color", "##{hex} !important"
         $("#secondary_colorpicker").val "rgb(#{rgb.r}, #{rgb.g}, #{rgb.b})"
         $("#secondary_colorpicker").css "background", "##{hex}"
     
