@@ -1,0 +1,23 @@
+.column {
+  padding: 0px 1.5%;
+  
+  &.fifths {
+    width: 20%;
+    float: left;
+  }
+  
+  &.fourths {
+    width: 25%;
+    float: left;
+  }
+
+  &.thirds {
+    width: 33.3333%;
+    float: left;
+  }
+
+  &.halves {
+    width: 50%;
+    float: left;
+  }
+}
