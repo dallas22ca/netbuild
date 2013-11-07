@@ -13,7 +13,7 @@ $(document).on "keyup", "#primary_colorpicker", ->
     $("#secondary_colorpicker").ColorPicker
       color: rgbToHex($("#secondary_colorpicker").val())
       onChange: (hsb, hex, rgb) ->
-        $("#manage_nav").css "border-color", "##{hex} !important"
+        $("#manage_nav").css "border-color", "##{hex}"
         $("#secondary_colorpicker").val "rgb(#{rgb.r}, #{rgb.g}, #{rgb.b})"
         $("#secondary_colorpicker").css "background", "##{hex}"
     
