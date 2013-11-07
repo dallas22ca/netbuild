@@ -6,7 +6,7 @@
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
 	<%= tag :meta, name: "stripe-key", content: CONFIG["stripe_public_key"] %>
   <%= csrf_meta_tags %>
-	<style="text/css">
+	<style type="text/css">
 		<%= render "dynamic_css" %>
 	</style>
 </head>
