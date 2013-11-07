@@ -1,9 +1,8 @@
 <% cache [@theme, "css"] do %>
 <%=
-	Liquid::Template.parse(@theme.documents.css.map { |d| d.body }.join(" ").gsub(/\s\s+/, "")).render({
+	Liquid::Template.parse((@theme.documents.css.map { |d| d.body }.join(" ") + render("dynamic_css")).gsub(/\s\s+/, "")).render({
 		"primary" => @website.primary_colour,
 		"secondary" => @website.secondary_colour
 	}, :filters => [LiquidFilters]).html_safe
 %>
 <% end %>
-<%= render "dynamic_css" %>
