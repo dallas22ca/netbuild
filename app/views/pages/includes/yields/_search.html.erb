@@ -1,6 +1,6 @@
 <%= form_tag public_page_path("search"), method: :get, authenticity_token: false do %>
 	<%= text_field_tag :q, params[:q] %>
-	<%= submit_tag "Search!", name: nil %>
+	<%= submit_tag "Search!", name: nil, class: "button primary-button" %>
 <% end %>
 
 <% if params[:q] %>
@@ -8,7 +8,7 @@
 	You searched for <b><%= params[:q] %></b>!
 
 	<ul style="list-style: disc; margin-left: 25px; ">
-		<% Block.where("details->'content' ilike ?", "%#{params[:q]}%").each do |result| %>
+		<% @website.blocks.where("details->'content' ilike ?", "%#{params[:q]}%").each do |result| %>
 			<% if result.wrapper.page %>
 				<li style="margin: 15px; ">
 					<b><%= link_to result.wrapper.page.title, public_page_path(result.wrapper.page.permalink, q: params[:q]) %></b><br>

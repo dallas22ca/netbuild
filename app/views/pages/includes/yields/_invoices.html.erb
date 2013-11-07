@@ -1,7 +1,7 @@
 <% if @invoice %>
 
-	<%= link_to "Invoices", public_page_path("invoices") if signed_in? %><br>
-	<%= link_to "View As PDF", public_page_path("invoices", id: @invoice.visible_id, format: :pdf) %><br><br>
+	<%= link_to "Invoices", public_page_path("invoices"), class: "button primary-button" if signed_in? %><br>
+	<%= link_to "View As PDF", public_page_path("invoices", id: @invoice.visible_id, format: :pdf), class: "button primary-button" %><br><br>
 	<%= render @invoice %>
 
 <% elsif signed_in? %>
