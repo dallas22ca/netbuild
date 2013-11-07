@@ -85,6 +85,21 @@
 	<% end %>
 </div>
 
+<div class="widget_editor" data-genre="post">
+	<%= form_tag "#", authenticity_token: false do %>
+		<%= hidden_field_tag :block_id, "", class: "block_id", id: nil %>
+		<h3>Posts</h3>
+		<div class="field">
+			<%= label_tag :limit %>
+			<%= text_field_tag :limit, "", class: "full_width limit", id: nil %>
+		</div>
+		<div class="actions">
+			<%= submit_tag "Save" %>
+			<%= link_to "Cancel", "#", class: "cancel" %>
+		</div>
+	<% end %>
+</div>
+
 <div class="widget_editor" data-genre="events">
 	<%= form_tag "#", authenticity_token: false do %>
 		<%= hidden_field_tag :block_id, "", class: "block_id", id: nil %>

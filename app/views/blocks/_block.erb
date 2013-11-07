@@ -49,7 +49,8 @@
 			<button>Pay</button>
 		</div>
 	<% elsif block.genre == "posts" %>
-		<% 15.times do %>
+		<% quantity = block.data["limit"].to_i; count = 15 if block.data["limit"].to_i == 0 %>
+		<% quantity.times do %>
 			<div class="post">
 				<h3 class="title">John Doe</h3>
 				<div class="img_wrapper">
