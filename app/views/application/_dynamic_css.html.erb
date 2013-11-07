@@ -29,7 +29,7 @@
 		background: <%= @website.primary_colour %> !important;
 	}
 	
-	[contenteditable]:focus {
-		outline-color: <%= @website.primary_colour %>;
+	[contenteditable]:focus, [contenteditable]:active {
+		outline: 3px dotted <%= @website.primary_colour %>;
 	}
 </style>
