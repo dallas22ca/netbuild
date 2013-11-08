@@ -135,14 +135,19 @@ class Membership < ActiveRecord::Base
   end
   
   def name
-    @name ||= data["name"].blank? ? user.email : data["name"]
+    @name ||= safe_data.nil? && safe_data["name"].blank? ? user.email : safe_data["name"]
   end
   
   def name_and_email
-    @name_and_email ||= data["name"].blank? ? user.email : "#{data["name"]} <#{user.email}>"
+    @name_and_email ||= safe_data["name"].blank? ? user.email : "#{safe_data["name"]} <#{user.email}>"
   end
   
   def invoice_name
-    "#{name}#{" - #{data["company"]}" unless data["company"].blank?}"
+    "#{name}#{" - #{safe_data["company"]}" unless safe_data["company"].blank?}"
+  end
+  
+  def safe_data
+    @safe_data = safe_data
+    @safe_data ||= {}
   end
 end

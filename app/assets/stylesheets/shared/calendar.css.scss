@@ -1,6 +1,20 @@
 .calendar {
   table {
     width: 100%;
+    
+    th {
+      font-weight: bold;
+      width: 14.28571428571429%;
+    }
+    
+    td {
+      border: 1px solid #bbb;
+      background: #fff;
+      
+      &.not_in_current_month {
+        background: #f9f9f9;
+      }
+    }
   }
   
   .title {
