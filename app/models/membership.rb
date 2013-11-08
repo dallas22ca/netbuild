@@ -147,7 +147,7 @@ class Membership < ActiveRecord::Base
   end
   
   def safe_data
-    @safe_data = safe_data
+    @safe_data = data
     @safe_data ||= {}
   end
 end
