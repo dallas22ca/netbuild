@@ -74,6 +74,7 @@ class PagesController < ApplicationController
         end
       end
       format.pdf { render pdf: "#{@website.title} #{@invoice.date.strftime("%m-%d-%Y")}" } if @invoice
+      format.json { render json: (@page.has_children? ? @page.children : @page) }
     end
   end
 
