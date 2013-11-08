@@ -8,6 +8,19 @@ $(document).on "change", "#message_to", (e, p) ->
 
 $(document).on "click", ".membership_checkbox", ->
   $(".to_count").text $(".membership_checkbox:checked").length
+  
+$(document).on "click", ".compose_with_id", ->
+  id = $(this).data("id")
+
+  $("#message_to option").removeAttr "selected"
+  $("#message_to option[value=#{id}]").attr "selected", true
+  
+  if $(".chosen-container").length
+    $("#message_to").trigger("chosen:updated")
+  else
+    $("#message_to").chosen
+      width: "100%"
+      search_contains: true
 
 $(document).on "click", ".compose_with_selection", ->
   $("#message_to option").removeAttr "selected"

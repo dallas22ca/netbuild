@@ -20,6 +20,7 @@
 <hr />
 
 <ul id="messages">
+	<li><%= link_to "Send Message".html_safe, "#", class: "compose_with_id", data: { id: @membership.id } %></li>
 	<% @membership.messages.each do |message| %>
 		<li><%= link_to message.subject, message %></li>
 	<% end %>
@@ -28,6 +29,7 @@
 <hr />
 
 <ul id="invoices">
+	<li><%= link_to "Create An Invoice", new_invoice_path %></li>
 	<% @membership.invoices.each do |invoice| %>
 		<li><%= link_to invoice.quick_summary, invoice %></li>
 	<% end %>
