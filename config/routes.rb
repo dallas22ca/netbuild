@@ -48,7 +48,10 @@ Netbuild::Application.routes.draw do
     end
     
     resources :themes, only: :show
-    get "/:a(/:b(/:c/:d))" => "pages#show", as: :public_page
+    get "/:permalink/:year/:month/:post" => "pages#show", constraints: { year: /\d.+/, month: /\d.+/ }
+    get "/:permalink/:year/:month" => "pages#show", constraints: { year: /\d.+/, month: /\d.+/ }
+    get "/:permalink/:year" => "pages#show", constraints: { year: /\d.+/, month: /\d.+/ }
+    get "/:a(/:b(/:c))" => "pages#show", as: :public_page
   end
   
   root to: "pages#show"

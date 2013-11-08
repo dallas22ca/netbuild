@@ -1,4 +1,6 @@
 class Page < ActiveRecord::Base
+  liquid_methods :title, :path
+  
   belongs_to :website, touch: true
   belongs_to :layout, class_name: "Document", foreign_key: "document_id"
   
@@ -8,16 +10,28 @@ class Page < ActiveRecord::Base
   
   before_validation :permalink_is_not_safe, if: Proc.new { |p| %w[manage auth sign_out].include? p.permalink }
   validates_uniqueness_of :permalink, scope: [:website_id, :parent_id], case_sensitive: false
-  validates_presence_of :document_id
+  validates_presence_of :document_id, :published_at
   validates_presence_of :title, allow_blank: false
+  validate :cannot_have_dates_if_parent_has_dates, if: Proc.new { |p| !p.root? && p.parent.children_have_dates? && p.children_have_dates? }
   
-  default_scope -> { order(:ordinal) }
+  default_scope -> { order :ordinal }
   
   scope :roots, -> { where parent_id: nil }
+  scope :not_dated, -> { where children_have_dates: false }
+  scope :dated, -> { where children_have_dates: true }
+  scope :roots_or_dated, -> { where "pages.parent_id is ? or children_have_dates = ?", nil, true }
   scope :visible, -> { where visible: true }
   
   def permalink_is_not_safe
     self.errors.add :permalink, "is a reserved word and cannot be used."
+  end
+  
+  def cannot_have_dates_if_parent_has_dates
+    self.errors.add :parent, "page is unavailable as a parent as it is a grouped section in and of itself."
+  end
+  
+  def has_siblings?
+    !siblings.empty?
   end
   
   def siblings
@@ -43,13 +57,18 @@ class Page < ActiveRecord::Base
   def path(params = {})
     imploded_params = "#{"?" unless params.empty?}#{params.map{|k, v| "#{k}=#{v}" }.join("&")}"
     
-    @path ||= case
-  	when website.home_id == id
+    @path ||= if !root? && parent.children_have_dates?
+      "/#{parent.permalink}/#{published_at.year}/#{published_at.month}/#{permalink}#{imploded_params}"
+    elsif website.home_id == id
   		"/#{imploded_params}"
-  	when !root?
+    elsif !root?
   		"/#{parent.permalink}/#{permalink}#{imploded_params}"
   	else
   		"/#{permalink}#{imploded_params}"
   	end
+  end
+  
+  def has_children?
+    !children.empty?
   end
 end

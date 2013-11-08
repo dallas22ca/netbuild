@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131108155524) do
+ActiveRecord::Schema.define(version: 20131108174042) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -174,17 +174,19 @@ ActiveRecord::Schema.define(version: 20131108155524) do
     t.string   "title"
     t.string   "permalink"
     t.text     "description"
-    t.boolean  "visible",     default: true
+    t.boolean  "visible",             default: true
     t.integer  "ordinal"
     t.integer  "document_id"
     t.integer  "parent_id"
     t.integer  "website_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "deleteable",  default: false
+    t.boolean  "deleteable",          default: false
     t.string   "redirect"
     t.string   "redirect_to"
-    t.boolean  "published",   default: false
+    t.boolean  "published",           default: false
+    t.boolean  "children_have_dates", default: false
+    t.datetime "published_at"
   end
 
   add_index "pages", ["document_id"], name: "index_pages_on_document_id", using: :btree

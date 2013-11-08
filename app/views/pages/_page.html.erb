@@ -1,6 +1,6 @@
 <%= content_tag_for :li, page, id: nil, data: { id: page.id } do %>
 	<%= link_to page.title, page.path %>
-	<% if page.children.visible.any?  %>
+	<% if !page.children_have_dates? && page.children.visible.any? %>
 		<ol class="subnav">
 			<%= render page.children.visible %>
 		</ol>

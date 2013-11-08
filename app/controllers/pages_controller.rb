@@ -14,15 +14,27 @@ class PagesController < ApplicationController
   def show
     @path = request.path
     
-    if params[:d]
-      # BLOG
-      @page = @website.pages.roots.where(permalink: params[:a]).first
+    if params[:post]
+      start = Time.parse("#{params[:year]}/#{params[:month]}")
+      finish = start.end_of_month
+      @parent = @website.pages.dated.where(permalink: params[:permalink]).first
+      @page = @parent.children.where("permalink = ? and published_at >= ? and published_at <= ?", params[:post], start, finish).first
+    elsif params[:month]
+      @page = @website.pages.dated.where(permalink: params[:permalink]).first
+      @month = params[:month]
+      @year = params[:year]
+    elsif params[:year]
+      @page = @website.pages.dated.where(permalink: params[:permalink]).first
+      @year = params[:year]
+    elsif params[:c]
+      @grandparent = @website.pages.roots.not_dated.where(permalink: params[:a]).first
+      @parent = @grandparent.pages.where(permalink: params[:b]).first
+      @page = @parent.children.where(permalink: params[:c]).first
     elsif params[:b]
-      # SUBPAGE
-      @parent = @website.pages.roots.where(permalink: params[:a]).first
+      @parent = @website.pages.roots.not_dated.where(permalink: params[:a]).first
       @page = @parent.children.where(permalink: params[:b]).first
     elsif params[:a]
-      @page = @website.pages.roots.where(permalink: params[:a]).first
+      @page = @website.pages.roots_or_dated.where(permalink: params[:a]).first
     elsif @website
       @page = @website.home
     end
@@ -81,7 +93,7 @@ class PagesController < ApplicationController
 
     respond_to do |format|
       if @page.save
-        format.html { redirect_to public_page_path(@page.permalink), notice: 'Page was successfully created.' }
+        format.html { redirect_to @page.path, notice: 'Page was successfully created.' }
         format.json { render action: 'show', status: :created, location: @page }
       else
         format.html { render action: 'new' }
@@ -95,7 +107,7 @@ class PagesController < ApplicationController
   def update
     respond_to do |format|
       if @page.update(page_params)
-        format.html { redirect_to (@page.redirect_to.blank? ? public_page_path(@page.permalink) : manage_path("pages")), notice: 'Page was successfully updated.' }
+        format.html { redirect_to (@page.redirect_to.blank? ? @page.path : manage_path("pages")), notice: 'Page was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -122,7 +134,7 @@ class PagesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def page_params
-      params.require(:page).permit(:title, :description, :visible, :ordinal, :document_id, :parent_id, :permalink, :published, :redirect_to)
+      params.require(:page).permit(:title, :description, :visible, :ordinal, :document_id, :parent_id, :permalink, :published, :published_at, :redirect_to, :children_have_dates)
     end
     
     def choose_layout

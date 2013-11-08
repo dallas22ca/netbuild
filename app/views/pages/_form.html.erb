@@ -36,6 +36,14 @@
     <%= f.check_box :published %>
   </div>
   <div class="field">
+    <%= f.label :published_at %><br>
+    <%= f.datetime_select :published_at %>
+  </div>
+  <div class="field">
+    <%= f.label :children_have_dates %><br>
+    <%= f.check_box :children_have_dates %>
+  </div>
+  <div class="field">
     <%= f.label :ordinal %><br>
     <%= f.number_field :ordinal %>
   </div>
