@@ -33,8 +33,8 @@
       <tr class="membership" data-id="<%= membership.id %>">
 				<td><%= check_box_tag "membership_checkbox_#{membership.id}", membership.id, false, class: "membership_checkbox" %></td>
         <td><%= link_to membership.user.email, membership, class: "email" %></td>
-				<td><%= link_to membership.data["name"].to_s, membership %></td>
-				<td><%= link_to membership.data["phone"].to_s, membership %></td>
+				<td><%= link_to membership.safe_data["name"].to_s, membership %></td>
+				<td><%= link_to membership.safe_data["phone"].to_s, membership %></td>
 				<td><%= link_to membership.security.capitalize, membership %></td>
 				
 				<% if @website.email_addon %>

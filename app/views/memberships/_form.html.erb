@@ -21,7 +21,7 @@
 	<% %w[company name phone].each do |field| %>
 		<div class="field">
 			<%= label_tag field.to_sym %><br>
-			<%= text_field_tag field.to_sym, @membership.data[field], name: "membership[data][#{field}]" %>
+			<%= text_field_tag field.to_sym, @membership.safe_data[field], name: "membership[data][#{field}]" %>
 		</div>
 	<% end %>
 	

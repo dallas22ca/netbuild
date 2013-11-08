@@ -1,8 +1,8 @@
 <%= content_tag_for :div, block, data: { genre: block.genre, id: block.id, details: block.details, url: block_path(block) } do %>
 	<% if block.genre == "text" %>
-		<<%= block.data["style"] %> class="contenteditable"><%= block.data["content"].to_s.html_safe %></<%= block.data["style"] %>>
+		<<%= block.safe_data["style"] %> class="contenteditable"><%= block.safe_data["content"].to_s.html_safe %></<%= block.safe_data["style"] %>>
 	<% elsif block.genre == "events" %>
-		<% if block.data["style"] == "list" %>
+		<% if block.safe_data["style"] == "list" %>
 			<ol>
 				<li>
 					<h5>Mon, Sept 18</h5>
@@ -20,15 +20,15 @@
 					</ol>
 				</li>
 			</ol>
-		<% elsif block.data["style"] == "calendar" %>
+		<% elsif block.safe_data["style"] == "calendar" %>
 			<%= render "blocks/templates/calendar" %>
 		<% end %>
 	<% elsif block.genre == "img" %>
-		<div class="img_wrapper" style="text-align: <%= block.data["align"].blank? ? "center" : block.data["align"] %>">
-			<% if block.data["href"].blank? %>
-				<%= image_tag block.data["src"], width: block.data["width"] %>
+		<div class="img_wrapper" style="text-align: <%= block.safe_data["align"].blank? ? "center" : block.safe_data["align"] %>">
+			<% if block.safe_data["href"].blank? %>
+				<%= image_tag block.safe_data["src"], width: block.safe_data["width"] %>
 			<% else %>
-				<%= link_to image_tag(block.data["src"], width: block.data["width"]), block.data["href"] %>
+				<%= link_to image_tag(block.safe_data["src"], width: block.safe_data["width"]), block.safe_data["href"] %>
 			<% end %>
 		</div>
 	<% elsif block.genre == "social" %>
@@ -37,19 +37,19 @@
 		</div>
 	<% elsif block.genre == "money" %>
 		<div class="img_wrapper">
-			<% if block.data["amount"].downcase == "fluctuating" %>
+			<% if block.safe_data["amount"].downcase == "fluctuating" %>
 				<div class="field">
-					<%= label_tag :how_much, block.data["description"] %><br>
+					<%= label_tag :how_much, block.safe_data["description"] %><br>
 					<%= text_field_tag :how_much %>
 				</div>
 			<% else %>
-				<p><%= block.data["description"] %></p>
-				<h1><%= number_to_currency(block.data["amount"].to_i / 100.00) %></h1>
+				<p><%= block.safe_data["description"] %></p>
+				<h1><%= number_to_currency(block.safe_data["amount"].to_i / 100.00) %></h1>
 			<% end %>
 			<button>Pay</button>
 		</div>
 	<% elsif block.genre == "posts" %>
-		<% quantity = block.data["limit"].to_i; quantity = 15 if quantity == 0 %>
+		<% quantity = block.safe_data["limit"].to_i; quantity = 15 if quantity == 0 %>
 		<% quantity.times do %>
 			<div class="post">
 				<h3 class="title">John Doe</h3>
