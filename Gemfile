@@ -22,6 +22,7 @@ gem 'paper_trail', '>= 3.0.0.beta1'
 gem 'codemirror-rails'
 gem 'oauth2'
 gem 'wicked_pdf'
+gem 'acts-as-taggable-on'
 
 gem 'sidekiq'
 gem 'sidekiq-failures'

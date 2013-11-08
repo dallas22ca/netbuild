@@ -59,6 +59,8 @@ class Page < ActiveRecord::Base
     
     @path ||= if !root? && parent.children_have_dates?
       "/#{parent.permalink}/#{published_at.year}/#{published_at.month}/#{permalink}#{imploded_params}"
+    elsif children_have_dates?
+      "/#{parent.permalink}#{imploded_params}"
     elsif website.home_id == id
   		"/#{imploded_params}"
     elsif !root?
