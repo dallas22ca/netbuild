@@ -9,7 +9,7 @@
 		"secondary" => @website.secondary_colour,
 		"nav" => render("pages/includes/nav"),
 		"social" => render("pages/includes/social"),
-		"subnav" => render("pages/includes/subnav"),
+		"subnav" => @page.children_have_dates? ? "" : render("pages/includes/subnav"),
 		"title" => @page.title,
 		"sign_inout_icon" => user_signed_in? ? "unlock" : "lock",
 		"sign_inout_path" => user_signed_in? ? destroy_user_session_path : public_page_path("sign_in"),

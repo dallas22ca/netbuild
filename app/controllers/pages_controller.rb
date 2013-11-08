@@ -79,7 +79,7 @@ class PagesController < ApplicationController
 
   # GET /pages/new
   def new
-    @page = Page.new(published: true)
+    @page = Page.new(published: true, layout_id: @website.theme.default_document_id)
   end
 
   # GET /pages/1/edit
