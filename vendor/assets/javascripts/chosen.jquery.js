@@ -312,8 +312,8 @@
             option.group_match = false;
             option.active_options = 0;
           }
-          if ((option.group_array_index != null) && this.results_safe_data[option.group_array_index]) {
-            results_group = this.results_safe_data[option.group_array_index];
+          if ((option.group_array_index != null) && this.results_data[option.group_array_index]) {
+            results_group = this.results_data[option.group_array_index];
             if (results_group.active_options === 0 && results_group.search_match) {
               results += 1;
             }
@@ -334,7 +334,7 @@
               if (results_group != null) {
                 results_group.group_match = true;
               }
-            } else if ((option.group_array_index != null) && this.results_safe_data[option.group_array_index].search_match) {
+            } else if ((option.group_array_index != null) && this.results_data[option.group_array_index].search_match) {
               option.search_match = true;
             }
           }
@@ -938,12 +938,12 @@
           if (this.result_single_selected) {
             this.result_single_selected.removeClass("result-selected");
             selected_index = this.result_single_selected[0].getAttribute('data-option-array-index');
-            this.results_safe_data[selected_index].selected = false;
+            this.results_data[selected_index].selected = false;
           }
           this.result_single_selected = high;
         }
         high.addClass("result-selected");
-        item = this.results_safe_data[high[0].getAttribute("data-option-array-index")];
+        item = this.results_data[high[0].getAttribute("data-option-array-index")];
         item.selected = true;
         this.form_field.options[item.options_index].selected = true;
         this.selected_option_count = null;
@@ -982,7 +982,7 @@
     Chosen.prototype.result_deselect = function(pos) {
       var result_data;
 
-      result_data = this.results_safe_data[pos];
+      result_data = this.results_data[pos];
       if (!this.form_field.options[result_data.options_index].disabled) {
         result_data.selected = false;
         this.form_field.options[result_data.options_index].selected = false;
