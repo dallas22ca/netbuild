@@ -1,3 +1,5 @@
-<%= content_tag "ol", class: "nav roots" do %>
-	<%= render @website.pages.roots.visible %>
+<% cache [@website, "nav"] do %>
+	<%= content_tag "ol", class: "nav roots" do %>
+		<%= render @website.pages.roots.visible %>
+	<% end %>
 <% end %>

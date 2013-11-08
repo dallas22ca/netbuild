@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131106030052) do
+ActiveRecord::Schema.define(version: 20131108155524) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -184,6 +184,7 @@ ActiveRecord::Schema.define(version: 20131106030052) do
     t.boolean  "deleteable",  default: false
     t.string   "redirect"
     t.string   "redirect_to"
+    t.boolean  "published",   default: false
   end
 
   add_index "pages", ["document_id"], name: "index_pages_on_document_id", using: :btree

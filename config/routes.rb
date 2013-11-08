@@ -48,7 +48,7 @@ Netbuild::Application.routes.draw do
     end
     
     resources :themes, only: :show
-    get "/:permalink" => "pages#show", as: :public_page
+    get "/:a(/:b(/:c/:d))" => "pages#show", as: :public_page
   end
   
   root to: "pages#show"

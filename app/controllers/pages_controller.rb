@@ -14,8 +14,15 @@ class PagesController < ApplicationController
   def show
     @path = request.path
     
-    if params[:permalink]
-      @page = @website.pages.where(permalink: params[:permalink]).first
+    if params[:d]
+      # BLOG
+      @page = @website.pages.roots.where(permalink: params[:a]).first
+    elsif params[:b]
+      # SUBPAGE
+      @parent = @website.pages.roots.where(permalink: params[:a]).first
+      @page = @parent.children.where(permalink: params[:b]).first
+    elsif params[:a]
+      @page = @website.pages.roots.where(permalink: params[:a]).first
     elsif @website
       @page = @website.home
     end
@@ -34,7 +41,7 @@ class PagesController < ApplicationController
       end
     end
     
-    if params[:permalink] == "invoices" && params[:id]
+    if params[:a] == "invoices" && params[:id]
       @invoice = @website.invoices.where(visible_id: params[:id]).first
       
       unless @invoice.public_access?
@@ -60,7 +67,7 @@ class PagesController < ApplicationController
 
   # GET /pages/new
   def new
-    @page = Page.new
+    @page = Page.new(published: true)
   end
 
   # GET /pages/1/edit
@@ -115,7 +122,7 @@ class PagesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def page_params
-      params.require(:page).permit(:title, :description, :visible, :ordinal, :document_id, :parent_id, :permalink, :redirect_to)
+      params.require(:page).permit(:title, :description, :visible, :ordinal, :document_id, :parent_id, :permalink, :published, :redirect_to)
     end
     
     def choose_layout
