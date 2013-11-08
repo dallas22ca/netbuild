@@ -64,10 +64,18 @@ class Page < ActiveRecord::Base
     elsif website.home_id == id
   		"/#{imploded_params}"
     elsif !root?
-  		"/#{parent.permalink}/#{permalink}#{imploded_params}"
+      if parent.root?
+    		"/#{parent.permalink}/#{permalink}#{imploded_params}"
+      else
+        "/#{grandparent.permalink}/#{parent.permalink}/#{permalink}#{imploded_params}"
+      end
   	else
   		"/#{permalink}#{imploded_params}"
   	end
+  end
+  
+  def grandparent
+    parent.parent
   end
   
   def has_children?
