@@ -4,7 +4,7 @@
 	padding: 50px;
 	font-family: Helvetica, Sans Serif;
 	font-size: 14px;
-	line-height: 22px;
+	line-height: 19px;
   
   table {
   	width: 100%;
@@ -43,9 +43,12 @@
     resize: none;
     padding: 0px;
     margin: 0px;
-    height: 2.5em;
-    border-radius: none;
+    border-radius: 0;
     box-shadow: none;
+  }
+  
+  textarea {
+    height: 2.5em;
   }
   
   .my_company {
