@@ -1,15 +1,5 @@
-<% 
-	path = case
-	when @website.home_id == page.id
-		root_path
-	when !page.root?
-		public_page_path(page.parent.permalink, page.permalink)
-	else
-		public_page_path(page.permalink)
-	end
-%>
 <%= content_tag_for :li, page, id: nil, data: { id: page.id } do %>
-	<%= link_to page.title, path %>
+	<%= link_to page.title, page.path %>
 	<% if page.children.visible.any?  %>
 		<ol class="subnav">
 			<%= render page.children.visible %>

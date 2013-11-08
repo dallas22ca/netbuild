@@ -51,6 +51,10 @@
     }
   }
   
+  tr:hover {
+    background: #eee;
+  }
+  
   tr:last-child {
     td {
       border-bottom: 1px solid #333;

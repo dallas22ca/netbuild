@@ -39,4 +39,17 @@ class Page < ActiveRecord::Base
     
     @body_with_partials.html_safe
   end
+  
+  def path(params = {})
+    imploded_params = "#{"?" unless params.empty?}#{params.map{|k, v| "#{k}=#{v}" }.join("&")}"
+    
+    @path ||= case
+  	when website.home_id == id
+  		"/#{imploded_params}"
+  	when !root?
+  		"/#{parent.permalink}/#{permalink}#{imploded_params}"
+  	else
+  		"/#{permalink}#{imploded_params}"
+  	end
+  end
 end
