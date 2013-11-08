@@ -15,11 +15,9 @@
 
 <%= render "pages/includes/editor" %>
 
-<% cache [@website, @page] do %>
-	<div id="timetravel">
-		<%= render "pages/includes/yield" %>
-	</div>
-<% end %>
+<div id="timetravel">
+	<%= render "pages/includes/yield" %>
+</div>
 
 </body>
 </html>

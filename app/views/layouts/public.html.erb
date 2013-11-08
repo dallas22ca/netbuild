@@ -13,11 +13,9 @@
 </head>
 <body data-primary_colour="<%= @website.primary_colour %>" data-secondary_colour="<%= @website.secondary_colour %>">
 
-<% cache [@website, @page] do %>
-	<div id="timetravel">
-		<%= render "pages/includes/yield" %>
-	</div>
-<% end %>
+<div id="timetravel">
+	<%= render "pages/includes/yield" %>
+</div>
 
 </body>
 </html>
