@@ -21,6 +21,9 @@ $(document).on "click", ".compose_with_id", ->
     $("#message_to").chosen
       width: "100%"
       search_contains: true
+  
+  Dialog.open "message"
+  false
 
 $(document).on "click", ".compose_with_selection", ->
   $("#message_to option").removeAttr "selected"
