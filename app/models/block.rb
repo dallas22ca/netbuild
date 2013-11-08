@@ -16,7 +16,8 @@ class Block < ActiveRecord::Base
     end
   end
   
-  def data
-    @data = details || {}
+  def safe_data
+    @safe_data = details
+    @safe_data ||= {}
   end
 end
