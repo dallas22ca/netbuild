@@ -22,8 +22,8 @@
   <tbody>
     <% @websites.each do |website| %>
       <tr>
-        <td><%= link_to website.title, root_url(subdomain: website.permalink) %></td>
-        <td><%= link_to website.theme.name, root_url(subdomain: website.permalink) %></td>
+        <td><%= link_to website.title, root_url(protocol: "http://", subdomain: website.permalink) %></td>
+        <td><%= link_to website.theme.name, root_url(protocol: "http://", subdomain: website.permalink) %></td>
         <td><%= link_to 'Edit', edit_website_path(website) %></td>
       </tr>
     <% end %>
