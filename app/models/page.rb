@@ -59,14 +59,18 @@ class Page < ActiveRecord::Base
     
     @path ||= if website.home_id == id
   		"/#{imploded_params}"
-    elsif  website.home_id == parent_id
-      "/#{permalink}#{imploded_params}"
-    elsif !root? && parent.children_have_dates?
-      "/#{parent.permalink}/#{published_at.year}/#{published_at.month}/#{permalink}#{imploded_params}"
+    elsif website.home_id == parent_id
+      if parent.children_have_dates?
+        "/#{published_at.year}/#{published_at.month}/#{permalink}#{imploded_params}"
+      else
+        "/#{permalink}#{imploded_params}"
+      end
     elsif children_have_dates?
       "/#{permalink}#{imploded_params}"
     elsif !root?
-      if parent.root?
+      if parent.children_have_dates?
+        "/#{parent.permalink}/#{published_at.year}/#{published_at.month}/#{permalink}#{imploded_params}"
+      elsif parent.root?
     		"/#{parent.permalink}/#{permalink}#{imploded_params}"
       else
         "/#{grandparent.permalink}/#{parent.permalink}/#{permalink}#{imploded_params}"
