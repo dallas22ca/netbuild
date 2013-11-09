@@ -61,7 +61,7 @@ class Page < ActiveRecord::Base
   		"/#{imploded_params}"
     elsif website.home_id == parent_id
       if parent.children_have_dates?
-        "/#{published_at.year}/#{published_at.month}/#{permalink}#{imploded_params}"
+        "/#{published_at.year}/#{published_at.month}/#{published_at.strftime("%-d")}/#{permalink}#{imploded_params}"
       else
         "/#{permalink}#{imploded_params}"
       end
@@ -69,7 +69,7 @@ class Page < ActiveRecord::Base
       "/#{permalink}#{imploded_params}"
     elsif !root?
       if parent.children_have_dates?
-        "/#{parent.permalink}/#{published_at.year}/#{published_at.month}/#{permalink}#{imploded_params}"
+        "/#{parent.permalink}/#{published_at.year}/#{published_at.month}/#{published_at.strftime("%-d")}/#{permalink}#{imploded_params}"
       elsif parent.root?
     		"/#{parent.permalink}/#{permalink}#{imploded_params}"
       else

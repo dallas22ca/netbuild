@@ -25,6 +25,11 @@ class PagesController < ApplicationController
       end
       
       @page = @parent.children.where("permalink = ? and published_at >= ? and published_at <= ?", params[:post], start, finish).first if @parent
+    elsif params[:day]
+      @page = @website.pages.dated.where(permalink: params[:permalink]).first
+      @month = params[:day]
+      @month = params[:month]
+      @year = params[:year]
     elsif params[:month]
       @page = @website.pages.dated.where(permalink: params[:permalink]).first
       @month = params[:month]
