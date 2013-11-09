@@ -48,9 +48,14 @@ Netbuild::Application.routes.draw do
     end
     
     resources :themes, only: :show
-    get "/:permalink/:year/:month/:post" => "pages#show", constraints: { year: /\d.+/, month: /\d.+/ }
-    get "/:permalink/:year/:month" => "pages#show", constraints: { year: /\d.+/, month: /\d.+/ }
-    get "/:permalink/:year" => "pages#show", constraints: { year: /\d.+/, month: /\d.+/ }
+    
+    constraints year: /\d.+/, month: /\d.+/ do
+      get "/:year/:month/:post" => "pages#show"
+      get "/:permalink/:year/:month/:post" => "pages#show"
+      get "/:permalink/:year/:month" => "pages#show"
+      get "/:permalink/:year" => "pages#show"
+    end
+    
     get "/:a(/:b(/:c))" => "pages#show", as: :public_page
   end
   

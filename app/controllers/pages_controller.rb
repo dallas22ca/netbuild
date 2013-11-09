@@ -14,11 +14,22 @@ class PagesController < ApplicationController
   def show
     @path = request.path
     
+    if params[:month] && params[:year] && params[:post] && !params[:permalink]
+      start = Time.parse("#{params[:year]}/#{params[:month]}")
+      finish = start.end_of_month
+      @parent = @website.home
+      @page = @parent.children.where("permalink = ? and published_at >= ? and published_at <= ?", params[:post], start, finish).first
     if params[:post]
       start = Time.parse("#{params[:year]}/#{params[:month]}")
       finish = start.end_of_month
-      @parent = @website.pages.dated.where(permalink: params[:permalink]).first
-      @page = @parent.children.where("permalink = ? and published_at >= ? and published_at <= ?", params[:post], start, finish).first
+      
+      if params[:permalink]
+        @parent = @website.pages.dated.where(permalink: params[:permalink]).first
+      elsif @website.home.has_children?
+        @parent = @website.home
+      end
+      
+      @page = @parent.children.where("permalink = ? and published_at >= ? and published_at <= ?", params[:post], start, finish).first if @parent
     elsif params[:month]
       @page = @website.pages.dated.where(permalink: params[:permalink]).first
       @month = params[:month]
