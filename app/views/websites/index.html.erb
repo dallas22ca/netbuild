@@ -2,8 +2,13 @@
 
 <h1>Websites</h1>
 
+<% percent = (Website.all.count * 100.00) / 1000 %>
 <p><%= Website.all.count %> / 1000 websites</p>
-<p><%= (Website.all.count * 100.00) / 1000 %>%</p>
+<p><%= percent %>%</p>
+
+<div style="background: #eee; border: 1px solid #ccc; ">
+	<div style="background: <%= @website.primary_colour %>; width: <%= percent %>%; height: 25px; "></div>
+</div>
 
 <table class="table">
   <thead>
