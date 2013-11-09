@@ -40,9 +40,11 @@ class PagesController < ApplicationController
       @parent = @website.pages.roots.not_dated.where(permalink: params[:a]).first
       @page = @parent.children.not_dated.where(permalink: params[:b]).first
     elsif params[:a]
-      @page = @website.pages.roots_or_dated.where(permalink: params[:a]).first
-    elsif @website.home.has_children? && !@website.home.children_have_dates?
-      @page = @website.home.children.where(permalink: params[:a]).first
+      if @website.home.has_children? && !@website.home.children_have_dates?
+        @page = @website.home.children.where(permalink: params[:a]).first
+      else
+        @page = @website.pages.roots_or_dated.where(permalink: params[:a]).first
+      end
     elsif @website
       @page = @website.home
     end
