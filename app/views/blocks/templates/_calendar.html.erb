@@ -3,7 +3,7 @@
 		month = Time.parse("#{params[:calendar][:month]}/#{params[:calendar][:year]}") if params[:calendar][:month] && params[:calendar][:year]
 	end
 	
-	month ||= Time.now
+	month ||= Time.now.beginning_of_month
 	prev_month = month - 1.month
 	next_month = month + 1.month
 %>
@@ -29,7 +29,7 @@
 			<% 6.times do %>
 				<tr>
 					<% %w[S M T W T F S].each do |d| %>
-						<td class="<%= " today" if date < now.beginning_of_day || date > now.end_of_day %><%= " not_in_current_month" if date < month.beginning_of_month || date > month.end_of_month %>" data-day="<%= date.day %>" data-month="<%= date.month %>" data-year="<%= date.year %>">
+						<td class="<%= " today" if date >= now.beginning_of_day && date <= now.end_of_day %><%= " not_in_current_month" if date < month.beginning_of_month || date > month.end_of_month %>" data-day="<%= date.day %>" data-month="<%= date.month %>" data-year="<%= date.year %>">
 							<span class="number"><%= date.day %></span>
 						</td>
 						<% date = date + 1.day %>
