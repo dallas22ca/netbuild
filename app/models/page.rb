@@ -57,12 +57,14 @@ class Page < ActiveRecord::Base
   def path(params = {})
     imploded_params = "#{"?" unless params.empty?}#{params.map{|k, v| "#{k}=#{v}" }.join("&")}"
     
-    @path ||= if !root? && parent.children_have_dates?
+    @path ||= if website.home_id == id
+  		"/#{imploded_params}"
+    elsif  website.home_id == parent_id
+      "/#{permalink}#{imploded_params}"
+    elsif !root? && parent.children_have_dates?
       "/#{parent.permalink}/#{published_at.year}/#{published_at.month}/#{permalink}#{imploded_params}"
     elsif children_have_dates?
       "/#{permalink}#{imploded_params}"
-    elsif website.home_id == id
-  		"/#{imploded_params}"
     elsif !root?
       if parent.root?
     		"/#{parent.permalink}/#{permalink}#{imploded_params}"
