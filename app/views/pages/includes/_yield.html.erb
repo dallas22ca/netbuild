@@ -19,7 +19,7 @@
 		"website_admin?" => website_admin?,
 		"signed_in?" => signed_in?,
 		"q" => params[:q],
-		"children" => @page.children + @page.children + @page.children + @page.children + @page.children + @page.children + @page.children + @page.children + @page.children + @page.children + @page.children,
+		"children" => @page.children.order("published_at desc"),
 		"siblings" => @page.siblings,
 		"yield" => @yield
 	}.merge(@blocks).merge(@current_user_details)
