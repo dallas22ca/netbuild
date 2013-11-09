@@ -3,7 +3,7 @@
 <h1>Websites</h1>
 
 <p><%= Website.all.count %> / 1000 websites</p>
-<p><%= Website.all.count / 1000.00 %>%</p>
+<p><%= (Website.all.count * 100.00) / 1000 %>%</p>
 
 <table class="table">
   <thead>
