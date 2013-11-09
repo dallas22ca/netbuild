@@ -1,1 +1,5 @@
-json.extract! @page, :title, :description, :visible, :ordinal, :document_id, :parent_id, :created_at, :updated_at
+if @page.has_children?
+  json.pages @page.children, :id, :description, :title, :path, :permalink, :published_at
+else
+  json.extract! @page, :id, :description, :title, :path, :permalink, :published_at
+end

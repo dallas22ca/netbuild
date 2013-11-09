@@ -1,5 +1,5 @@
 class Page < ActiveRecord::Base
-  liquid_methods :title, :path
+  liquid_methods :title, :path, :id
   
   belongs_to :website, touch: true
   belongs_to :layout, class_name: "Document", foreign_key: "document_id"
