@@ -111,7 +111,7 @@
 		<div class="field">
 			<%= label_tag :tags %><br>
 			<%= select_tag :tags, options_for_select(["Awesome", "Cool", "Nice"]), multiple: true, class: "tags", id: nil %><br>
-			<%= link_to "Manage Media", media_path, class: "show_media" %>
+			<%= link_to "Manage Media", media_path, class: "show_media_gallery" %>
 		</div>
 		<div class="field">
 			<%= check_box_tag :list_limit, true, true, class: "list_limit", id: nil %>
@@ -136,7 +136,7 @@
 				<div class="field">
 					<%= label_tag :tags %><br>
 					<%= select_tag :tags, options_for_select(["Awesome", "Cool", "Nice"]), multiple: true, class: "tags", id: nil %><br>
-					<%= link_to "Manage Media", media_path, class: "show_media" %>
+					<%= link_to "Manage Media", media_path, class: "show_media_gallery" %>
 				</div>
 				<div class="field">
 					<%= label_tag :gallery_width %><br>
@@ -162,6 +162,7 @@
 		<div class="field">
 			<%= label_tag :src %>
 			<%= text_field_tag :src, "", class: "full_width src", id: nil %>
+			<%= link_to "Open Gallery", "#", class: "show_media_gallery" %>
 		</div>
 		<div class="field">
 			<%= label_tag :href %>
@@ -189,7 +190,7 @@
 		<div class="field">
 			<%= label_tag :tags %><br>
 			<%= select_tag :tags, options_for_select(["Awesome", "Cool", "Nice"]), multiple: true, class: "tags", id: nil %><br>
-			<%= link_to "Manage Media", media_path, class: "show_media" %>
+			<%= link_to "Manage Media", media_path, class: "show_media_gallery" %>
 		</div>
 		<div class="field">
 			<%= label_tag :formats %><br>

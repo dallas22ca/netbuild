@@ -31,9 +31,11 @@ class MediaController < ApplicationController
       if @medium.save
         format.html { redirect_to @medium, notice: 'Medium was successfully created.' }
         format.json { render action: 'show', status: :created, location: @medium }
+        format.js
       else
         format.html { render action: 'new' }
         format.json { render json: @medium.errors, status: :unprocessable_entity }
+        format.js
       end
     end
   end

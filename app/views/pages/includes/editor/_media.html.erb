@@ -1,9 +1,23 @@
-<div id="media_gallery" data-url="<%= media_path %>">
-	<%= s3_uploader_form callback_url: media_url, callback_param: "medium[path]", key_starts_with: "#{@website.permalink}/", key: "#{@website.permalink}/{timestamp}-{unique_id}-#{SecureRandom.hex}/original/${filename}", id: "s3-uploader" do %>
-	  <%= file_field_tag :file, multiple: true %>
-	<% end %>
+<div id="media_gallery_overlay" class="hide_media_gallery"></div>
+
+<div id="media_gallery" data-url="<%= media_path %>">	
+	<div class="tabs">
+		<ul class="navigation">
+			<li><%= link_to "Upload Files", "#", class: "show_tab", data: { tab: "upload" } %></li>
+			<li><%= link_to "Media Library", "#", class: "show_tab", data: { tab: "library" } %></li>
+			<li class="media_q_holder"><%= text_field_tag :media_q, "", placeholder: "Search..." %></li>
+		</ul>
 	
-	<ul id="library">
-		<li class="loading">Loading...</li>
-	</ul>
+		<div class="tab upload">
+			<%= s3_uploader_form callback_url: media_url(format: :js), callback_param: "medium[path]", key_starts_with: "#{@website.permalink}/", key: "#{@website.permalink}/{timestamp}-{unique_id}-#{SecureRandom.hex}/original/${filename}", id: "s3-uploader" do %>
+			  <%= file_field_tag :file, multiple: true %>
+			<% end %>
+		</div>
+	
+		<div class="tab library">
+			<ul class="media">
+				<li class="loading">Loading...</li>
+			</ul>
+		</div>
+	</div>
 </div>

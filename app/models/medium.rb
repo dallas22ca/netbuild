@@ -2,6 +2,8 @@ class Medium < ActiveRecord::Base
   belongs_to :website
   belongs_to :user
   
+  default_scope order("created_at desc")
+  
   before_save :prepare_info
   
   def prepare_info
@@ -15,6 +17,6 @@ class Medium < ActiveRecord::Base
   end
   
   def amazon_url
-    "http://assets.netbuild.co#{path}"
+    "http://#{CONFIG["s3_bucket"]}#{path}"
   end
 end

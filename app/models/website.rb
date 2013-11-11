@@ -102,7 +102,7 @@ class Website < ActiveRecord::Base
   end
   
   def seed_content
-    home = pages.create(
+    home = pages.create!(
       title: "Welcome",
       permalink: "welcome",
       description: "Welcome to our website",
@@ -114,7 +114,7 @@ class Website < ActiveRecord::Base
     
     self.update_attributes home_id: home.id
     
-    sign_in = pages.create(
+    sign_in = pages.create!(
       title: "Sign In",
       permalink: "sign_in",
       description: "Sign in to our website",
@@ -124,7 +124,7 @@ class Website < ActiveRecord::Base
       document_id: theme.default_document.id
     )
     
-    sign_up = pages.create(
+    sign_up = pages.create!(
       title: "Sign Up",
       permalink: "sign_up",
       description: "Sign up for our website",
@@ -134,7 +134,7 @@ class Website < ActiveRecord::Base
       document_id: theme.default_document.id
     )
     
-    sitemap = pages.create(
+    sitemap = pages.create!(
       title: "Sitemap",
       permalink: "sitemap",
       description: "Sitemap of our website",
@@ -144,7 +144,7 @@ class Website < ActiveRecord::Base
       document_id: theme.default_document.id
     )
     
-    search = pages.create(
+    search = pages.create!(
       title: "Search",
       permalink: "search",
       description: "Search our website",
@@ -154,7 +154,7 @@ class Website < ActiveRecord::Base
       document_id: theme.default_document.id
     )
     
-    invoices = pages.create(
+    invoices = pages.create!(
       title: "Invoices",
       permalink: "invoices",
       description: "Invoices",
@@ -164,7 +164,7 @@ class Website < ActiveRecord::Base
       document_id: theme.default_document.id
     )
     
-    mail = pages.create(
+    mail = pages.create!(
       title: "Mail",
       permalink: "mail",
       description: "Check your email.",
