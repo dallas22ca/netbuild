@@ -109,7 +109,7 @@ class Website < ActiveRecord::Base
       visible: true,
       deleteable: false,
       ordinal: 1,
-      document_id: w.theme.default_document_id
+      document_id: theme.default_document_id
     )
     
     self.update_attributes home_id: home.id
