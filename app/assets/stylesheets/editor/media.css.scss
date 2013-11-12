@@ -3,6 +3,7 @@ body.fixed {
 }
 
 #media_gallery {
+  display: none;
   z-index: 10000;
   position: fixed;
   left: 3%;
@@ -78,6 +79,7 @@ body.fixed {
 }
 
 #media_gallery_overlay {
+  display: none;
   z-index: 9999;
   background: rgba(0, 0, 0, 0.8);
   position: fixed;

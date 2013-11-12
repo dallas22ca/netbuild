@@ -8,9 +8,11 @@ class Page < ActiveRecord::Base
   has_many :children, class_name: "Page", foreign_key: "parent_id"
   has_many :wrappers
   
+  before_validation :set_defaults
   before_validation :permalink_is_not_safe, if: Proc.new { |p| %w[manage auth sign_out].include? p.permalink }
   validates_uniqueness_of :permalink, scope: [:website_id, :parent_id], case_sensitive: false
-  validates_presence_of :document_id, :published_at
+  validates_presence_of :document_id
+  validates_presence_of :published_at
   validates_presence_of :title, allow_blank: false
   validate :cannot_have_dates_if_parent_has_dates, if: Proc.new { |p| !p.root? && p.parent.children_have_dates? && p.children_have_dates? }
   
@@ -21,6 +23,10 @@ class Page < ActiveRecord::Base
   scope :dated, -> { where children_have_dates: true }
   scope :roots_or_dated, -> { where "pages.parent_id is ? or children_have_dates = ?", nil, true }
   scope :visible, -> { where visible: true }
+  
+  def set_defaults
+    self.published_at = Time.zone.now if self.published_at.blank?
+  end
   
   def permalink_is_not_safe
     self.errors.add :permalink, "is a reserved word and cannot be used."
