@@ -13,6 +13,7 @@
 		"title" => @page.title,
 		"sign_inout_icon" => user_signed_in? ? "unlock" : "lock",
 		"sign_inout_path" => user_signed_in? ? destroy_user_session_path : public_page_path("sign_in"),
+		"sign_inout" => user_signed_in? ? "Sign Out" : "Sign Out",
 		"home_path" => root_path,
 		"manage_path" => public_page_path("people"),
 		"search_path" => public_page_path("search"),

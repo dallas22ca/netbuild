@@ -21,6 +21,13 @@
 			</p>
 		</li>
 		
+		<li>
+			<%= link_to "<i class=\"icon-sitemap\"></i>".html_safe, manage_path("pages"), data: { no_turbolink: true } %>
+			<p class="hint">
+				Click to see all pages
+			</p>
+		</li>
+		
 		<% if @website.theme.pristine? %>
 			<li>
 				<%= link_to "<i class=\"icon-copy\"></i>".html_safe, save_path("website[duplicate_theme]" => @website.theme_id, redirect: manage_path("themes")), method: :patch %>
