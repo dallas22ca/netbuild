@@ -21,7 +21,6 @@ class StripeController < ApplicationController
 
       if json["type"].include? "invoice"
         website = Website.where(stripe_user_id: json["user_id"]).first
-        p "----------- #{json["user_id"]} -----------"
         
         if website
           membership = website.memberships.where(customer_token: object["customer"]).first

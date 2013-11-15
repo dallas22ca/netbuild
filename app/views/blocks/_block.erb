@@ -1,4 +1,4 @@
-<%= content_tag_for :div, block, data: { genre: block.genre, id: block.id, details: block.safe_data, url: block_path(block) } do %>
+<%= content_tag_for :div, block, data: { genre: block.genre, id: block.id, details: block.safe_data, url: block.new_record? ? "" : block_path(block) } do %>
 	<% if block.genre == "text" %>
 		<<%= block.safe_data["style"] %> class="contenteditable"><%= block.safe_data["content"].to_s.html_safe %></<%= block.safe_data["style"] %>>
 	<% elsif block.genre == "events" %>
