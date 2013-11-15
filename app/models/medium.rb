@@ -65,6 +65,8 @@ class Medium < ActiveRecord::Base
   end
   
   def resize
+    require 'RMagick'
+    
     if is_format("Images")
       variations = [
         { fill: true, width: 150, height: 150, style: "thumb", format: "jpg" }, 
