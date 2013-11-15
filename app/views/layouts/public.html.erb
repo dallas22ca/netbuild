@@ -8,6 +8,8 @@
 	<%= tag :meta, name: "viewport", content: "initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" %>
 	<%= tag :meta, name: "apple-mobile-web-app-capable", content: "yes" %>
 	<%= tag :meta, name: "apple-mobile-web-app-status-bar-style", content: "black" %>
+	<%= auto_discovery_link_tag :atom, feed_path %>
+	<%= auto_discovery_link_tag :rss, feed_path(format: :rss) %>
   <%= csrf_meta_tags %>
 	<%= @website.header.to_s.html_safe %>
 </head>

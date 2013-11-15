@@ -7,6 +7,7 @@ class Page < ActiveRecord::Base
   belongs_to :parent, class_name: "Page", foreign_key: "parent_id"
   has_many :children, class_name: "Page", foreign_key: "parent_id"
   has_many :wrappers
+  has_many :blocks, through: :wrappers
   
   before_validation :set_defaults
   before_validation :permalink_is_not_safe, if: Proc.new { |p| %w[manage auth sign_out].include? p.permalink }
@@ -19,6 +20,7 @@ class Page < ActiveRecord::Base
   default_scope -> { order :ordinal }
   
   scope :roots, -> { where parent_id: nil }
+  scope :not_roots, -> { where("parent_id is not ?", nil) }
   scope :not_dated, -> { where children_have_dates: false }
   scope :dated, -> { where children_have_dates: true }
   scope :roots_or_dated, -> { where "pages.parent_id is ? or children_have_dates = ?", nil, true }

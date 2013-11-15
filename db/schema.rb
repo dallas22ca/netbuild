@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131108174042) do
+ActiveRecord::Schema.define(version: 20131115151837) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,6 +49,7 @@ ActiveRecord::Schema.define(version: 20131108174042) do
     t.boolean  "columnizes", default: false
     t.integer  "parent_id"
     t.float    "width"
+    t.text     "data"
   end
 
   add_index "blocks", ["details"], name: "index_blocks_on_details", using: :gist
@@ -130,6 +131,9 @@ ActiveRecord::Schema.define(version: 20131108174042) do
     t.string   "extension"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "resized",     default: false
+    t.string   "filename"
+    t.text     "tags"
   end
 
   add_index "media", ["user_id"], name: "index_media_on_user_id", using: :btree
@@ -192,6 +196,23 @@ ActiveRecord::Schema.define(version: 20131108174042) do
   add_index "pages", ["document_id"], name: "index_pages_on_document_id", using: :btree
   add_index "pages", ["parent_id"], name: "index_pages_on_parent_id", using: :btree
   add_index "pages", ["website_id"], name: "index_pages_on_website_id", using: :btree
+
+  create_table "taggings", force: true do |t|
+    t.integer  "tag_id"
+    t.integer  "taggable_id"
+    t.string   "taggable_type"
+    t.integer  "tagger_id"
+    t.string   "tagger_type"
+    t.string   "context",       limit: 128
+    t.datetime "created_at"
+  end
+
+  add_index "taggings", ["tag_id"], name: "index_taggings_on_tag_id", using: :btree
+  add_index "taggings", ["taggable_id", "taggable_type", "context"], name: "index_taggings_on_taggable_id_and_taggable_type_and_context", using: :btree
+
+  create_table "tags", force: true do |t|
+    t.string "name"
+  end
 
   create_table "themes", force: true do |t|
     t.string   "name"

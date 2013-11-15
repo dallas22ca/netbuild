@@ -3,7 +3,7 @@ class Document < ActiveRecord::Base
   
   belongs_to :theme, touch: true
   
-  validates_uniqueness_of :name, scope: :theme_id
+  validates_uniqueness_of :name, scope: [:theme_id, :extension]
     
   default_scope -> { order(:name) }
   

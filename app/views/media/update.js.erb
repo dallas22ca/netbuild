@@ -1,0 +1,7 @@
+<% if @medium.errors.any? %>
+  alert("<%= @medium.errors.full_messages.join(". ") %>");
+<% else %>
+  $("#<%= dom_id @medium %>").replaceWith("<%= j render @medium %>")
+  $("#media_gallery .chosen form .saved").fadeIn().delay(2500).fadeOut()
+  Tags.update()
+<% end %>

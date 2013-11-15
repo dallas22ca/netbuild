@@ -1,4 +1,5 @@
 class Block < ActiveRecord::Base
+  serialize :data, JSON
   attr_accessor :initial_id
   
   belongs_to :wrapper, touch: true
@@ -17,7 +18,7 @@ class Block < ActiveRecord::Base
   end
   
   def safe_data
-    @safe_data = details
+    @safe_data = data
     @safe_data ||= {}
   end
 end

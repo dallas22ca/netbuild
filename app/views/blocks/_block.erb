@@ -1,4 +1,4 @@
-<%= content_tag_for :div, block, data: { genre: block.genre, id: block.id, details: block.details, url: block_path(block) } do %>
+<%= content_tag_for :div, block, data: { genre: block.genre, id: block.id, details: block.safe_data, url: block_path(block) } do %>
 	<% if block.genre == "text" %>
 		<<%= block.safe_data["style"] %> class="contenteditable"><%= block.safe_data["content"].to_s.html_safe %></<%= block.safe_data["style"] %>>
 	<% elsif block.genre == "events" %>
@@ -60,6 +60,30 @@
 			</div>
 		<% end %>
 		<div class="clear"></div>
+	<% elsif block.genre == "form" %>
+		<%= form_tag submit_path, remote: true do %>
+			<%= hidden_field_tag :block_id, block.id %>
+			<%= hidden_field_tag :membership_id, current_membership.try(:id) %>
+			
+			<% if block.safe_data["fields"] %>
+				<% block.safe_data["fields"].each do |field| %>
+					<% value = field["contact_driven"] == "true" && current_membership ? current_membership.safe_data[field["data"]] : "" %>
+					<div class="field">
+						
+						<% if field["type"] == "textarea" %>
+							<%= label_tag :email, field["label"] %><br>
+							<%= text_field_tag :email, value %>
+						<% else %>
+							<%= label_tag field["data"], field["label"] %><br>
+							<%= text_field_tag field["data"], value %>
+						<% end %>
+						
+					</div>
+				<% end %>
+			<% end %>
+			
+			<%= submit_tag "Submit" %>
+		<% end %>
 	<% elsif block.genre == "table" %>
 		<table class="table">
 			<tbody>

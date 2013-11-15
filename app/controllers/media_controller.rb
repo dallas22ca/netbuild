@@ -5,7 +5,19 @@ class MediaController < ApplicationController
   # GET /media
   # GET /media.json
   def index
-    @media = @website.media
+    if params[:media_q]
+      @media = @website.media.where("name ilike :q or extension ilike :q or description ilike :q or filename ilike :q", q: "%#{params[:media_q]}%")
+    elsif params[:tags]
+      @media = @website.media.tagged_with(params[:tags])
+    else
+      @media = @website.media
+    end
+  end
+  
+  # GET /media/tags
+  # GET /media/tags.json
+  def tags
+    @tags = Medium.where(website_id: @website.id).tag_counts_on(:tags)
   end
 
   # GET /media/1
@@ -47,9 +59,11 @@ class MediaController < ApplicationController
       if @medium.update(medium_params)
         format.html { redirect_to @medium, notice: 'Medium was successfully updated.' }
         format.json { head :no_content }
+        format.js
       else
         format.html { render action: 'edit' }
         format.json { render json: @medium.errors, status: :unprocessable_entity }
+        format.js
       end
     end
   end
@@ -61,6 +75,7 @@ class MediaController < ApplicationController
     respond_to do |format|
       format.html { redirect_to media_url }
       format.json { head :no_content }
+      format.js
     end
   end
 
@@ -72,6 +87,6 @@ class MediaController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def medium_params
-      params.require(:medium).permit(:path, :name, :description, :width, :height, :size, :extension)
+      params.require(:medium).permit(:path, :name, :description, :tag_list)
     end
 end

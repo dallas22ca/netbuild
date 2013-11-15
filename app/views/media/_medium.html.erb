@@ -1,3 +1,12 @@
-<%= content_tag_for :li, medium do %>
-	<%= image_tag medium.amazon_url %>
+<%= content_tag_for :li, medium, data: {
+	src: medium.amazon_url, 
+	id: medium.id, 
+	small: medium.amazon_url("small"),
+	medium: medium.amazon_url("medium"),
+	large: medium.amazon_url("large"),
+	description: medium.description,
+	name: medium.name,
+	tag_list: medium.tag_list
+} do %>
+	<%= image_tag medium.resized? ? medium.amazon_url("thumb", "jpg") : medium.amazon_url %>
 <% end %>

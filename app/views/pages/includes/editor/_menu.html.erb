@@ -84,7 +84,7 @@
 		</li>		
 		
 		<li>
-			<%= link_to "<i class=\"icon-film\"></i>".html_safe, "", class: "block_dragger show_media_gallery", data: { genre: "media" } %>
+			<%= link_to "<i class=\"icon-film\"></i>".html_safe, "", class: "block_dragger show_media_gallery", data: { gallery_formats: :all, gallery_prompt: "View Gallery", genre: "media" } %>
 			<p class="hint">
 				Add media
 			</p>
@@ -107,7 +107,7 @@
 		<li>
 			<%= link_to "<i class=\"icon-money\"></i>".html_safe, "", class: "block_dragger", data: { genre: "money" } %>
 			<p class="hint">
-				Add giving widget
+				Accept money
 			</p>
 		</li>
 		

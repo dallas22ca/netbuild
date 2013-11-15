@@ -87,6 +87,14 @@ class PagesController < ApplicationController
       format.json
     end
   end
+  
+  # POST /submission
+  def submit
+    respond_to do |format|
+      format.html { redirect_to :back }
+      format.js
+    end
+  end
 
   # GET /pages/new
   def new

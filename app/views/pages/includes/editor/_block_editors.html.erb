@@ -39,28 +39,6 @@
 		</div>
 	<% end %>
 </div>
-	
-<div class="widget_editor" data-genre="forms">
-	<%= form_tag "#", authenticity_token: false do %>
-		<%= hidden_field_tag :block_id, "", class: "block_id", id: nil %>
-		<h3>Forms</h3>
-		<div class="field">
-			<%= label_tag :new_or_previous %><br>
-			<%= select_tag :new_or_previous, options_for_select(["Create New", "Choose From Previous"]), class: "new_or_previous", id: nil %>
-		</div>
-		<div class="field">
-			<%= label_tag :contact_specific? %><br>
-			<%= select_tag :contact_specific?, options_for_select(["Create New", "Choose From Previous"]), class: "contact_specific?", id: nil %>
-		</div>
-		<div class="field">
-			<p>{{ each field }}</p>
-		</div>
-		<div class="actions">
-			<%= submit_tag "Save" %>
-			<%= link_to "Cancel", "#", class: "cancel" %>
-		</div>
-	<% end %>
-</div>
 
 <div class="widget_editor" data-genre="social">
 	<%= form_tag "#", authenticity_token: false do %>
@@ -124,6 +102,26 @@
 	<% end %>
 </div>
 
+<div class="widget_editor" data-genre="form">
+	<%= form_tag "#", authenticity_token: false do %>
+		<%= hidden_field_tag :block_id, "", class: "block_id", id: nil %>
+		<h3>Form</h3>
+		
+		<div class="field">
+			<%= label_tag :new_or_previous %><br>
+			<%= select_tag :new_or_previous, options_for_select(["None...", "Choose From Previous"]), class: "new_or_previous", id: nil %>
+		</div>
+		<div class="field">
+			<%= label_tag :contact_driven %><br>
+			<%= check_box_tag :contact_driven, true, true, class: "contact_driven", id: nil %>
+		</div>
+		<div class="actions">
+			<%= submit_tag "Save" %>
+			<%= link_to "Cancel", "#", class: "cancel" %>
+		</div>
+	<% end %>
+</div>
+
 <div class="widget_editor" data-genre="img">
 	<%= form_tag "#", authenticity_token: false do %>
 		<%= hidden_field_tag :block_id, "", class: "block_id", id: nil %>
@@ -162,7 +160,7 @@
 		<div class="field">
 			<%= label_tag :src %>
 			<%= text_field_tag :src, "", class: "full_width src", id: nil %>
-			<%= link_to "Open Gallery", "#", class: "show_media_gallery" %>
+			<%= link_to "Open Gallery", "#", class: "show_media_gallery", data: { gallery_prompt: "Choose Image" } %>
 		</div>
 		<div class="field">
 			<%= label_tag :href %>

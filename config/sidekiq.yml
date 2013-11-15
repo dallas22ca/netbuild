@@ -3,3 +3,4 @@
 :pidfile: tmp/pids/sidekiq.pid
 :queues:
   - [WHMWorker, 1]
+  - [Resizer, 1]

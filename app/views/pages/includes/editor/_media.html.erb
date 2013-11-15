@@ -1,11 +1,15 @@
 <div id="media_gallery_overlay" class="hide_media_gallery"></div>
 
-<div id="media_gallery" data-url="<%= media_path %>">	
+<div id="media_gallery" data-url="<%= media_path %>" data-no-turbolink>	
 	<div class="tabs">
 		<ul class="navigation">
-			<li><%= link_to "Upload Files", "#", class: "show_tab", data: { tab: "upload" } %></li>
+			<li><%= link_to "Add Files", "#", class: "show_tab", data: { tab: "upload" } %></li>
 			<li><%= link_to "Media Library", "#", class: "show_tab", data: { tab: "library" } %></li>
-			<li class="media_q_holder"><%= text_field_tag :media_q, "", placeholder: "Search..." %></li>
+			<li class="media_q_holder">
+				<%= form_tag manage_path("media"), remote: true, method: :get do %>
+					<%= text_field_tag :media_q, "", placeholder: "Search..." %>
+				<% end %>
+			</li>
 		</ul>
 	
 		<div class="tab upload">
@@ -15,9 +19,47 @@
 		</div>
 	
 		<div class="tab library">
-			<ul class="media">
-				<li class="loading">Loading...</li>
+			<ul class="media_tags" data-url="<%= manage_path("media/tags", format: :js) %>">
 			</ul>
+			
+			<div class="media_wrapper">
+				<ul class="media">
+					<% if @website.media.any? %>
+						<li class="loading">Choose a tag on the left.</li>
+					<% else %>
+						<li class="loading">Upload a media file by dragging it here from your computer.</li>
+					<% end %>
+				</ul>
+			</div>
+			
+			<div class="chosen">
+				<%= form_tag manage_path("media/"), data: { url: manage_path("media/") }, method: :patch, remote: true do %>
+					<ol>
+						<li>
+							<%= image_tag "", class: "small" %>
+							<div class="field">
+								<%= label_tag :url %><br>
+								<%= text_field_tag :url, "", name: nil, class: "url", readonly: true, id: nil %>
+							</div>
+							<div class="field">
+								<%= label_tag :name %><br>
+								<%= text_field_tag :name, "", name: "medium[name]", class: "name", id: nil %>
+							</div>
+							<div class="field">
+								<%= label_tag :description %><br>
+								<%= text_area_tag :description, "", name: "medium[description]", class: "description", id: nil %>
+							</div>
+							<div class="field">
+								<%= label_tag :tag_list %><br>
+								<%= text_field_tag :tag_list, "", name: "medium[tag_list]", class: "tag_list", id: nil %>
+							</div>
+						</li>
+					</ol>
+					<%= submit_tag "Save", class: "button primary-button" %>
+					<%= link_to "Delete", "", method: :delete, remote: true, data: { url: manage_path("media/"), confirm: "Are you sure you want to delete this image?" }, class: "delete_medium" %><br><br>
+					<p class="saved">Your changes are saved.</p>
+				<% end %>
+			</div>
 		</div>
 	</div>
 </div>

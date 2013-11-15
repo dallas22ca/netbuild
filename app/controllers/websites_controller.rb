@@ -114,6 +114,13 @@ class WebsitesController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  def feed
+    respond_to do |format|
+      format.atom { render layout: false }
+      format.rss { redirect_to feed_path(format: :atom), status: :moved_permanently }
+    end
+  end
 
   private
     # Never trust parameters from the scary internet, only allow the white list through.

@@ -1,0 +1,3 @@
+<% @tags.each do |tag| %>
+	<li class="tag"><%= link_to "<span class=\"name\">#{tag.name}</span> (<span class=\"count\">#{tag.count}</span>)".html_safe, manage_path("media?tags[]=#{tag.name}"), remote: true, data: { tag: tag.name } %></li>
+<% end %>

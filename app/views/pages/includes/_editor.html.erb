@@ -3,7 +3,7 @@
 
 <%= render "pages/includes/editor/media" %>
 <%= render "pages/includes/editor/menu" %>
-<%= render "pages/includes/editor/widget_editors" %>
+<%= render "pages/includes/editor/block_editors" %>
 
 <div id="templates">
 	<%= render Block.new(genre: "text", details: { "style" => "p", "content" => "This is a placeholder" }) %>
@@ -11,5 +11,6 @@
 	<%= render Block.new(genre: "img", details: { "src" => "//www.netbuild.co/themes/shared/white_logo.png", "width" => "100%" }) %>
 	<%= render Block.new(genre: "social") %>
 	<%= render Block.new(genre: "posts", details: { "limit" => "15" }) %>
+	<%= render Block.new(genre: "form") %>
 </div>
 <div id="snapshots"></div>

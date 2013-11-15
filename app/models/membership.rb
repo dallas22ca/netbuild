@@ -149,5 +149,8 @@ class Membership < ActiveRecord::Base
   def safe_data
     @safe_data = data
     @safe_data ||= {}
+    @safe_data.reverse_merge({
+      "email" => user.email
+    })
   end
 end

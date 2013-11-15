@@ -1,1 +1,5 @@
-$("#media_gallery .library .media").html("<%= j render @media %><%= j render @media %><%= j render @media %><%= j render @media %><%= j render @media %><%= j render @media %><%= j render @media %><%= j render @media %><%= j render @media %><%= j render @media %><%= j render @media %><%= j render @media %><%= j render @media %>");
+$("#media_gallery .library .media").html("<%= j render @media %>");
+
+<% if params[:media_q] %>
+  $("#media_gallery .media_tags a").removeClass("selected");
+<% end %>
