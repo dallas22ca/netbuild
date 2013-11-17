@@ -12,7 +12,7 @@ class Block < ActiveRecord::Base
   def set_defaults
     if self.details.blank?
       if self.genre == "text"
-        self.details = { "style" => "p", "content" => "This is a placeholder." }
+        self.data = { "style" => "p", "content" => "This is a placeholder." }
       end
     end
   end
