@@ -85,7 +85,7 @@ $(document).on "click", ".publish", ->
         block.genre = $(this).data("genre")
         block.delete = $(this).hasClass("pending_delete")
         block.ordinal = n
-        block.details = $.parseJSON($(this).attr("data-details"))
+        block.data = $.parseJSON($(this).attr("data-details"))
         blocks.push block
         n += 1
   

@@ -63,7 +63,7 @@ class WebsitesController < ApplicationController
               wrapper_id: block[:wrapper_id],
               genre: block[:genre],
               ordinal: block[:ordinal],
-              details: block[:details]
+              data: block[:data]
             )
           end
         elsif block[:delete] != "true"
@@ -71,7 +71,7 @@ class WebsitesController < ApplicationController
             wrapper_id: block[:wrapper_id],
             genre: block[:genre],
             ordinal: block[:ordinal],
-            details: block[:details],
+            data: block[:data],
             initial_id: block[:initial_id],
             website_id: @website.id
           )
