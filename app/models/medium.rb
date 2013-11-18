@@ -87,6 +87,7 @@ class Medium < ActiveRecord::Base
     if is_format("Images")
       i = Magick::ImageList.new
       image = i.from_blob(open(URI.encode(amazon_url)).read)
+      update_columns size: image.filesize, width: image.columns, height: image.rows
     end
     
     variations.each do |v|

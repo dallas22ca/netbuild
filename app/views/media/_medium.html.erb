@@ -6,7 +6,10 @@
 	large: medium.amazon_url("large"),
 	description: medium.description,
 	name: medium.name,
-	tag_list: medium.tag_list
+	tag_list: medium.tag_list,
+	width: medium.width,
+	height: medium.height,
+	size: medium.size
 } do %>
 	<%= image_tag medium.resized? ? medium.amazon_url("thumb", "jpg") : medium.amazon_url %>
 <% end %>

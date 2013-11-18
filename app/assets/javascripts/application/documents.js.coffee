@@ -1,3 +1,11 @@
+$(window).on "keypress", (e) ->
+  if $("#document_body").length
+    code = e.keyCode or e.which
+    if code == 115 && (e.ctrlKey || e.metaKey)
+      e.preventDefault()
+      $("#document_body").val window.editor.getValue()
+      $("#new_document, .edit_document").submit()
+
 $(document).on
   mouseenter: ->
     $(this).find(".delete").show()
