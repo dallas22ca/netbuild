@@ -24,7 +24,9 @@
 
 @media screen and (max-width: 860px){
   .column {
-    width: 100%;
-    float: none;
+    &.halves, &.thirds, &.fourths, &.fifths {
+      width: 100%;
+      float: none;
+    }
   }
 }
