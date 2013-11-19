@@ -1,7 +1,5 @@
 <div class="section">
   
-  <h3>Sign Up</h2>
-	
 	<%= flash[:notice] %>
 
   <%= form_for(User.new, :as => "user", :url => public_page_path("accounts")) do |f| %>
