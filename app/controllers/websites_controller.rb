@@ -1,5 +1,5 @@
 class WebsitesController < ApplicationController
-  before_action :authenticate_website_admin?
+  before_action :authenticate_website_admin?, except: [:feed]
   
   # GET /websites
   # GET /websites.json

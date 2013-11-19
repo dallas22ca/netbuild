@@ -23,8 +23,6 @@ Netbuild::Application.routes.draw do
   end
   
   constraints subdomain: /.*?/ do
-    get "/feed" => "websites#feed", as: :feed, defaults: { format: :atom }
-    
     authenticated do
       resources :blocks, only: [:show, :create]
       
@@ -60,6 +58,7 @@ Netbuild::Application.routes.draw do
     end
     
     post "/submission" => "pages#submit", as: :submit
+    get "/feed" => "websites#feed", as: :feed, defaults: { format: :atom }
     get "/:a(/:b(/:c))" => "pages#show", as: :public_page
   end
   
