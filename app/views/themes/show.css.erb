@@ -1,10 +1,10 @@
-<% cache [@theme, "css"] do %>
-	<%
-		docs = Liquid::Template.parse((@theme.documents.css.map { |d| d.body }.join(" ") + render("dynamic_css"))).render({
-			"primary" => @website.primary_colour,
-			"secondary" => @website.secondary_colour
-		}, :filters => [LiquidFilters])
+<% cache [@theme, "css"] do 
 	
-		Sass::Engine.new(docs, syntax: :scss, style: :compressed).render
-	%>
+	docs = Liquid::Template.parse((@theme.documents.css.map { |d| d.body }.join(" ") + render("dynamic_css"))).render({
+		"primary" => @website.primary_colour,
+		"secondary" => @website.secondary_colour
+	}, :filters => [LiquidFilters])
+	
+%>
+	<%= Sass::Engine.new(docs, syntax: :scss, style: :compressed).render %>
 <% end %>
