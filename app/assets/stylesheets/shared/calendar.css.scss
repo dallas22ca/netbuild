@@ -29,3 +29,13 @@
     float: right;
   }
 }
+
+@media screen and (max-width: 860px){
+  .month_long, .day_long, .title_long {
+    display: none !important;
+  }
+  
+  .month_short, .day_short, .title_short {
+    display: inline-block !important;
+  }
+}
