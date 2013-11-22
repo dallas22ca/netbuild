@@ -130,9 +130,9 @@ class WebsitesController < ApplicationController
     
     def website_params
       if super_admin?
-        params.require(:website).permit(:title, :domain, :theme_id, :duplicate_theme, :home_id, :primary_colour, :secondary_colour, :header, :warnings, :card_token, :customer_token, :stripe_access_token, :stripe_user_id, :address, :invoice_blurb, , :include_js, addon_ids: [])
+        params.require(:website).permit(:title, :domain, :theme_id, :duplicate_theme, :home_id, :primary_colour, :secondary_colour, :header, :warnings, :card_token, :customer_token, :stripe_access_token, :stripe_user_id, :address, :invoice_blurb, :include_js, addon_ids: [])
       elsif @website.adminable_by(current_user)
-        params.require(:website).permit(:title, :domain, :theme_id, :duplicate_theme, :home_id, :primary_colour, :secondary_colour, :header, :warnings, :card_token, :stripe_access_token, :stripe_user_id, :address, :invoice_blurb, , :include_js, addon_ids: [])
+        params.require(:website).permit(:title, :domain, :theme_id, :duplicate_theme, :home_id, :primary_colour, :secondary_colour, :header, :warnings, :card_token, :stripe_access_token, :stripe_user_id, :address, :invoice_blurb, :include_js, addon_ids: [])
       else
         params.require(:website).permit(:title, :domain, :theme_id, :duplicate_theme, :home_id, :primary_colour, :secondary_colour, :header, :warnings, :include_js)
       end
