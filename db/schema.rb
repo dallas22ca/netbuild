@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131115151837) do
+ActiveRecord::Schema.define(version: 20131122123610) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -278,6 +278,7 @@ ActiveRecord::Schema.define(version: 20131115151837) do
     t.string   "stripe_user_id"
     t.text     "address"
     t.text     "invoice_blurb"
+    t.boolean  "include_js",            default: true
   end
 
   add_index "websites", ["domain"], name: "index_websites_on_domain", using: :btree

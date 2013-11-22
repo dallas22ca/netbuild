@@ -52,6 +52,11 @@
     <%= f.text_area :invoice_blurb, class: "full_width" %>
 	</div>
 	
+	<div class="field">
+    <%= f.check_box :include_js %>
+    <%= f.label :include_js, "Include the NetBuild.co JS Helpers (jQuery & other functions)" %>
+	</div>
+	
 	<ol>
 		<li>Allow users to sign up.</li>
 		<li>Allow users to see other user profiles.</li>
