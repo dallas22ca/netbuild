@@ -12,6 +12,8 @@
 		"subnav" => @page.children_have_dates? || (!@page.root? && @page.parent.children_have_dates?) ? "" : render("pages/includes/subnav"),
 		"title" => @page.title,
 		"permalink" => @page.permalink,
+		"open_bracket" => "{{",
+		"close_bracket" => "}}",
 		"path" => @page.path,
 		"sign_inout_icon" => user_signed_in? ? "unlock" : "lock",
 		"sign_inout_path" => user_signed_in? ? destroy_user_session_path : public_page_path("sign_in"),
