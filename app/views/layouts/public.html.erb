@@ -3,7 +3,9 @@
 <head>
   <title><%= @page.title %> - <%= @website.title %></title>
 	<%= stylesheet_link_tag    "public", theme_path(@website.theme, format: :css), media: "all", "data-turbolinks-track" => true %>
-  <%= javascript_include_tag "public", theme_path(@website.theme, format: :js), "data-turbolinks-track" => true if @website.include_js? %>
+	<% if @website.include_js? %>
+	  <%= javascript_include_tag "public", theme_path(@website.theme, format: :js), "data-turbolinks-track" => true %>
+	<% end %>
 	<%= tag :meta, name: "description", content: @page.description unless @page.description.blank? %>
 	<%= tag :meta, name: "viewport", content: "initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" %>
 	<%= tag :meta, name: "apple-mobile-web-app-capable", content: "yes" %>
