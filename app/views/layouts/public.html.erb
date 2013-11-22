@@ -2,6 +2,7 @@
 <html>
 <head>
   <title><%= @page.title %> - <%= @website.title %></title>
+	<%= stylesheet_link_tag    "public", theme_path(@website.theme, format: :css), media: "all", "data-turbolinks-track" => true %>
 	<% if @website.include_js? %>
 	  <%= javascript_include_tag "public", theme_path(@website.theme, format: :js), "data-turbolinks-track" => true %>
 	<% else %>
