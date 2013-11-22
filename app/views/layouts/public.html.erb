@@ -2,9 +2,10 @@
 <html>
 <head>
   <title><%= @page.title %> - <%= @website.title %></title>
-	<%= stylesheet_link_tag    "public", theme_path(@website.theme, format: :css), media: "all", "data-turbolinks-track" => true %>
 	<% if @website.include_js? %>
 	  <%= javascript_include_tag "public", theme_path(@website.theme, format: :js), "data-turbolinks-track" => true %>
+	<% else %>
+		<%= javascript_include_tag theme_path(@website.theme, format: :js), "data-turbolinks-track" => true %>
 	<% end %>
 	<%= tag :meta, name: "description", content: @page.description unless @page.description.blank? %>
 	<%= tag :meta, name: "viewport", content: "initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" %>
