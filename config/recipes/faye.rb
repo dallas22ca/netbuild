@@ -1,11 +1,11 @@
 set_default(:faye_user) { user }
 set_default(:faye_pid) { "#{current_path}/tmp/pids/faye.pid" }
-set_default(:faye_config) { "#{current_path}/config/faye.yml" }
+set_default(:faye_config) { "#{current_path}/faye.ru" }
 
 namespace :faye do
   desc "Setup Faye initializer"
   task :setup, roles: :app do
-    template "faye_init", "/tmp/faye_init"
+    template "faye_init.erb", "/tmp/faye_init"
     run "chmod +x /tmp/faye_init"
     run "#{sudo} mv /tmp/faye_init /etc/init.d/faye_#{application}"
     run "#{sudo} update-rc.d -f faye_#{application} defaults"
