@@ -14,7 +14,7 @@ namespace :faye do
   after "deploy:setup", "faye:setup"
 
   task :start do
-    run %Q{thin start -R faye.ru --ssl  --ssl-key-file "/etc/ssl/certs/www.daljs.org/domain.key"  --ssl-cert-file "/etc/ssl/certs/www.daljs.org/ssl.crt" -p 9291}
+    run %Q{cd #{current_path}; thin start -R faye.ru --ssl  --ssl-key-file "/etc/ssl/certs/www.daljs.org/domain.key"  --ssl-cert-file "/etc/ssl/certs/www.daljs.org/ssl.crt" -p 9291}
   end
   after "deploy:start", "faye:start"
   
@@ -26,7 +26,7 @@ namespace :faye do
   
   
   task :stop do
-    run "ps aux | grep thin | awk '{print $2}' |  xargs kill -9"
+    run "ps -ef | grep thin | grep -v grep | awk '{print $2}' | xargs kill || echo 'no process with name #{name} found'"
   end
   after "deploy:start", "faye:start"
 end
