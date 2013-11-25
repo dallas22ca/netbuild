@@ -11,6 +11,7 @@ class ApplicationController < ActionController::Base
         if request.subdomain == "www"
           true
         end
+      end
     rescue
       false
     end
