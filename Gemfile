@@ -30,6 +30,9 @@ gem 'sidekiq'
 gem 'sidekiq-failures'
 gem 'sinatra', require: false
 gem 'slim'
+gem 'faye'
+
+gem 'thin'
 
 group :production do
   gem 'unicorn'
@@ -38,6 +41,5 @@ end
 group :development do
   gem 'capistrano'
   gem 'capistrano-unicorn', :require => false
-  gem 'thin'
   gem 'foreman'
 end
