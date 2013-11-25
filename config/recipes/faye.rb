@@ -14,7 +14,7 @@ namespace :faye do
   after "deploy:setup", "faye:setup"
 
   task :start do
-    run %Q{cd #{current_path}; thin start -R faye.ru --ssl  --ssl-key-file "/etc/ssl/certs/www.daljs.org/domain.key"  --ssl-cert-file "/etc/ssl/certs/www.daljs.org/ssl.crt" -p 9291}
+    run %Q{cd #{current_path}; thin start -R faye.ru --ssl  --ssl-key-file "/etc/ssl/certs/www.daljs.org/domain.key"  --ssl-cert-file "/etc/ssl/certs/www.daljs.org/ssl.crt" -p 9291 -d}
   end
   after "deploy:start", "faye:start"
   
