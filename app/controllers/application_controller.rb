@@ -1,9 +1,20 @@
 class ApplicationController < ActionController::Base
-  before_filter :secure_www, if: Proc.new { request.subdomain == "www" && request.protocol == "http://" && request.domain == CONFIG["domain"] && Rails.env.production? }
+  before_filter :secure_www, if: Proc.new { request.protocol == "http://" && should_be_secure? }
   protect_from_forgery with: :exception
   before_filter :set_website
 
   private
+  
+  def should_be_secure?
+    begin
+      if request.domain == "netbuild.co" || request.domain == "daljs.org"
+        if request.subdomain == "www"
+          true
+        end
+    rescue
+      false
+    end
+  end
   
   def secure_www
     redirect_to :protocol => "https://", :status => :moved_permanently
