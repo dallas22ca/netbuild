@@ -1,8 +1,7 @@
 set_default(:faye_user) { user }
 set_default(:faye_pid) { "#{current_path}/tmp/pids/faye.pid" }
 set_default(:faye_ru) { "#{current_path}/faye.ru" }
-set_default(:faye_config) { "#{current_path}/config/faye.yml" }
-set_default(:faye_port) { 9211 }
+set_default(:faye_port) { 9291 }
 
 namespace :faye do
   desc "Setup Faye initializer"
