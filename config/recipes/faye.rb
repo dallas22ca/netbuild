@@ -13,11 +13,20 @@ namespace :faye do
   end
   after "deploy:setup", "faye:setup"
 
-  %w[start stop restart].each do |command|
-    desc "#{command} faye"
-    task command, roles: :app do
-      run "service faye_#{application} #{command}"
-    end
-    after "deploy:#{command}", "faye:#{command}"
+  task :start do
+    run %Q{thin start -R faye.ru --ssl  --ssl-key-file "/etc/ssl/certs/www.daljs.org/domain.key"  --ssl-cert-file "/etc/ssl/certs/www.daljs.org/ssl.crt" -p 9291}
   end
+  after "deploy:start", "faye:start"
+  
+  task :restart do
+    stop
+    start
+  end
+  after "deploy:restart", "faye:restart"
+  
+  
+  task :stop do
+    run "ps aux | grep thin | awk '{print $2}' |  xargs kill -9"
+  end
+  after "deploy:start", "faye:start"
 end
