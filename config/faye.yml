@@ -1,0 +1,12 @@
+---
+pid: ../tmp/pids/faye.pid
+address: 0.0.0.0
+timeout: 120
+port: 1763
+log: ../log/faye.log
+max_conns: 2048
+require: []
+max_persistent_conns: 4048
+environment: production
+servers: 1
+daemonize: true
