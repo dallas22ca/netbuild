@@ -16,7 +16,7 @@ gem 'activerecord-postgres-hstore'
 gem 'aws-sdk'
 gem 's3_direct_upload'
 gem 'stripe'
-gem 'whenever', :require => false
+gem 'whenever', require: false
 gem 'rest-client'
 gem 'paper_trail', '>= 3.0.0.beta1'
 gem 'codemirror-rails'
@@ -30,7 +30,7 @@ gem 'sidekiq'
 gem 'sidekiq-failures'
 gem 'sinatra', require: false
 gem 'slim'
-gem 'faye'
+gem 'faye', require: false
 
 gem 'thin'
 
