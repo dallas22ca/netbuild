@@ -1,20 +1,22 @@
+set_default(:faye_user) { user }
+set_default(:faye_pid) { "#{current_path}/tmp/pids/faye.pid" }
+set_default(:faye_config) { "#{current_path}/config/faye.yml" }
+
 namespace :faye do
-  desc "Start Faye"
-  task :start, :roles => :app do
-    run "cd #{current_path}; thin start -C config/faye.yml"
+  desc "Setup Faye initializer"
+  task :setup, roles: :app do
+    template "faye_init", "/tmp/faye_init"
+    run "chmod +x /tmp/faye_init"
+    run "#{sudo} mv /tmp/faye_init /etc/init.d/faye_#{application}"
+    run "#{sudo} update-rc.d -f faye_#{application} defaults"
   end
+  after "deploy:setup", "faye:setup"
 
-  desc "Stop Faye"
-  task :stop, :roles => :app do
-    run "cd #{current_path}; thin stop -C config/faye.yml"
-  end
-
-  desc "Restart Faye"
-  task :restart, :roles => :app do
-    run "cd #{current_path}; thin restart -C config/faye.yml"
+  %w[start stop restart].each do |command|
+    desc "#{command} faye"
+    task command, roles: :app do
+      run "service faye_#{application} #{command}"
+    end
+    after "deploy:#{command}", "faye:#{command}"
   end
 end
-
-before 'deploy:start', 'faye:start'
-before 'deploy:stop', 'faye:stop'
-before 'deploy:restart', 'faye:restart'

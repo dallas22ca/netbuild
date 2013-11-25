@@ -5,11 +5,23 @@ upstream unicorn {
 server {
 	listen 80;
 	listen 443 ssl;
+	
+	server_name *.netbuild.co;
+	root <%= current_path %>/public;
+	
 	ssl_certificate /etc/ssl/certs/www.netbuild.co/ssl.crt;
 	ssl_certificate_key /etc/ssl/certs/www.netbuild.co/domain.key;
-	server_name *.netbuild.co;
 	
-  root <%= current_path %>/public;
+	location /faye {
+	  proxy_set_header  X-Real-IP  $remote_addr;
+	  proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
+	  proxy_set_header Host $http_host;
+	  proxy_redirect off;
+
+	  root <%= current_path %>/faye;
+	  proxy_pass http://127.0.0.1:9292;
+	  break;
+	}
 
 	location ~ ^/assets/ {
     gzip_static on;

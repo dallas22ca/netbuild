@@ -5,10 +5,6 @@ require 'sidekiq/capistrano'
 require "whenever/capistrano"
 require 'capistrano-unicorn'
 
-Dir.glob("config/recipes/*.rb").each do |file|
-  load file
-end
-
 set :application, "netbuild"
 set :user, "deployer"
 set :deploy_to, "/home/#{user}/apps/#{application}"
@@ -33,6 +29,10 @@ set :whenever_command, "bundle exec whenever"
 
 default_run_options[:pty] = true
 ssh_options[:forward_agent] = true
+
+Dir.glob("config/recipes/*.rb").each do |file|
+  load file
+end
 
 after "deploy", "deploy:migrate"
 after "deploy", "deploy:cleanup"
