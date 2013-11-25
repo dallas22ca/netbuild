@@ -13,9 +13,11 @@ set -e
 AS_USER=<%= faye_user %>
 RAILS_ENV=<%= rails_env %>
 APP_ROOT=<%= current_path %>
-FAYE_CONF=<%= faye_config %>
+FAYE_RU=<%= faye_ru %>
 PID=<%= faye_pid %>
-CMD="cd <%= current_path %>; RAILS_ENV=$RAILS_ENV bundle exec rackup $FAYE_CONF -s thin -E $RAILS_ENV -D --pid $PID"
+FAYE_PORT=<%= faye_port %>
+
+CMD="cd <%= current_path %>; RAILS_ENV=$RAILS_ENV bundle exec rackup $FAYE_RU -s thin -E $RAILS_ENV -D --pid $PID -p $FAYE_PORT"
 
 set -u
 
