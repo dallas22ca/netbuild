@@ -16,17 +16,17 @@ namespace :faye do
   task :start do
     run %Q{cd #{current_path}; thin start -R faye.ru --ssl  --ssl-key-file "/etc/ssl/certs/www.daljs.org/domain.key"  --ssl-cert-file "/etc/ssl/certs/www.daljs.org/ssl.crt" -p 9291 -d}
   end
-  after "deploy:start", "faye:start"
+  # after "deploy:start", "faye:start"
   
   task :restart do
     stop
     start
   end
-  after "deploy:restart", "faye:restart"
+  # after "deploy:restart", "faye:restart"
   
   
   task :stop do
     run "ps -ef | grep thin | grep -v grep | awk '{print $2}' | xargs kill || echo 'no process with name #{name} found'"
   end
-  after "deploy:start", "faye:start"
+  # after "deploy:start", "faye:start"
 end
