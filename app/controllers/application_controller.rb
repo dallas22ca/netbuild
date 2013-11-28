@@ -44,7 +44,7 @@ class ApplicationController < ActionController::Base
   helper_method :signed_in?
   
   def current_membership
-    current_user.memberships.where(website_id: @website.id).first
+    current_user && current_user.memberships.where(website_id: @website.id).first
   end
   helper_method :current_membership
   

@@ -87,6 +87,7 @@ $(document).on "click", ".publish", ->
         block.ordinal = n
         block.data = $.parseJSON($(this).attr("data-details"))
         blocks.push block
+        console.log(block)
         n += 1
   
   $.post url,

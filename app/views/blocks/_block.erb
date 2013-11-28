@@ -65,23 +65,23 @@
 			<%= hidden_field_tag :block_id, block.id %>
 			<%= hidden_field_tag :membership_id, current_membership.try(:id) %>
 			
-			<% if block.safe_data["fields"] %>
-				<% block.safe_data["fields"].each do |field| %>
-					<% value = field["contact_driven"] == "true" && current_membership ? current_membership.safe_data[field["data"]] : "" %>
-					<% permalink = field["contact_driven"] == "true" ? field["data"] : field["label"].parameterize  %>
+			< if block.safe_data["fields"] %>
+				< block.safe_data["fields"].each do |field| %>
+					< value = field["contact_driven"] == "true" && current_membership ? current_membership.safe_data[field["data"]] : "" %>
+					< permalink = field["contact_driven"] == "true" ? field["data"] : field["label"].parameterize  %>
 					<div class="field">
 						
-						<% if field["type"] == "textarea" %>
-							<%= label_tag permalink.to_sym, field["label"] %><br>
-							<%= text_area_tag permalink.to_sym, value %>
-						<% else %>
-							<%= label_tag permalink.to_sym, field["label"] %><br>
-							<%= text_field_tag permalink.to_sym, value %>
-						<% end %>
+						< if field["type"] == "textarea" %>
+							< label_tag permalink.to_sym, field["label"] %><br>
+							< text_area_tag permalink.to_sym, value %>
+						< else %>
+							< label_tag permalink.to_sym, field["label"] %><br>
+							< text_field_tag permalink.to_sym, value %>
+						< end %>
 						
 					</div>
-				<% end %>
-			<% end %>
+				< end %>
+			< end %>
 			
 			<%= submit_tag block.safe_data["submit"], class: "button primary-button" %>
 		<% end %>
