@@ -23,7 +23,7 @@
 				</ul>
 			</li>
 			
-			<% if website_admin? %>
+			<% if website_admin? || super_admin? %>
 				<li><%= link_to "People", manage_path("people") %></li>
 			<% end %>
 

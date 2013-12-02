@@ -50,8 +50,11 @@ class MembershipsController < ApplicationController
   # PATCH/PUT /memberships/1
   # PATCH/PUT /memberships/1.json
   def update
+    @membership.assign_attributes(membership_params)
+    @membership.user.no_password = true
+    
     respond_to do |format|
-      if @membership.update(membership_params)
+      if @membership.save
         format.html { redirect_to @membership, notice: 'Membership was successfully updated.' }
         format.json { head :no_content }
       else
@@ -79,7 +82,7 @@ class MembershipsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def membership_params
-      params.require(:membership).permit(:security, :has_email_account, :username, :password, :forward_to, user_attributes: [:email, :password]).tap do |whitelisted|
+      params.require(:membership).permit(:security, :has_email_account, :username, :password, :forward_to, user_attributes: [:id, :email, :password]).tap do |whitelisted|
         whitelisted[:data] = params[:membership][:data]
       end
     end

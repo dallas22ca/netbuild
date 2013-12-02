@@ -25,7 +25,7 @@
 		</div>
 	<% end %>
 	
-	<%= f.fields_for :user do |u| %>
+	<%= f.fields_for :user, @membership.user do |u| %>
 	  <div class="field">
 	    <%= u.label :email %><br>
 	    <%= u.text_field :email %>
@@ -64,6 +64,9 @@
 	<% end %>
 	
   <div class="actions">
-    <%= f.submit "Add Person", class: "primary-button button" %>
+    <%= f.submit "Save Person", class: "primary-button button" %>
+		<% if @membership.user != current_user && (website_admin? || super_admin?) %>
+			<%= link_to "Remove", @membership, method: :delete, data: { confirm: 'Are you sure?' } %>
+		<% end %>
   </div>
 <% end %>
