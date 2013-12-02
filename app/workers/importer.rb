@@ -9,7 +9,7 @@ class Importer
     m = Medium.find(id)
 
     begin
-      memberships = []
+      users = []
       
       csv = CSV.parse(open(m.amazon_url).read, headers: true)
       
@@ -25,11 +25,11 @@ class Importer
         user.no_password = true
         
         if !user.new_record? || (user.new_record? && user.save)
-          memberships.push user.memberships.create(website_id: m.website_id, data: hash, security: "user")
+          users.push user.create(website_id: m.website_id, data: hash, security: "user")
         end
       end
 
-      Membership.import memberships
+      User.import users
       
       m.destroy
     rescue# CSV::MalformedCSVError => e

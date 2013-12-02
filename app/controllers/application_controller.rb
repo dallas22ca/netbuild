@@ -36,7 +36,7 @@ class ApplicationController < ActionController::Base
   
   def signed_in?
     if user_signed_in?
-      @signed_in ||= @website && @website.memberships.where(user_id: current_user.id).any?
+      @signed_in ||= @website && @website.users.where(user_id: current_user.id).any?
     else
       @signed_in ||= false
     end
@@ -56,20 +56,20 @@ class ApplicationController < ActionController::Base
   helper_method :authenticate_website_admin?
   
   def authenticate_super_admin?
-    unless user_signed_in? && current_user.admin?
+    unless user_signed_in? && current_user.super_admin?
       redirect_to root_path
     end
   end
   helper_method :authenticate_super_admin?
   
   def super_admin?
-    user_signed_in? && current_user.admin?
+    user_signed_in? && current_user.super_admin?
   end
   helper_method :super_admin?
   
   def website_admin?
     if user_signed_in?
-      @adminable ||= @website && @website.memberships.admin.where(user_id: current_user.id).any?
+      @adminable ||= @website && @website.users.admin.where(id: current_user.id).any?
     else
       @adminable ||= false
     end
