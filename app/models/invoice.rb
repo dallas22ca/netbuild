@@ -13,7 +13,7 @@ class Invoice < ActiveRecord::Base
     website.messages.create!(
       to: [membership_id],
       subject: "New Invoice", 
-      plain: "Here is a link to your new invoice.\n\n#{Rails.application.routes.url_helpers.public_page_url("invoices", id: visible_id, format: :pdf, subdomain: website.permalink, host: CONFIG["domain"])}\n\n#{website.invoice_blurb}", 
+      plain: "Here is a link to your new invoice (PDF version).\n\n#{Rails.application.routes.url_helpers.public_page_url("invoices", id: visible_id, format: :pdf, subdomain: website.permalink, host: CONFIG["domain"])}\n\n#{website.invoice_blurb}", 
       user_id: website.memberships.admin.first.user_id
     )
     update_columns public_access: true
