@@ -6,13 +6,13 @@ class Website < ActiveRecord::Base
   belongs_to :theme, touch: true
   belongs_to :home, class_name: "Page", foreign_key: "home_id"
   
-  has_many :users, dependent: :destroy
   has_many :fields, dependent: :destroy
   has_many :messages, dependent: :destroy
   has_many :wrappers, dependent: :destroy
   has_many :blocks, dependent: :destroy
   has_many :pages, dependent: :destroy
   has_many :themes, dependent: :destroy
+  has_many :memberships, dependent: :destroy
   has_many :media, dependent: :destroy
   has_many :members, through: :memberships, source: :user
   has_many :addonships, dependent: :destroy
@@ -219,8 +219,12 @@ class Website < ActiveRecord::Base
     price
   end
   
+  def admins
+    members.where("memberships.security = ?", "admin")
+  end
+  
   def adminable_by(user)
-    if user.admin? || users.admin.include?(user)
+    if user.admin? || admins.include?(user)
       @adminable_by ||= true
     else
       @adminable_by ||= false

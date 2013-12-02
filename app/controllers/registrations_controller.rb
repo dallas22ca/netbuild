@@ -1,18 +1,17 @@
 class RegistrationsController < Devise::RegistrationsController
-  def create    
-    begin
-      build_resource(sign_up_params)
-      
-      if @website.allow_signups?
-        resource.website_id = @website.id
-        resource.security = "user"
-        
-        if resource.save
-          sign_in(resource_name, resource)
-          respond_with resource, location: root_path
-        end
+  def create
+    build_resource(sign_up_params)
+  
+    if resource.save
+      if resource.memberships.create! website_id: @website.id, security: "user"
+        sign_in(resource_name, resource)
+        respond_with resource, location: root_path
+      else
+        flash[:notice] = resource.errors.full_messages
+        clean_up_passwords resource
+        redirect_to :back
       end
-    rescue
+    else
       flash[:notice] = resource.errors.full_messages
       clean_up_passwords resource
       redirect_to :back

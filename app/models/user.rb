@@ -10,14 +10,12 @@ class User < ActiveRecord::Base
   has_many :memberships
   has_many :websites, through: :memberships
   has_many :media, through: :websites
-  
-  scope :admin, -> { where(security: "admin") }
 
   def self.find_for_authentication(conditions = {})
     website = Website.where(permalink: conditions.delete(:subdomain)).first
     user = User.where(conditions).first
 
-    if website && website.users.include?(user)
+    if user && website && user.memberships.where(website_id: website.id).any?
       user
     else
       false

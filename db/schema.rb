@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131202204355) do
+ActiveRecord::Schema.define(version: 20131202194047) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -266,20 +266,10 @@ ActiveRecord::Schema.define(version: 20131202204355) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "admin",                  default: false
-    t.hstore   "data"
-    t.integer  "website_id"
-    t.string   "security"
-    t.string   "username"
-    t.boolean  "has_email_account"
-    t.string   "forward_to"
-    t.string   "customer_token"
-    t.string   "card_token"
-    t.string   "last_4"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
-  add_index "users", ["website_id"], name: "index_users_on_website_id", using: :btree
 
   create_table "versions", force: true do |t|
     t.string   "item_type",  null: false
@@ -315,7 +305,6 @@ ActiveRecord::Schema.define(version: 20131202204355) do
     t.text     "address"
     t.text     "invoice_blurb"
     t.boolean  "include_js",            default: true
-    t.boolean  "allow_signups",         default: false
   end
 
   add_index "websites", ["domain"], name: "index_websites_on_domain", using: :btree
