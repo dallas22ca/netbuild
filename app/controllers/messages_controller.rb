@@ -17,6 +17,7 @@ class MessagesController < ApplicationController
   def create
     @message = @website.messages.new(message_params)
     @message.user = current_user
+    parse_filters(@message)
 
     respond_to do |format|
       if @message.save
@@ -39,6 +40,6 @@ class MessagesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def message_params
-      params.require(:message).permit(:subject, :plain, to: [])
+      params.require(:message).permit(:subject, :plain, filters: [], to: [])
     end
 end

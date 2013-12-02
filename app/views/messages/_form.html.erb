@@ -1,7 +1,17 @@
 <%= form_for Message.new, url: manage_path("messages"), remote: true do |f| %>
 	<div class="field">
-		<%= f.label :to, "To (<span class=\"to_count\">0</span> people)".html_safe %><br>
 		<!-- f.collection_select :to, @website.memberships, :id, :name, {}, multiple: true-->
+	  <div class="field">
+	    <%= label_tag :who, "To" %><br>
+	    <%= select_tag :who, options_for_select([["Everyone", "everyone"], ["Filter my contacts...", "filter"]]), class: "full_width" %>
+    
+	    <div class="filter_options">
+	      <table id="filters_container"></table>
+	      <%= link_to "+ Add Another Filter", "#", class: "add_filter small_link" %>
+	    </div>
+	  </div>
+  
+	  <%= render "filterpicker" %>
 	</div>
 	<div class="field">
 		<%= label_tag :from %><br>

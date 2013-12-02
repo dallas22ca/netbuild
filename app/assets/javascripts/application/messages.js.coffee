@@ -38,6 +38,7 @@ $(document).on "click", ".compose_with_selection", ->
     $("#message_to").chosen
       width: "100%"
       search_contains: true
-
+  
+  Filters.init()
   Dialog.open "message"
   false

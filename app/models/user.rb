@@ -14,6 +14,7 @@ class User < ActiveRecord::Base
   def self.find_for_authentication(conditions = {})
     website = Website.where(permalink: conditions.delete(:subdomain)).first
     user = User.where(conditions).first
+
     if user && website && user.memberships.where(website_id: website.id).any?
       user
     else

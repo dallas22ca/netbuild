@@ -11,7 +11,13 @@ class Importer
     begin
       memberships = []
       
-      CSV.parse open(m.amazon_url).read, headers: true do |row|
+      csv = CSV.parse(open(m.amazon_url).read, headers: true)
+      
+      csv.headers.each do |header|
+        m.website.fields.where(name: header).first_or_create
+      end
+      
+      csv.each do |row|
         hash = {}
         row.map{ |k, v| hash[k.parameterize] = v }
         email = hash.delete "email"
@@ -24,10 +30,10 @@ class Importer
       end
 
       Membership.import memberships
+      
+      m.destroy
     rescue# CSV::MalformedCSVError => e
       false
     end
-    
-    m.destroy
   end
 end

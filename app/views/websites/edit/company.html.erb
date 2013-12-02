@@ -1,7 +1,7 @@
 <%= render "manage_nav" %>
 
 <%= form_for @website, url: save_path, data: { customer_token: @website.has_payment_info? } do |f| %>
-	<%= hidden_field_tag :redirect, manage_path("theme") %>
+	<%= hidden_field_tag :redirect, manage_path("company") %>
 	
   <% if @website.errors.any? %>
     <div id="error_explanation">

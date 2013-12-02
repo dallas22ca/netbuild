@@ -3,7 +3,7 @@ class Bulk < ActionMailer::Base
     membership = Membership.find(membership_id)
     message = Message.find(message_id)
     from = "#{message.user.email.gsub(/@/, "=")}@netbuild.co"
-    @plain = message.plain
+    @plain = Liquid::Template.parse(message.plain).render(membership.to_liquid).html_safe
     @domain = membership.website.domain
     @one_line_address = membership.website.one_line_address
     

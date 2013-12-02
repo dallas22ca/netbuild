@@ -163,4 +163,72 @@ class Membership < ActiveRecord::Base
     #   end
     # end
   end
+  
+  def to_liquid
+    {
+      "contact" => data.merge({ email: user.email })
+    }
+  end
+  
+  def self.filter(requirements = [], q = "", order = "id", direction = "asc", data_type = "string")
+    queries = []
+    normal_fields = ["created_at", "updated_at", "email", "id"]
+
+    unless normal_fields.include? order
+      if data_type == "integer"
+        order = "cast(memberships.data -> '#{order}' as numeric)"
+      else
+        order = "memberships.data -> '#{order}'"
+      end
+    else
+      order = "memberships.#{order}"
+    end
+    
+    unless q.blank?
+      q = q.to_s
+      queries.push "memberships.name ilike '%#{q}%' or LOWER(CAST(avals(memberships.data) AS text)) ilike '%#{q}%'"
+    end
+    
+    requirements.each do |field, matcher, search, args|
+      search = search.to_s unless args.blank?
+    
+      if normal_fields.include? field
+        case matcher
+        when "is"
+          queries.push "memberships.#{field} = '#{search}'"
+        when "is_not"
+          queries.push "memberships.#{field} != '#{search}'"
+        when "like"
+          queries.push "memberships.#{field} ilike '%#{search}%'"
+        when "greater_than"
+          queries.push "memberships.#{field} > '#{search}'"
+        when "less_than"
+          queries.push "memberships.#{field} < '#{search}'"
+        end  
+      else
+        case matcher
+        when "is"
+          queries.push "memberships.data @> hstore('#{field}', '#{search}')"
+        when "is_not"
+          queries.push "memberships.data -> '#{field}' <> '#{search}'"
+        when "like"
+          queries.push "memberships.data -> '#{field}' ilike '%#{search}%'"
+        when "greater_than"
+          queries.push "memberships.data -> '#{field}' > '#{search}'"
+        when "less_than"
+          queries.push "memberships.data -> '#{field}' < '#{search}'"
+        when "recurring"
+          start = args[:start]
+          finish = args[:finish]
+          queries.push "to_char(cast(memberships.data -> '#{field}' as date), 'MMDD') BETWEEN '#{start.strftime("%m%d")}' and '#{finish.strftime("%m%d")}'"
+        end
+      end
+    end
+      
+    if queries.any?
+      where(queries.join(" and ")).order("#{order} #{direction}")
+    else
+      order("#{order} #{direction}")
+    end
+  end
 end

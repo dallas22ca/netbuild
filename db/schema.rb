@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131129180436) do
+ActiveRecord::Schema.define(version: 20131202194047) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -89,6 +89,18 @@ ActiveRecord::Schema.define(version: 20131129180436) do
   end
 
   add_index "email_addresses", ["website_id"], name: "index_email_addresses_on_website_id", using: :btree
+
+  create_table "fields", force: true do |t|
+    t.string   "name"
+    t.string   "permalink"
+    t.string   "data_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "website_id"
+  end
+
+  add_index "fields", ["permalink"], name: "index_fields_on_permalink", using: :btree
+  add_index "fields", ["website_id"], name: "index_fields_on_website_id", using: :btree
 
   create_table "invoices", force: true do |t|
     t.integer  "website_id"
@@ -169,6 +181,7 @@ ActiveRecord::Schema.define(version: 20131129180436) do
     t.datetime "updated_at"
     t.text     "membership_ids"
     t.text     "to"
+    t.text     "filters"
   end
 
   add_index "messages", ["user_id"], name: "index_messages_on_user_id", using: :btree

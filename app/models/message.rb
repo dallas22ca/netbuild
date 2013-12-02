@@ -1,4 +1,5 @@
 class Message < ActiveRecord::Base
+  serialize :filters, Array
   serialize :to, Array
   belongs_to :website
   belongs_to :user
@@ -17,7 +18,9 @@ class Message < ActiveRecord::Base
   end
   
   def deliver
-    to.each do |membership_id|
+    recipients = (to + Membership.filter(filters).pluck(:membership_id)).uniq
+    
+    recipients.each do |membership_id|
       Sender.perform_async(id, membership_id)
     end
   end

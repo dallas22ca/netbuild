@@ -82,4 +82,19 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.for(:account_update) { |u| u.permit(:email, :password, :password_confirmation, :current_password, :time_zone, :address) }
   end
   
+  def parse_filters(resource)
+    filters = []
+    
+    if params[:filter_permalink]
+      params[:filter_permalink].each_with_index do |permalink, index|
+        search = params[:filter_search][index]
+        
+        unless search.blank?
+          filters.push [permalink, params[:filter_matcher][index], search]
+        end
+      end
+    end
+  
+    @filters = resource.filters = filters
+  end
 end

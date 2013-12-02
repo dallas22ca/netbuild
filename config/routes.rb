@@ -38,6 +38,7 @@ Netbuild::Application.routes.draw do
           
           resources :media
           resources :responses
+          resources :fields
           resources :messages, only: [:show, :create]
           resources :themes do
             resources :documents

@@ -10,8 +10,8 @@ class Medium < ActiveRecord::Base
   
   before_save :prepare_info, if: :path_changed?
   before_save :set_meta_tags
-  after_save :sidekiq_resize, if: Proc.new { is_format "Images" }
-  after_save :sidekiq_import, if: Proc.new { import == "true" }
+  after_commit :sidekiq_import, if: Proc.new { import == "true" }
+  after_commit :sidekiq_resize, if: Proc.new { is_format "Images" }
   
   def set_meta_tags
     if is_format("Images")
