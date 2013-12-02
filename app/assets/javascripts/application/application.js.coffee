@@ -8,6 +8,8 @@ load = ->
   setColours()
   selectedNav()
   Invoices.init()
+  Members.init()
+  Importer.init()
 
 $ ->
   load()

@@ -15,6 +15,7 @@
 //= require jquery-ui-1.10.3
 //= require turbolinks
 //= require stripe.v2
+//= require s3_direct_upload
 //= require codemirror
 //= require codemirror/modes/css
 //= require colorpicker

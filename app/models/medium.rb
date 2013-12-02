@@ -1,6 +1,8 @@
 class Medium < ActiveRecord::Base
   acts_as_taggable_on :tags
   
+  attr_accessor :import
+  
   belongs_to :website
   belongs_to :user
   
@@ -8,7 +10,8 @@ class Medium < ActiveRecord::Base
   
   before_save :prepare_info, if: :path_changed?
   before_save :set_meta_tags
-  after_save :sidekiq_resize, if: Proc.new { is_format("Images") }
+  after_save :sidekiq_resize, if: Proc.new { is_format "Images" }
+  after_save :sidekiq_import, if: Proc.new { import == "true" }
   
   def set_meta_tags
     if is_format("Images")
@@ -34,6 +37,10 @@ class Medium < ActiveRecord::Base
   
   def sidekiq_resize
     Resizer.perform_async id
+  end
+  
+  def sidekiq_import
+    Importer.perform_async id
   end
   
   def prepare_info

@@ -5,7 +5,14 @@ class MembershipsController < ApplicationController
   # GET /memberships
   # GET /memberships.json
   def index
-    @memberships = @website.memberships
+    @memberships = @website.memberships.includes(:user).limit(50)
+    
+    respond_to do |format|
+      format.html
+      format.json
+      format.csv { send_data @memberships.to_csv(current_user.id) }
+      format.js
+    end
   end
 
   # GET /memberships/1
@@ -15,7 +22,8 @@ class MembershipsController < ApplicationController
 
   # GET /memberships/new
   def new
-    @membership = Membership.new(data: {})
+    @membership = Membership.new
+    @membership.build_user
   end
 
   # GET /memberships/1/edit
@@ -26,6 +34,7 @@ class MembershipsController < ApplicationController
   # POST /memberships.json
   def create
     @membership = @website.memberships.new(membership_params)
+    @membership.user.no_password = true
 
     respond_to do |format|
       if @membership.save

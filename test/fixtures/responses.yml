@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  block_id: 
+  data: MyText
+  contact_id: 
+  website_id: 
+
+two:
+  block_id: 
+  data: MyText
+  contact_id: 
+  website_id: 

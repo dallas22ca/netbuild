@@ -13,12 +13,12 @@ class Message < ActiveRecord::Base
   after_create :deliver
   
   def reject_empties
-    self.to = self.to.reject(&:blank?)
+    self.to = self.to.reject(&:blank?).map(&:to_i)
   end
   
   def deliver
     to.each do |membership_id|
-      Bulk.sender(id, membership_id).deliver
+      Sender.perform_async(id, membership_id)
     end
   end
 end

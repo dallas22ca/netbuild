@@ -31,6 +31,7 @@ gem 'sidekiq-failures'
 gem 'sinatra', require: false
 gem 'slim'
 gem 'faye', require: false
+gem 'activerecord-import'
 
 gem 'thin'
 

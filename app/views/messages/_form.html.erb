@@ -1,7 +1,7 @@
 <%= form_for Message.new, url: manage_path("messages"), remote: true do |f| %>
 	<div class="field">
 		<%= f.label :to, "To (<span class=\"to_count\">0</span> people)".html_safe %><br>
-		<%= f.collection_select :to, @website.memberships, :id, :name, {}, multiple: true %>
+		<!-- f.collection_select :to, @website.memberships, :id, :name, {}, multiple: true-->
 	</div>
 	<div class="field">
 		<%= label_tag :from %><br>

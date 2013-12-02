@@ -1,0 +1,8 @@
+<%= render "manage_nav" %>
+<%= render "people_nav" %>
+
+<h1>Import People</h1>
+
+<%= s3_uploader_form callback_url: media_url(format: :js), callback_param: "medium[path]", key_starts_with: "#{@website.permalink}/", key: "#{@website.permalink}/{timestamp}-{unique_id}-#{SecureRandom.hex}/original/${filename}", id: "importer" do %>
+  <%= file_field_tag :file %>
+<% end %>

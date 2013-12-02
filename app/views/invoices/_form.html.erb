@@ -33,7 +33,7 @@
 		
 		<tfoot>
 			<tr>
-				<td><%= link_to "Add Item", "#", class: "add_line" %></td>
+				<td><%= link_to "Add Item", "#", class: "add_line button primary-button" %></td>
 				<td></td>
 				<td></td>
 				<td></td>
@@ -65,11 +65,17 @@
 	
 	<p class="invoice_blurb"><%= f.text_area :note, value: @invoice.new_record? ? @website.invoice_blurb : @invoice.note, placeholder: "Add a note here..." %></p>
 	
-	<%= f.check_box :paid %>
-	<%= f.label :paid %><br>
-	<%= f.check_box :public_access %>
-	<%= f.label :public_access %><br>
+	<div class="field">
+		<%= f.check_box :paid %>
+		<%= f.label :paid %><br>
+		<%= f.check_box :public_access %>
+		<%= f.label :public_access %><br>
+		<%= f.check_box :email %>
+		<%= f.label :email %>
+	</div>
 
-	<%= f.submit %>
-	<%= link_to "Delete", @invoice, method: :delete, data: { confirm: "Are you sure you want to delete this invoice?" } %>
+	<div class="right">
+		<%= link_to "Delete This Invoice", @invoice, method: :delete, data: { confirm: "Are you sure you want to delete this invoice?" }, class: "help_link" %> &nbsp; &nbsp; 
+		<%= f.submit "Save Invoice", class: "primary-button button" %>
+	</div>
 <% end %>

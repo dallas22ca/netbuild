@@ -1,1 +1,1 @@
-nice: bundle exec sidekiq -q WHMWorker,1 -q 1,Resizer
+nice: bundle exec sidekiq -q WHMWorker,1 -q 1,Resizer -q 1,Sender -q 1,Importer

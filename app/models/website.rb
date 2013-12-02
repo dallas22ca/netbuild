@@ -423,4 +423,8 @@ class Website < ActiveRecord::Base
       ""
     end
   end
+  
+  def one_line_address
+    address.split(/\n|\r\n/).reject(&:blank?).join(", ")
+  end
 end

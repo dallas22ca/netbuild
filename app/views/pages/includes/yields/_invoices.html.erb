@@ -1,7 +1,13 @@
 <% if @invoice %>
 
-	<%= link_to "Invoices", public_page_path("invoices"), class: "button primary-button" if signed_in? %><br>
-	<%= link_to "View As PDF", public_page_path("invoices", id: @invoice.visible_id, format: :pdf), class: "button primary-button" %><br><br>
+	<div id="invoice_header">
+		<% if current_membership && current_membership.invoices.any? %>
+			<%= link_to "&larr; Back To Invoices".html_safe, public_page_path("invoices"), class: "button primary-button" if signed_in? %>
+		<% end %>
+		<%= link_to "View As PDF", public_page_path("invoices", id: @invoice.visible_id, format: :pdf), class: "button primary-button right" %>
+		<div class="clear"></div>
+	</div>
+	
 	<%= render @invoice %>
 
 <% elsif signed_in? %>

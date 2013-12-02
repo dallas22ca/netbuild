@@ -28,11 +28,16 @@ Netbuild::Application.routes.draw do
       
       constraints "1" == "2" do
         scope "/manage" do
+          get "/people/import" => "import#new", as: :import
+          
           resources :memberships, path: :people
           resources :invoices
           resources :pages
+          
           get "/media/tags" => "media#tags"
+          
           resources :media
+          resources :responses
           resources :messages, only: [:show, :create]
           resources :themes do
             resources :documents
@@ -57,7 +62,7 @@ Netbuild::Application.routes.draw do
       get "/:permalink/:year" => "pages#show"
     end
     
-    post "/submission" => "pages#submit", as: :submit
+    post "/submission" => "responses#create", as: :submit
     get "/feed" => "websites#feed", as: :feed, defaults: { format: :atom }
     get "/:a(/:b(/:c))" => "pages#show", as: :public_page
   end

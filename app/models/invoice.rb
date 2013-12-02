@@ -1,10 +1,23 @@
 class Invoice < ActiveRecord::Base
+  attr_accessor :email
+  
   serialize :lines, Array
   belongs_to :membership
   has_one :website, through: :membership
   
   before_validation :set_visible_id
+  after_create :email_invoice, if: Proc.new { email }
   validates_presence_of :visible_id, :subtotal, :total
+  
+  def email_invoice
+    website.messages.create!(
+      to: [membership_id],
+      subject: "New Invoice", 
+      plain: "Here is a link to your new invoice.\n\n#{Rails.application.routes.url_helpers.public_page_url("invoices", id: visible_id, format: :pdf, subdomain: website.permalink, host: CONFIG["domain"])}\n\n#{website.invoice_blurb}", 
+      user_id: website.memberships.admin.first.user_id
+    )
+    update_columns public_access: true
+  end
   
   def set_visible_id
     if stripe_id.blank?

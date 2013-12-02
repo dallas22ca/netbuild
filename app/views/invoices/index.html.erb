@@ -3,7 +3,7 @@
 <h1>Invoices</h1>
 
 <% unless @netbuild %>
-	<%= link_to "Create New Invoice", new_invoice_path %><br><br>
+	<%= link_to "Create New Invoice", new_invoice_path, class: "button primary-button" %><br><br>
 <% end %>
 
 <table class="table">

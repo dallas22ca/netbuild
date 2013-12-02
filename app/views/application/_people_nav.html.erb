@@ -1,0 +1,8 @@
+<%= link_to "People", memberships_path, class: "button primary-button" %> &nbsp; 
+<%= link_to "Add Person", new_membership_path, class: "button primary-button" %> &nbsp; 
+<%= link_to "Upload People", import_path, class: "button primary-button" %> &nbsp; 
+<%= link_to "Send Message (<span class=\"to_count\">0</span>)".html_safe, "#", class: "compose_with_selection button primary-button" %>
+<% if @website.can_accept_money? %>
+ &nbsp; 
+	<%= link_to "Create New Invoice", new_invoice_path, class: "button primary-button" %>
+<% end %><br><br>

@@ -4,3 +4,5 @@
 :queues:
   - [WHMWorker, 1]
   - [Resizer, 1]
+  - [Sender, 1]
+  - [Importer, 1]

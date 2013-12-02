@@ -14,8 +14,8 @@ class Membership < ActiveRecord::Base
   
   before_create :set_security
   validates_uniqueness_of :username, scope: :website_id, allow_blank: true
-  after_validation :manage_cpanel, if: Proc.new { website && website.has_payment_info? && website.email_addon }
-  after_save :update_website_email_addresses_count, if: :has_email_account_changed?
+  after_validation :manage_cpanel, if: Proc.new { has_email_account_changed? && website && website.has_payment_info? && website.email_addon }
+  after_save :update_website_email_addresses_count, if: Proc.new { has_email_account_changed? }
   
   def update_website_email_addresses_count
     website.update_email_addresses_count
@@ -135,7 +135,7 @@ class Membership < ActiveRecord::Base
   end
   
   def name
-    @name ||= safe_data.nil? && safe_data["name"].blank? ? user.email : safe_data["name"]
+    @name ||= safe_data.empty? || safe_data["name"].blank? ? user.email : safe_data["name"]
   end
   
   def name_and_email
@@ -149,8 +149,18 @@ class Membership < ActiveRecord::Base
   def safe_data
     @safe_data = data
     @safe_data ||= {}
-    @safe_data.reverse_merge({
-      "email" => user.email
-    })
+    # @safe_data.reverse_merge({ "email" => user.email }) if user && !user.new_record?
+  end
+  
+  def self.to_csv(user_id)
+    require 'csv'
+    # CSV.generate do |csv|
+    #   fields = User.find(user_id).fields
+    #   
+    #   csv << ["Name"] + fields.pluck(:title)
+    #   all.each do |contact|
+    #     csv << [contact.name] + fields.map{ |f| contact.d[f.permalink] }
+    #   end
+    # end
   end
 end

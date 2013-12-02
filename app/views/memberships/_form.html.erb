@@ -25,23 +25,45 @@
 		</div>
 	<% end %>
 	
+	<%= f.fields_for :user do |u| %>
+	  <div class="field">
+	    <%= u.label :email %><br>
+	    <%= u.text_field :email %>
+	  </div>
+	<% end %>
+	
 	<% if @website.email_addon && @website.has_payment_info? %>
 	  <div class="field">
 			<%= f.check_box :has_email_account %>
-	    <%= f.label :has_email_account %><br>
-			<%= f.label :username %> 
-			<% if !@membership.has_email_account? %>
-				<%= f.text_field :username %>@<%= @website.stripped_domain(@website.domain) %>
-			<% else %>
-				<%= @membership.username %>@<%= @website.stripped_domain(@website.domain) %>
-			<% end %>
-			<br>
-			Password: <%= f.password_field :password %><br>
-			Forward To: <%= f.text_field :forward_to %>
+	    <%= f.label :has_email_account, "Has custom <strong>#{@website.stripped_domain(@website.domain)}</strong> email address?".html_safe %><br>
+			
+			<div class="custom_email_form hint">
+				
+				<div class="field">
+					<%= f.label :username, "Custom Email Address" %><br>
+					<% if !@membership.has_email_account? %>
+						<%= f.text_field :username %>@<%= @website.stripped_domain(@website.domain) %>
+					<% else %>
+						<%= @membership.username %>@<%= @website.stripped_domain(@website.domain) %>
+					<% end %>
+				</div>
+				
+				<div class="field">
+					<%= f.label :password %><br>
+					<%= f.password_field :password %>
+				</div>
+				
+				<div class="field">
+					<%= f.label :forward_to, "Forward incoming mail to (leave blank for none)" %><br>
+					<%= f.text_field :forward_to %>
+				</div>
+				
+				<span class="help_link">Need your email transferred from another source? <%= mail_to "dallas@excitecreative.ca", "Email us." %></span>
+			</div>
 	  </div>
 	<% end %>
 	
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit "Add Person", class: "primary-button button" %>
   </div>
 <% end %>

@@ -2,9 +2,9 @@ input[type="text"], input[type="email"], input[type="password"], textarea {
   font-family: inherit;
   font-size: 14px;
   border: 1px solid #ddd;
-  padding: 3px 13px;
+  padding: 4px 6px;
   outline: none;
-  border-radius: 20px;
+  border-radius: 4px;
   resize: none;
   line-height: 21px;
   color: #222;
@@ -22,4 +22,14 @@ input[type="text"], input[type="email"], input[type="password"], textarea {
 textarea {
   padding: 10px 13px;
   min-height: 200px;
+}
+
+.field {
+  margin: 15px 0;
+  
+  label {
+    font-size: 14px;
+    display: inline-block;
+    margin-bottom: 3px;
+  }
 }

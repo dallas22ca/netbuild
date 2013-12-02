@@ -37,7 +37,7 @@ class InvoicesController < ApplicationController
   # POST /invoices
   # POST /invoices.json
   def create
-    @invoice = Invoice.new(invoice_params)
+    @invoice = @website.invoices.new(invoice_params)
 
     respond_to do |format|
       if @invoice.save
@@ -90,10 +90,8 @@ class InvoicesController < ApplicationController
         line[:unit_price] = line[:unit_price].to_f * 100
       end
       
-      if current_user.try(:admin?)
-        params.require(:invoice).permit(:total_in_dollars, :subtotal_in_dollars, :paid, :membership_id, :date, :tax_rate, :public_access, :note, lines: [:amount, :description, :quantity, :unit_price])
-      else
-        params.require(:invoice).permit(:total_in_dollars, :subtotal_in_dollars, :paid, :membership_id, :date, :tax_rate, :public_access, :note, lines: [:amount, :description, :quantity, :unit_price])
+      if website_admin? || super_admin?
+        params.require(:invoice).permit(:email, :total_in_dollars, :subtotal_in_dollars, :paid, :membership_id, :date, :tax_rate, :public_access, :note, lines: [:amount, :description, :quantity, :unit_price])
       end
     end
 end

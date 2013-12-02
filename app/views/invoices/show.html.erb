@@ -1,11 +1,14 @@
 <%= render "manage_nav" %>
-<p id="notice"><%= notice %></p>
-<%= link_to "PDF", invoice_path(@invoice, format: :pdf) %><br>
 
-<% if @invoice.public_access? %>
-	<%= link_to "Share", public_page_path("invoices", id: @invoice.visible_id) %><br>
-<% end %>
+<div id="invoice_header">
+	<%= link_to "View PDF", invoice_path(@invoice, format: :pdf), class: "button primary-button right" %>
 
-<%= link_to "Edit", edit_invoice_path(@invoice) %>
-<br><br>
+	<% if @invoice.public_access? %>
+		<%= link_to "Share", public_page_path("invoices", id: @invoice.visible_id), class: "button primary-button right", style: "margin-right: 10px; " %>
+	<% end %>
+
+	<%= link_to "Edit Invoice", edit_invoice_path(@invoice), class: "button primary-button" %>
+	<div class="clear"></div>
+</div>
+
 <%= render @invoice %>

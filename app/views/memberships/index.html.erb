@@ -1,11 +1,5 @@
 <%= render "manage_nav" %>
-
-<%= link_to "Add Person", new_membership_path, class: "button primary-button" %> &nbsp; 
-<%= link_to "Send Message (<span class=\"to_count\">0</span>)".html_safe, "#", class: "compose_with_selection button primary-button" %>
-<% if @website.can_accept_money? %>
- &nbsp; 
-	<%= link_to "Create New Invoice", new_invoice_path, class: "button primary-button" %>
-<% end %><br><br>
+<%= render "people_nav" %>
 
 <table class="table">
   <thead>
@@ -29,6 +23,7 @@
   </thead>
 
   <tbody>
+		<% email_addon = @website.email_addon; can_accept_money = @website.can_accept_money? %>
     <% @memberships.each do |membership| %>
       <tr class="membership" data-id="<%= membership.id %>">
 				<td><%= check_box_tag "membership_checkbox_#{membership.id}", membership.id, false, class: "membership_checkbox" %></td>
@@ -37,7 +32,7 @@
 				<td><%= link_to membership.safe_data["phone"].to_s, membership %></td>
 				<td><%= link_to membership.security.capitalize, membership %></td>
 				
-				<% if @website.email_addon %>
+				<% if email_addon %>
 					<td>
 						<% if membership.has_email_account? %>
 							<%= link_to "<i class=\"icon-ok\"></i>".html_safe, membership %>
@@ -47,7 +42,7 @@
 					</td>
 				<% end %>
 				
-				<% if @website.can_accept_money? %>
+				<% if can_accept_money %>
 					<td>
 						<% if membership.card_token.blank? %>
 							<%= link_to "<i class=\"icon-remove\"></i>".html_safe, membership %>
@@ -57,9 +52,9 @@
 					</td>
 				<% end %>
 				
-				<!--<% if @website.adminable_by(current_user) %>
-	        <td><%= link_to "<i class=\"icon-trash\"></i>".html_safe, membership, method: :delete, data: { confirm: 'Are you sure?' } if membership.user != current_user %></td>
-				<% end %>-->
+				<!--< if @website.adminable_by(current_user) >
+	        <td><%= link_to "<i class=\"icon-trash\"></i>".html_safe, membership, method: :delete, data: { confirm: 'Are you sure?' } if membership.user_id != current_user.id %></td>
+				< end >-->
 					
 				<td><%= link_to membership.updated_at.strftime("%b %-d, %Y at %I:%M%p"), membership %></td>
       </tr>
