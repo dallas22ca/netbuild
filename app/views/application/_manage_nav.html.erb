@@ -12,6 +12,7 @@
 				<ul class="subnav">
 					<li><%= link_to "Theme", manage_path("theme") %></li>
 					<li><%= link_to "Pages", manage_path("pages") %></li>
+					<li><%= link_to "Company Settings", manage_path("company") %></li>
 					<li><%= link_to "Responses", manage_path("responses") %></li>
 					
 					<% if @website.can_accept_money? %>
