@@ -244,6 +244,7 @@ GEM
       chronic (>= 0.6.3)
     wicked_pdf (0.9.7)
       rails
+    will_paginate (3.0.5)
 
 PLATFORMS
   ruby
@@ -283,3 +284,4 @@ DEPENDENCIES
   unicorn
   whenever
   wicked_pdf
+  will_paginate (~> 3.0.5)

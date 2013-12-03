@@ -18,7 +18,7 @@ class Message < ActiveRecord::Base
   end
   
   def deliver
-    recipients = (to + Membership.filter(filters).pluck(:membership_id)).uniq
+    recipients = (to + Membership.filter(filters).pluck(:id)).uniq
     
     recipients.each do |membership_id|
       Sender.perform_async(id, membership_id)

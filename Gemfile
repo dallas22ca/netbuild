@@ -25,6 +25,7 @@ gem 'wicked_pdf'
 gem 'acts-as-taggable-on'
 gem 'rmagick', '2.13.2'
 gem 'streamio-ffmpeg'
+gem 'will_paginate', '~> 3.0.5'
 
 gem 'sidekiq'
 gem 'sidekiq-failures'

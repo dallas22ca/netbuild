@@ -12,10 +12,15 @@ class Membership < ActiveRecord::Base
   scope :admin, -> { where(security: "admin") }
   scope :with_email_account, -> { where(has_email_account: true) }
   
+  before_save :set_email
   before_create :set_security
   validates_uniqueness_of :username, scope: :website_id, allow_blank: true
   after_validation :manage_cpanel, if: Proc.new { has_email_account_changed? && website && website.has_payment_info? && website.email_addon }
   after_save :update_website_email_addresses_count, if: Proc.new { has_email_account_changed? }
+  
+  def set_email
+    self.data = self.data.merge({ "email" => self.user.email })
+  end
   
   def update_website_email_addresses_count
     website.update_email_addresses_count
@@ -172,7 +177,7 @@ class Membership < ActiveRecord::Base
   
   def self.filter(requirements = [], q = "", order = "id", direction = "asc", data_type = "string")
     queries = []
-    normal_fields = ["created_at", "updated_at", "email", "id"]
+    normal_fields = ["created_at", "updated_at", "id"]
 
     unless normal_fields.include? order
       if data_type == "integer"

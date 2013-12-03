@@ -1,7 +1,7 @@
 <table style="display: none; ">
   <tr id="filter_template" data-criteria="<%= @criteria %>" data-filters="<%= @website.fields.for_filters.to_json %>" class="filter">
 
-    <td><%= select_tag "filter_permalink[]", options_for_select([["Name", "name"]] + @website.fields.where("data_type != ?", "datetime").map{ |f| [f.name, f.permalink] }), id: nil, class: "filter_permalink filter_field" %></td>
+    <td><%= select_tag "filter_permalink[]", options_for_select(@website.fields.where("data_type != ?", "datetime").map{ |f| [f.name, f.permalink] }), id: nil, class: "filter_permalink filter_field" %></td>
     <td><%= select_tag "filter_matcher[]", options_for_select([]), id: nil, class: "filter_matcher filter_field" %></td>
     <td>
       <%= select_tag "filter_boolean_matcher[]", options_for_select([["Yes", "true"], ["No", "false"]]), id: nil, class: "filter_boolean filter_field" %>

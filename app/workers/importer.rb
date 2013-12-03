@@ -20,7 +20,7 @@ class Importer
       csv.each do |row|
         hash = {}
         row.map{ |k, v| hash[k.parameterize] = v }
-        email = hash.delete "email"
+        email = hash["email"]
         user = User.where(email: email).first_or_initialize
         user.no_password = true
         

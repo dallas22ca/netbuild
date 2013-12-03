@@ -18,10 +18,10 @@
 	  </div>
 	<% end %>
 	
-	<% %w[company name phone].each do |field| %>
+	<% @website.fields.each do |f| %>
 		<div class="field">
-			<%= label_tag field.to_sym %><br>
-			<%= text_field_tag field.to_sym, @membership.safe_data[field], name: "membership[data][#{field}]" %>
+			<%= label_tag f.permalink.to_sym %><br>
+			<%= text_field_tag f.permalink, @membership.safe_data[f.permalink], name: "membership[data][#{f.permalink}]" %>
 		</div>
 	<% end %>
 	
