@@ -13,7 +13,7 @@ class Membership < ActiveRecord::Base
   scope :with_email_account, -> { where(has_email_account: true) }
   scope :emailable, -> { where(emailable: true) }
   
-  before_save :set_email
+  before_save :set_email, if: Proc.new { user }
   before_create :set_security, :generate_token
   validates_uniqueness_of :username, scope: :website_id, allow_blank: true
   after_validation :manage_cpanel, if: Proc.new { has_email_account_changed? && website && website.has_payment_info? && website.email_addon }
