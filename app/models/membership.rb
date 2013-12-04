@@ -20,6 +20,7 @@ class Membership < ActiveRecord::Base
   after_save :update_website_email_addresses_count, if: Proc.new { has_email_account_changed? }
   
   def set_email
+    self.data ||= {}
     self.data = self.data.merge({ "email" => self.user.email })
   end
   
