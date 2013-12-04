@@ -1,7 +1,11 @@
-<% if @membership.emailable? %>
-	<p>You have re-subscribed.</p>
-	<p>To un-subscribe, <%= link_to "reload this page", request.path %>.</p>
+<% if @membership %>
+	<% if @membership.emailable? %>
+		<p>You have re-subscribed.</p>
+		<p>To un-subscribe, <%= link_to "reload this page", request.path %>.</p>
+	<% else %>
+		<p>You have un-subscribed.</p>
+		<p>To re-subscribe, <%= link_to "reload this page", request.path %>.</p>
+	<% end %>
 <% else %>
-	<p>You have un-subscribed.</p>
-	<p>To re-subscribe, <%= link_to "reload this page", request.path %>.</p>
+	<p>We don't recognize your email address.</p>
 <% end %>

@@ -14,7 +14,7 @@ class PagesController < ApplicationController
   def show
     @path = request.path
     
-    if params[:a] == "subscriptions"
+    if params[:a] == "subscriptions" && params[:b]
       @membership = @website.memberships.where(token: params[:b]).first
 
       if @membership
