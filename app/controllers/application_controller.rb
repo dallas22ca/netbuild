@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
   end
   
   def secure_www
-    redirect_to "#{root_url(protocol: "https://")}#{request.path}", status: :moved_permanently
+    redirect_to "#{request.url.gsub("http", "https")}", status: :moved_permanently
   end
   
   def set_website
