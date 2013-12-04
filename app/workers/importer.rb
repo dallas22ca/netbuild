@@ -25,7 +25,7 @@ class Importer
         user.no_password = true
         
         if !user.new_record? || (user.new_record? && user.save)
-          memberships.push user.memberships.create(website_id: m.website_id, data: hash, security: "user")
+          memberships.push user.memberships.create(website_id: m.website_id, data: hash, security: "member")
         end
       end
 

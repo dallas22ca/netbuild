@@ -155,6 +155,16 @@ class Website < ActiveRecord::Base
       document_id: theme.default_document_id
     )
     
+    subscriptions = pages.create(
+      title: "Subscriptions",
+      permalink: "subscriptions",
+      description: "Manage your subscriptions",
+      visible: false,
+      deleteable: false,
+      ordinal: 996,
+      document_id: theme.default_document_id
+    )
+    
     invoices = pages.create(
       title: "Invoices",
       permalink: "invoices",

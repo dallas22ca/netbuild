@@ -56,15 +56,16 @@ Netbuild::Application.routes.draw do
     
     resources :themes, only: :show
     
-    constraints year: /\d.+/, month: /\d.+/ do
+    post "/submission" => "responses#create", as: :submit
+    get "/feed" => "websites#feed", as: :feed, defaults: { format: :atom }
+    
+    constraints year: /\d{4}/, month: /\d{2}/ do
       get "/:year/:month/:post" => "pages#show"
       get "/:permalink/:year/:month/:post" => "pages#show"
       get "/:permalink/:year/:month" => "pages#show"
       get "/:permalink/:year" => "pages#show"
     end
     
-    post "/submission" => "responses#create", as: :submit
-    get "/feed" => "websites#feed", as: :feed, defaults: { format: :atom }
     get "/:a(/:b(/:c))" => "pages#show", as: :public_page
   end
   

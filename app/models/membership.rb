@@ -11,9 +11,10 @@ class Membership < ActiveRecord::Base
   
   scope :admin, -> { where(security: "admin") }
   scope :with_email_account, -> { where(has_email_account: true) }
+  scope :emailable, -> { where(emailable: true) }
   
   before_save :set_email
-  before_create :set_security
+  before_create :set_security, :generate_token
   validates_uniqueness_of :username, scope: :website_id, allow_blank: true
   after_validation :manage_cpanel, if: Proc.new { has_email_account_changed? && website && website.has_payment_info? && website.email_addon }
   after_save :update_website_email_addresses_count, if: Proc.new { has_email_account_changed? }
@@ -235,5 +236,9 @@ class Membership < ActiveRecord::Base
     else
       order("#{order} #{direction}")
     end
+  end
+  
+  def generate_token
+    self.token = SecureRandom.hex
   end
 end

@@ -42,7 +42,6 @@ $(document).on "click", ".delete_filter", ->
   calc: ->
     if $("#filters_container").length
       filters = $("#filter_template").data("filters")
-      console.log filters
     
       $(".filter").each ->
         permalink = $(this).find(".filter_permalink").val()

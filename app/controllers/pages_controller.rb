@@ -14,7 +14,19 @@ class PagesController < ApplicationController
   def show
     @path = request.path
     
-    if params[:post]
+    if params[:a] == "subscriptions"
+      @membership = @website.memberships.where(token: params[:b]).first
+
+      if @membership
+        if @membership.emailable?
+          @membership.update_attributes emailable: false
+        else
+          @membership.update_attributes emailable: true
+        end
+      end
+      
+      @page = @website.pages.where(permalink: params[:a]).first
+    elsif params[:post]
       start = Time.parse("#{params[:year]}/#{params[:month]}")
       finish = start.end_of_month
       

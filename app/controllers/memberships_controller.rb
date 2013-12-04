@@ -75,12 +75,11 @@ class MembershipsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
+
     def set_membership
       @membership = @website.memberships.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def membership_params
       params.require(:membership).permit(:security, :has_email_account, :username, :password, :forward_to, user_attributes: [:id, :email, :password]).tap do |whitelisted|
         whitelisted[:data] = params[:membership][:data]

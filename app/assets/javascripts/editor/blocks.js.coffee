@@ -158,7 +158,6 @@ $(document).on
     receive: (e, ui) ->
       genre = $(ui.item).data("genre")
       clone = clone_with_new_id(genre)
-      console.log clone
       $(".wrapper a.block_dragger:last").replaceWith clone
 
 @clone_with_new_id = (genre) ->

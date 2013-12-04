@@ -117,6 +117,10 @@ GEM
     jwt (0.1.8)
       multi_json (>= 1.5)
     kgio (2.8.1)
+    launchy (2.3.0)
+      addressable (~> 2.3)
+    letter_opener (1.1.2)
+      launchy (~> 2.2)
     liquid (2.5.4)
     mail (2.5.4)
       mime-types (~> 1.16)
@@ -263,6 +267,7 @@ DEPENDENCIES
   foreman
   jbuilder (~> 1.2)
   jquery-rails
+  letter_opener
   liquid
   oauth2
   paper_trail (>= 3.0.0.beta1)

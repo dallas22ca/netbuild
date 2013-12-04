@@ -44,4 +44,5 @@ group :development do
   gem 'capistrano'
   gem 'capistrano-unicorn', :require => false
   gem 'foreman'
+  gem 'letter_opener'
 end

@@ -1,6 +1,6 @@
 <%=
 
-	if %w[sign_in sign_up sitemap members search invoices].include? @page.permalink
+	if %w[sign_in sign_up sitemap members search invoices subscriptions].include? @page.permalink
 		@yield = render("pages/includes/yields/#{@page.permalink}")
 	end
 	
