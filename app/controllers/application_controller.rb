@@ -87,10 +87,12 @@ class ApplicationController < ActionController::Base
     
     if params[:filter_permalink]
       params[:filter_permalink].each_with_index do |permalink, index|
-        search = params[:filter_search][index]
+        if index < params[:filter_permalink].length - 1
+          search = params[:filter_search][index]
         
-        unless search.blank?
-          filters.push [permalink, params[:filter_matcher][index], search]
+          unless search.blank?
+            filters.push [permalink, params[:filter_matcher][index], search]
+          end
         end
       end
     end

@@ -6,9 +6,6 @@ $(document).on "change", "#who", ->
     $(".filter_options").show()
     Filters.add "name", "like", "" if !$("#filters_container").find(".filter").length
 
-$(document).on "submit", "form", ->
-  $("#filter_template").find(".filter_field").removeAttr("name")
-
 $(document).on "change", ".filter_permalink", ->
   filter = $(this).closest(".filter")
   string = filter.find(".filter_string")

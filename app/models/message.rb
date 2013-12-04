@@ -11,7 +11,7 @@ class Message < ActiveRecord::Base
   validates_presence_of :subject, :plain, :user_id, :website_id
   
   before_validation :reject_empties
-  after_create :deliver
+  after_commit :deliver
   
   def reject_empties
     self.to = self.to.reject(&:blank?).map(&:to_i)
@@ -19,9 +19,6 @@ class Message < ActiveRecord::Base
   
   def deliver
     recipients = (to + website.memberships.filter(filters).emailable.pluck(:id)).uniq
-    
-    p filters
-    
     recipients.each do |membership_id|
       Sender.perform_async(id, membership_id)
     end
