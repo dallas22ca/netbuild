@@ -172,8 +172,10 @@ class Membership < ActiveRecord::Base
   end
   
   def to_liquid
+    self.data ||= {}
+    self.data.merge({ email: user.email }) if user
     {
-      "contact" => data.merge({ email: user.email })
+      "contact" => self.data
     }
   end
   
