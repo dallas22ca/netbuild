@@ -3,7 +3,7 @@
 		<!-- f.collection_select :to, @website.memberships, :id, :name, {}, multiple: true-->
 	  <div class="field">
 	    <%= label_tag :who, "To" %><br>
-	    <%= select_tag :who, options_for_select([["Everyone", "everyone"], ["Filter my contacts...", "filter"]]), class: "full_width" %>
+	    <%= select_tag :who, options_for_select([["Noone", "everyone"], ["Filter my contacts...", "filter"]]), class: "full_width" %>
     
 	    <div class="filter_options">
 	      <table id="filters_container"></table>

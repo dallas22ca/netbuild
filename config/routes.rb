@@ -23,6 +23,12 @@ Netbuild::Application.routes.draw do
   end
   
   constraints subdomain: /.*?/ do
+    namespace :api, defaults: { format: :json } do
+      scope module: :v1 do
+        resources :memberships, path: :people
+      end
+    end
+    
     authenticated do
       resources :blocks, only: [:show, :create]
       

@@ -438,4 +438,29 @@ class Website < ActiveRecord::Base
   def one_line_address
     address.split(/\n|\r\n/).reject(&:blank?).join(", ")
   end
+  
+  def import_members(array = [], args = {})
+    contacts = []
+    args[:overwrite] ||= false
+    
+    array.each do |data|
+      data.symbolize_keys
+      email = data.delete(:email)
+      c = members.where(email: email).first
+      
+      if c
+        m = memberships.where(user_id: c.id).first
+        m.update_attributes data: data if data != m.data
+      else
+        c = User.create(email: email, no_password: true)
+        m = memberships.create(user_id: c.id, data: data)
+      end
+      
+      c.data = m.data
+      
+      contacts.push c
+    end
+    
+    { success: true, contacts: contacts }
+  end
 end

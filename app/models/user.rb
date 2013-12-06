@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
   
-  attr_accessor :subdomain, :no_password
+  attr_accessor :subdomain, :no_password, :data
 
   has_many :memberships
   has_many :websites, through: :memberships

@@ -6,7 +6,7 @@ class Invoice < ActiveRecord::Base
   has_one :website, through: :membership
   
   before_validation :set_visible_id
-  after_create :email_invoice, if: Proc.new { email }
+  after_create :email_invoice, if: Proc.new { email == "1" || email == true  }
   validates_presence_of :visible_id, :subtotal, :total
   
   def email_invoice
