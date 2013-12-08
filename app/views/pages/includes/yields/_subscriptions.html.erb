@@ -1,10 +1,10 @@
 <% if @membership %>
 	<% if @membership.emailable? %>
-		<p>You have re-subscribed.</p>
-		<p>To un-subscribe, <%= link_to "reload this page", request.path %>.</p>
+		<p>You have re-subscribed.<br><br></p>
+		<%= link_to "Un-subscribe", request.path, class: "primary-button button" %>
 	<% else %>
-		<p>You have un-subscribed.</p>
-		<p>To re-subscribe, <%= link_to "reload this page", request.path %>.</p>
+		<p>You have un-subscribed.<br><br></p>
+		<%= link_to "Re-subscribe", request.path, class: "primary-button button" %>
 	<% end %>
 <% else %>
 	<p>We don't recognize your email address.</p>

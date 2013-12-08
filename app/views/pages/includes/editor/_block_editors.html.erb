@@ -107,10 +107,12 @@
 		<%= hidden_field_tag :block_id, "", class: "block_id", id: nil %>
 		<h3>Form</h3>
 		
+		<!--
 		<div class="field">
-			<%= label_tag :new_or_previous %><br>
-			<%= select_tag :new_or_previous, options_for_select(["None...", "Choose From Previous"]), class: "new_or_previous", id: nil %>
-		</div>
+					<%= label_tag :new_or_previous %><br>
+					<%= select_tag :new_or_previous, options_for_select(["None...", "Choose From Previous"]), class: "new_or_previous", id: nil %>
+				</div>-->
+		
 		<div class="field">
 			<%= label_tag :contact_driven %><br>
 			<%= check_box_tag :contact_driven, true, true, class: "contact_driven", id: nil %>

@@ -43,7 +43,7 @@ Netbuild::Application.routes.draw do
           get "/media/tags" => "media#tags"
           
           resources :media
-          resources :responses
+          resources :responses, except: [:create]
           resources :fields
           resources :messages, only: [:show, :create]
           resources :themes do

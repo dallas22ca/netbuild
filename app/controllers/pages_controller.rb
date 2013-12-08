@@ -87,7 +87,7 @@ class PagesController < ApplicationController
     
     respond_to do |format|
       format.html do
-        if @path != root_path && @page == @website.home
+        if (@path != root_path && @page == @website.home) || (@page.permalink == "sign_up" && (!@website.allow_signups? || !website_admin?))
           redirect_to root_path
         elsif !@page.redirect_to.blank?
           redirect_to @page.redirect_to
@@ -97,14 +97,6 @@ class PagesController < ApplicationController
       end
       format.pdf { render pdf: "#{@website.title} #{@invoice.date.strftime("%m-%d-%Y")}" } if @invoice
       format.json
-    end
-  end
-  
-  # POST /submission
-  def submit
-    respond_to do |format|
-      format.html { redirect_to :back }
-      format.js
     end
   end
 

@@ -5,26 +5,20 @@
 <table class="table">
   <thead>
     <tr>
-      <th>Block</th>
-      <th>Data</th>
       <th>Contact</th>
-      <th>Website</th>
-      <th></th>
-      <th></th>
-      <th></th>
+      <th>Email</th>
+      <th>Data</th>
+      <th>Page</th>
     </tr>
   </thead>
 
   <tbody>
     <% @responses.each do |response| %>
       <tr>
-        <td><%= response.block %></td>
-        <td><%= response.data %></td>
-        <td><%= response.contact %></td>
-        <td><%= response.website %></td>
-        <td><%= link_to 'Show', response %></td>
-        <td><%= link_to 'Edit', edit_response_path(response) %></td>
-        <td><%= link_to 'Destroy', response, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to response.membership.name_or_email, response.membership %></td>
+				<td><%= link_to "#{response.safe_data["email"]}", response %></td>
+        <td><%= link_to response.data.map{|k, v|"#{k}: #{v}"}.join("<br>").html_safe, response %></td>
+				<td><%= link_to response.page.title, response.page.path %></td>
       </tr>
     <% end %>
   </tbody>

@@ -1,0 +1,5 @@
+<% if @response.errors.any? %>
+  alert("<%= @response.errors.full_responses.join(". ") %>");
+<% else %>
+  $("#block_<%= @response.block_id %> form").replaceWith("<p>Submitted.</p>")
+<% end %>

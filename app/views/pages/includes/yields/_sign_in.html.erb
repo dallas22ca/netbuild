@@ -25,6 +25,6 @@
     </div>
   <% end %>
 	
-	<%= link_to "Sign Up", public_page_path("sign_up") %>
+	<%= link_to "Sign Up", public_page_path("sign_up") if @website.allow_signups? %>
 
 </div>

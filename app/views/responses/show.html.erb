@@ -1,24 +1,25 @@
-<p id="notice"><%= notice %></p>
+<%= render "manage_nav" %>
 
-<p>
-  <strong>Block:</strong>
-  <%= @response.block %>
-</p>
+<%= link_to "&larr; Back".html_safe, responses_path %>
 
-<p>
-  <strong>Data:</strong>
-  <%= @response.data %>
-</p>
+<% if @response.page %>
+	<div class="field">
+	  <strong>Page:</strong>
+	  <%= link_to @response.page.title, @response.page.path %>
+	</div>
+<% end %>
 
-<p>
-  <strong>Contact:</strong>
-  <%= @response.contact %>
-</p>
+<div class="field">
+  <strong>Email</strong><br>
+  <%= @response.safe_data["email"] %>
+</div>
 
-<p>
-  <strong>Website:</strong>
-  <%= @response.website %>
-</p>
+<div class="field">
+  <strong>Data</strong><br>
+  <%= @response.safe_data.map{ |k, v|"#{k}: #{v}" }.join("<br>").html_safe %>
+</div>
 
-<%= link_to 'Edit', edit_response_path(@response) %> |
-<%= link_to 'Back', responses_path %>
+<div class="field">
+  <strong>Member:</strong>
+  <%= link_to @response.membership.name_or_email, @response.membership %>
+</div>

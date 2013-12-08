@@ -33,6 +33,11 @@
     <%= f.text_area :header, class: "full_width" %>
   </div>
 	
+	<div class="field">
+    <%= f.check_box :allow_signups %>
+		<%= f.label :allow_signups %>
+	</div>
+	
 	<% if super_admin? %>
 	  <div class="field">
 	    <%= f.label :theme_id %><br>

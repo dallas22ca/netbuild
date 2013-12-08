@@ -18,6 +18,7 @@ class Website < ActiveRecord::Base
   has_many :addonships, dependent: :destroy
   has_many :addons, through: :addonships
   has_many :invoices, through: :memberships, dependent: :destroy
+  has_many :responses, dependent: :destroy
   
   accepts_nested_attributes_for :members
   

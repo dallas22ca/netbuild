@@ -4,6 +4,8 @@ class Block < ActiveRecord::Base
   
   belongs_to :wrapper, touch: true
   belongs_to :website
+  has_many :responses
+  has_one :page, through: :wrapper
   
   default_scope -> { order(:ordinal) }
   

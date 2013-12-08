@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131204125451) do
+ActiveRecord::Schema.define(version: 20131208123319) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -219,10 +219,12 @@ ActiveRecord::Schema.define(version: 20131204125451) do
     t.integer  "website_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "membership_id"
   end
 
   add_index "responses", ["block_id"], name: "index_responses_on_block_id", using: :btree
   add_index "responses", ["contact_id"], name: "index_responses_on_contact_id", using: :btree
+  add_index "responses", ["membership_id"], name: "index_responses_on_membership_id", using: :btree
   add_index "responses", ["website_id"], name: "index_responses_on_website_id", using: :btree
 
   create_table "taggings", force: true do |t|
