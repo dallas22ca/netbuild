@@ -62,10 +62,12 @@ a {
 	background: #111;
 	color: #777;
 	font-size: 11px;
+	text-align: center;
 	
 	a {
 		padding: 10px;
 		display: block;
+		color: #777;
 		
 		&:hover {
 			color: #aaa;
