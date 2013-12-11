@@ -17,8 +17,8 @@ class ResponsesController < ApplicationController
   # POST /responses.json
   def create
     @block = @website.blocks.find(params[:block_id])
-    @membership = @website.memberships.find(params[:membership_id])
-    @response = @website.responses.new(block_id: @block.id, membership_id: @membership.id, data: params[:data])
+    @response = @website.responses.new(block_id: @block.id, data: params[:data])
+    @response.membership_id = current_membership.id if current_membership
 
     respond_to do |format|
       if @response.save

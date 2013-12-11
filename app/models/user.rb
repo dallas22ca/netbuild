@@ -10,6 +10,16 @@ class User < ActiveRecord::Base
   has_many :memberships
   has_many :websites, through: :memberships
   has_many :media, through: :websites
+  
+  after_save :update_membership_data, if: :email_changed?
+  
+  def update_membership_data
+    memberships.each do |m|
+      data = m.data
+      data["email"] = email
+      m.update_attributes data: data
+    end
+  end
 
   def self.find_for_authentication(conditions = {})
     website = Website.where(permalink: conditions.delete(:subdomain)).first
