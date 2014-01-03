@@ -27,7 +27,7 @@ class PagesController < ApplicationController
       
       @page = @website.pages.where(permalink: params[:a]).first
     elsif params[:post]
-      start = Time.parse("#{params[:year].to_i}/#{params[:month].to_i}")
+      start = Time.parse("#{params[:year]}/#{params[:month]}")
       finish = start.end_of_month
       
       if params[:permalink]
@@ -39,11 +39,11 @@ class PagesController < ApplicationController
       @page = @parent.children.where("permalink = ? and published_at >= ? and published_at <= ?", params[:post], start, finish).first if @parent
     elsif params[:month]
       @page = @website.pages.dated.where(permalink: params[:permalink]).first
-      @month = params[:month].to_i
-      @year = params[:year].to_i
+      @month = params[:month]
+      @year = params[:year]
     elsif params[:year]
       @page = @website.pages.dated.where(permalink: params[:permalink]).first
-      @year = params[:year].to_i
+      @year = params[:year]
     elsif params[:c]
       @grandparent = @website.pages.roots.not_dated.where(permalink: params[:a]).first
       @parent = @grandparent.children.not_dated.where(permalink: params[:b]).first
